@@ -467,61 +467,9 @@
       
     
     
-      <label class="md-nav__link md-nav__link--active" for="toc">
-        Redis
-      </label>
-    
     <a href="./" title="Redis" class="md-nav__link md-nav__link--active">
       Redis
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-  
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#client" title="Client" class="md-nav__link">
-    Client
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#monitor" title="MONITOR" class="md-nav__link">
-    MONITOR
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#keys" title="KEYS" class="md-nav__link">
-    KEYS
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ping" title="PING" class="md-nav__link">
-    PING
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-      
-      
-    </ul>
-  
-</nav>
     
   </li>
 
@@ -794,33 +742,6 @@
     Client
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#monitor" title="MONITOR" class="md-nav__link">
-    MONITOR
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#keys" title="KEYS" class="md-nav__link">
-    KEYS
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ping" title="PING" class="md-nav__link">
-    PING
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
       
@@ -850,7 +771,7 @@
 
 
 <p>Here are some usefull commands for the redis-cli for debugging:</p>
-<h5 id="monitor">MONITOR<a class="headerlink" href="#monitor" title="Permanent link">&para;</a></h5>
+<p><strong>MONITOR</strong></p>
 <p>Listens for all requests received by the server in real time:</p>
 <div class="codehilite"><pre><span></span># docker-compose exec redis-mailcow redis-cli
 127.0.0.1:6379&gt; monitor
@@ -861,13 +782,13 @@ OK
 </pre></div>
 
 
-<h5 id="keys">KEYS<a class="headerlink" href="#keys" title="Permanent link">&para;</a></h5>
+<p><strong>KEYS</strong></p>
 <p>Get all keys matching your pattern:</p>
 <div class="codehilite"><pre><span></span>
 </pre></div>
 
 
-<h5 id="ping">PING<a class="headerlink" href="#ping" title="Permanent link">&para;</a></h5>
+<p><strong>PING</strong></p>
 <p>Test a connection:</p>
 <div class="codehilite"><pre><span></span>127.0.0.1:6379&gt; PING
 PONG
