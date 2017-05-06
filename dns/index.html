@@ -804,7 +804,7 @@
   <a href="https://www.skelleton.net/2015/03/21/how-to-eliminate-spam-and-protect-your-name-with-dmarc/">"How to eliminate spam and protect your name with DMARC"</a></li>
 </ul>
 <h2 id="reverse-dns-of-your-ip">Reverse DNS of your IP<a class="headerlink" href="#reverse-dns-of-your-ip" title="Permanent link">&para;</a></h2>
-<p>Make sure that the PTR record of your IP matches the FQDN of your mailcow host: <code>${MAILCOW_HOSTNAME}</code> [^1]. This record is usually set at the provider you leased the IP (server) from.</p>
+<p>Make sure that the PTR record of your IP matches the FQDN of your mailcow host: <code>${MAILCOW_HOSTNAME}</code> <sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup>. This record is usually set at the provider you leased the IP (server) from.</p>
 <h2 id="the-minimal-dns-configuration">The minimal DNS configuration<a class="headerlink" href="#the-minimal-dns-configuration" title="Permanent link">&para;</a></h2>
 <p>This example shows you a set of records for one domain managed by mailcow. Each domain that is added to mailcow needs at least this set or records to function correctly.</p>
 <div class="codehilite"><pre><span></span># Name              Type       Value
@@ -858,7 +858,14 @@ _autodiscover._tcp  IN SRV     0 1 443 autodiscover.example.org.
 </pre></div>
 
 
-<p>[^1]: A <strong>Fully Qualified Domain Name</strong> (<strong>FQDN</strong>) is the complete (absolute) domain name for a specific computer or host, on the Internet. The FQDN consists of at least three parts devided by a dot: the hostname (myhost), the domain name (mydomain) and the toplevel domain in short <strong>tld</strong> (com). In the example of <code>mx.mailcow.email</code> the hostname would be <code>mx</code>, the domain name 'mailcow' and the tld <code>email</code>.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>A <strong>Fully Qualified Domain Name</strong> (<strong>FQDN</strong>) is the complete (absolute) domain name for a specific computer or host, on the Internet. The FQDN consists of at least three parts devided by a dot: the hostname (myhost), the domain name (mydomain) and the toplevel domain in short <strong>tld</strong> (com). In the example of <code>mx.mailcow.email</code> the hostname would be <code>mx</code>, the domain name 'mailcow' and the tld <code>email</code>.&#160;<a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
                 
                   
                 
