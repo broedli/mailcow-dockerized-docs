@@ -257,13 +257,33 @@
         },
         {
             "location": "/redis/",
-            "text": "Client\n\u00b6\n\n\nRedis is used as a key-value store for (some of) mailcow's and rspamd's settings and data. If you are unfamilliar with redis please read the \nintroduction to redis\n and maybe visit this \nwonderfull guide\n on how to use it.\n\n\nTo connect to the redis cli execute:\n\n\ndocker-compose exec redis-mailcow redis-cli\n\n\n\n\n\nHere are some usefull commands for the redis-cli for debugging:\n\n\nMONITOR\n\n\nListens for all requests received by the server in real time:\n\n\n# docker-compose exec redis-mailcow redis-cli\n127.0.0.1:6379> monitor\nOK\n1494077286.401963 [0 172.22.1.253:41228] \"SMEMBERS\" \"BAYES_SPAM_keys\"\n1494077288.292970 [0 172.22.1.253:41229] \"SMEMBERS\" \"BAYES_SPAM_keys\"\n[...]\n\n\n\n\n\nKEYS\n\n\nGet all keys matching your pattern:\n\n\n\n\n\n\n\n\nPING\n\n\nTest a connection:\n\n\n127.0.0.1:6379> PING\nPONG\n\n\n\n\n\nIf you want to know more, here is a \ncheat sheet\n.",
+            "text": "Client\n\u00b6\n\n\nRedis is used as a key-value store for (some of) mailcow's and rspamd's settings and data. If you are unfamilliar with redis please read the \nintroduction to redis\n and maybe visit this \nwonderfull guide\n on how to use it.\n\n\nTo connect to the redis cli execute:\n\n\ndocker-compose exec redis-mailcow redis-cli\n\n\n\n\n\nDebugging\n\u00b6\n\n\nHere are some usefull commands for the redis-cli for debugging:\n\n\nMONITOR\n\u00b6\n\n\nListens for all requests received by the server in real time:\n\n\n# docker-compose exec redis-mailcow redis-cli\n127.0.0.1:6379> monitor\nOK\n1494077286.401963 [0 172.22.1.253:41228] \"SMEMBERS\" \"BAYES_SPAM_keys\"\n1494077288.292970 [0 172.22.1.253:41229] \"SMEMBERS\" \"BAYES_SPAM_keys\"\n[...]\n\n\n\n\n\nKEYS\n\u00b6\n\n\nGet all keys matching your pattern:\n\n\n\n\n\n\n\n\nPING\n\u00b6\n\n\nTest a connection:\n\n\n127.0.0.1:6379> PING\nPONG\n\n\n\n\n\nIf you want to know more, here is a \ncheat sheet\n.",
             "title": "Redis"
         },
         {
             "location": "/redis/#client",
-            "text": "Redis is used as a key-value store for (some of) mailcow's and rspamd's settings and data. If you are unfamilliar with redis please read the  introduction to redis  and maybe visit this  wonderfull guide  on how to use it.  To connect to the redis cli execute:  docker-compose exec redis-mailcow redis-cli  Here are some usefull commands for the redis-cli for debugging:  MONITOR  Listens for all requests received by the server in real time:  # docker-compose exec redis-mailcow redis-cli\n127.0.0.1:6379> monitor\nOK\n1494077286.401963 [0 172.22.1.253:41228] \"SMEMBERS\" \"BAYES_SPAM_keys\"\n1494077288.292970 [0 172.22.1.253:41229] \"SMEMBERS\" \"BAYES_SPAM_keys\"\n[...]  KEYS  Get all keys matching your pattern:    PING  Test a connection:  127.0.0.1:6379> PING\nPONG  If you want to know more, here is a  cheat sheet .",
+            "text": "Redis is used as a key-value store for (some of) mailcow's and rspamd's settings and data. If you are unfamilliar with redis please read the  introduction to redis  and maybe visit this  wonderfull guide  on how to use it.  To connect to the redis cli execute:  docker-compose exec redis-mailcow redis-cli",
             "title": "Client"
+        },
+        {
+            "location": "/redis/#debugging",
+            "text": "Here are some usefull commands for the redis-cli for debugging:",
+            "title": "Debugging"
+        },
+        {
+            "location": "/redis/#monitor",
+            "text": "Listens for all requests received by the server in real time:  # docker-compose exec redis-mailcow redis-cli\n127.0.0.1:6379> monitor\nOK\n1494077286.401963 [0 172.22.1.253:41228] \"SMEMBERS\" \"BAYES_SPAM_keys\"\n1494077288.292970 [0 172.22.1.253:41229] \"SMEMBERS\" \"BAYES_SPAM_keys\"\n[...]",
+            "title": "MONITOR"
+        },
+        {
+            "location": "/redis/#keys",
+            "text": "Get all keys matching your pattern:",
+            "title": "KEYS"
+        },
+        {
+            "location": "/redis/#ping",
+            "text": "Test a connection:  127.0.0.1:6379> PING\nPONG  If you want to know more, here is a  cheat sheet .",
+            "title": "PING"
         },
         {
             "location": "/mysql/",
