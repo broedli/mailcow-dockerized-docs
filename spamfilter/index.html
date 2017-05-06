@@ -15,7 +15,7 @@
     
     
       
-        <title>Gogs - mailcow: dockerized documentation</title>
+        <title>Spamfilter - mailcow: dockerized documentation</title>
       
     
     
@@ -79,11 +79,15 @@
             
               
                 <span class="md-header-nav__parent">
-                  Third party apps
+                  Usage & Examples
+                </span>
+              
+                <span class="md-header-nav__parent">
+                  mailcow UI
                 </span>
               
             
-            Gogs
+            Spamfilter
           
         </span>
       </div>
@@ -412,10 +416,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
     
     <label class="md-nav__link" for="nav-6">
       Usage & Examples
@@ -443,10 +449,12 @@
           
           
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-2" type="checkbox" id="nav-6-2">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-2" type="checkbox" id="nav-6-2" checked>
     
     <label class="md-nav__link" for="nav-6-2">
       mailcow UI
@@ -486,11 +494,18 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../spamfilter/" title="Spamfilter" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+    
+    <a href="./" title="Spamfilter" class="md-nav__link md-nav__link--active">
       Spamfilter
     </a>
+    
   </li>
 
         
@@ -748,12 +763,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
     
     <label class="md-nav__link" for="nav-7">
       Third party apps
@@ -793,18 +806,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-    
-    <a href="./" title="Gogs" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../gogs/" title="Gogs" class="md-nav__link">
       Gogs
     </a>
-    
   </li>
 
         
@@ -838,66 +844,18 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/gogs.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
+                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/spamfilter.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
                 
                 
-                  <h1>Gogs</h1>
+                  <h1>Spamfilter</h1>
                 
-                <p>With Gogs' ability to authenticate over SMTP it is trivial to integrate it with mailcow. Few changes are needed:</p>
-<p>1. Open <code>docker-compose.yml</code> and add gogs:</p>
-<div class="codehilite"><pre><span></span>    <span class="s s-Atom">gogs</span><span class="o">-</span><span class="nn">mailcow</span><span class="p">:</span>
-      <span class="nn">image</span><span class="p">:</span> <span class="s s-Atom">gogs</span><span class="o">/</span><span class="s s-Atom">gogs</span>
-      <span class="nn">volumes</span><span class="p">:</span>
-        <span class="o">-</span> <span class="p">.</span><span class="o">/</span><span class="s s-Atom">data</span><span class="o">/</span><span class="nn">gogs</span><span class="p">:</span><span class="o">/</span><span class="s s-Atom">data</span>
-      <span class="nn">networks</span><span class="p">:</span>
-        <span class="s s-Atom">mailcow</span><span class="o">-</span><span class="nn">network</span><span class="p">:</span>
-          <span class="s s-Atom">ipv4_address:</span> <span class="mf">172.22.1.123</span>
-          <span class="nn">aliases</span><span class="p">:</span>
-            <span class="o">-</span> <span class="s s-Atom">gogs</span>
-      <span class="nn">ports</span><span class="p">:</span>
-        <span class="o">-</span> <span class="s2">&quot;${GOGS_SSH_PORT:-50022}:22&quot;</span>
-        <span class="o">-</span> <span class="s2">&quot;${GOGS_WWW_PORT:-50080}:3000&quot;</span>
-      <span class="nn">dns</span><span class="p">:</span>
-        <span class="o">-</span> <span class="mf">172.22.1.254</span>
-</pre></div>
-
-
-<p>2. Open <code>data/conf/nginx/site.conf</code> and add in each <code>server{}</code> block</p>
-<div class="codehilite"><pre><span></span><span class="nt">location</span> <span class="o">/</span><span class="nt">gogs</span><span class="o">/</span> <span class="p">{</span>
-    <span class="err">proxy_pass</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.22.1.123</span><span class="o">:</span><span class="mi">3000</span><span class="o">/</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p>3. Open <code>mailcow.conf</code> and define ports you want gogs to open, as well as future database password. Example:</p>
-<div class="codehilite"><pre><span></span>GOGS_WWW_PORT=3000
-GOGS_SSH_PORT=4000
-DBGOGS=CorrectHorseBatteryStaple
-</pre></div>
-
-
-<p>4. Create database and user for Gogs to use.</p>
-<div class="codehilite"><pre><span></span>. ./mailcow.conf
-docker-compose exec mysql-mailcow mysql -uroot -p$DBROOT
-mysql&gt; CREATE USER gogs IDENTIFIED BY &#39;CorrectHorseBatteryStaple&#39;;
-mysql&gt; CREATE DATABASE gogs;
-mysql&gt; GRANT ALL PRIVILEGES ON gogs.* to gogs;
-</pre></div>
-
-
-<p>5. Run <code>docker-compose up -d</code> to bring up Gogs container. Verify with <code>curl http://172.22.1.123:3000/</code> that it is running.</p>
-<p>6. Proceed to installer from browser, for the time being using direct url <code>http://${MAILCOW_HOSTNAME}:${GOGS_WWW_PORT}/</code>, for example <code>http://example.org:3000/</code>. For database details set <code>172.22.1.2</code> as database host, user <code>gogs</code>, database name <code>gogs</code> and password as set above</p>
-<p>7. Once install is complete, login as admin and in settings - authorization enable SMTP. SMTP Host should be <code>172.22.1.8</code> with port <code>587</code>. You'll probably want to set <code>Skip TLS Verify</code>.</p>
-<p>8. Edit <code>data/gogs/gogs/conf/app.ini</code> and set following values. You can consult <a href="https://gogs.io/docs/advanced/configuration_cheat_sheet">Gogs cheat sheet</a> for their meaning and other possible values.</p>
-<div class="codehilite"><pre><span></span><span class="k">[server]</span>
-<span class="na">SSH_LISTEN_PORT</span> <span class="o">=</span> <span class="s">22</span>
-<span class="na">SSH_DOMAIN</span> <span class="o">=</span> <span class="s">[domain where ssh is available - used for ssh clone url]</span>
-<span class="na">SSH_PORT</span> <span class="o">=</span> <span class="s">[port where ssh is open on host - used for ssh clone url]</span>
-<span class="na">ROOT_URL</span> <span class="o">=</span> <span class="s">https://[url]/gogs/</span>
-</pre></div>
-
-
-<p>9. Restart Gogs with <code>docker-compose restart gogs-mailcow</code>. Your users should be able to login with mailcow managed accounts.</p>
+                <p>A mailbox user may adjust the spam filter and black- / whitelist settings for his mailbox individually by navigating to the <strong>Spam filter</strong> tab in the users mailcow UI.</p>
+<p><img alt="Where to adjust the users spam, black- and whitelist settings" src="../images/mailcow-spamfilter.png" /></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>For global adjustments on your spam filter please check our section on <a href="../rspamd/">Rspamd</a>.</p>
+<p>For a domain wide black- and whitelist please check our guide on <a href="../bl_wl/">Black / Whitelist</a></p>
+</div>
                 
                   
                 
@@ -916,7 +874,7 @@ mysql&gt; GRANT ALL PRIVILEGES ON gogs.* to gogs;
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../portainer/" title="Portainer" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../bl_wl/" title="Blacklist / Whitelist" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -925,11 +883,25 @@ mysql&gt; GRANT ALL PRIVILEGES ON gogs.* to gogs;
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Portainer
+                Blacklist / Whitelist
               </span>
             </div>
           </a>
         
+        
+          <a href="../spamalias/" title="Temporary email aliase" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Temporary email aliase
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
         
       </nav>
     </div>

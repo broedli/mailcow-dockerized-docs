@@ -261,6 +261,11 @@
             "title": "Blacklist / Whitelist"
         },
         {
+            "location": "/spamfilter/",
+            "text": "A mailbox user may adjust the spam filter and black- / whitelist settings for his mailbox individually by navigating to the \nSpam filter\n tab in the users mailcow UI.\n\n\n\n\n\n\nInfo\n\n\nFor global adjustments on your spam filter please check our section on \nRspamd\n.\n\n\nFor a domain wide black- and whitelist please check our guide on \nBlack / Whitelist",
+            "title": "Spamfilter"
+        },
+        {
             "location": "/spamalias/",
             "text": "These temporary email aliases are mostly used for places where we need to provide an email address but don't want future correspondence with. They are also called spam alias.\n\n\nTo create, delete or extend a temporary email aliase you need to login to mailcow's UI as a mailbox user and navigate to the tab \nTemporary email aliases\n:",
             "title": "Temporary email aliase"
