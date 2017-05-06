@@ -733,8 +733,20 @@
 <nav class="md-nav md-nav--secondary">
   
   
-    
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#client" title="Client" class="md-nav__link">
+    Client
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
   
 </nav>
                   </div>
@@ -749,6 +761,8 @@
                   <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/redis.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
                 
                 
+                  <h1>Redis</h1>
+                
                 <h3 id="client">Client<a class="headerlink" href="#client" title="Permanent link">&para;</a></h3>
 <p>Redis is used as a key-value store for (some of) mailcow's and rspamd's settings and data. If you are unfamilliar with redis please read the <a href="https://redis.io/topics/introduction">introduction to redis</a> and maybe visit this <a href="http://try.redis.io/">wonderfull guide</a> on how to use it.</p>
 <p>To connect to the redis cli execute:</p>
@@ -756,21 +770,29 @@
 </pre></div>
 
 
-<p>Here are some usefull commands for debugging:</p>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<ul>
-<li><strong>monitor</strong>: Listens for all requests received by the server in real time.
-```</li>
-</ul>
-<h1 id="docker-compose-exec-redis-mailcow-redis-cli">docker-compose exec redis-mailcow redis-cli<a class="headerlink" href="#docker-compose-exec-redis-mailcow-redis-cli" title="Permanent link">&para;</a></h1>
-<p>127.0.0.1:6379&gt; monitor
+<p>Here are some usefull commands for the redis-cli for debugging:</p>
+<p><strong>monitor</strong>: Listens for all requests received by the server in real time:</p>
+<div class="codehilite"><pre><span></span># docker-compose exec redis-mailcow redis-cli
+127.0.0.1:6379&gt; monitor
 OK
-1494077286.401963 [0 172.22.1.253:41228] "SMEMBERS" "BAYES_SPAM_keys"
-1494077288.292970 [0 172.22.1.253:41229] "SMEMBERS" "BAYES_SPAM_keys"
+1494077286.401963 [0 172.22.1.253:41228] &quot;SMEMBERS&quot; &quot;BAYES_SPAM_keys&quot;
+1494077288.292970 [0 172.22.1.253:41229] &quot;SMEMBERS&quot; &quot;BAYES_SPAM_keys&quot;
 [...]
-```</p>
-</div>
+</pre></div>
+
+
+<p><strong>keys</strong>: Get all keys matching your pattern:</p>
+<div class="codehilite"><pre><span></span>
+</pre></div>
+
+
+<p><strong>ping</strong>: Test a connection</p>
+<div class="codehilite"><pre><span></span>127.0.0.1:6379&gt; PING
+PONG
+</pre></div>
+
+
+<p>If you want to know more, here is a <a href="https://www.cheatography.com/tasjaevan/cheat-sheets/redis/">cheat sheet</a>.</p>
                 
                   
                 
