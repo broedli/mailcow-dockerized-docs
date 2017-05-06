@@ -15,7 +15,7 @@
     
     
       
-        <title>Service Descriptions - mailcow: dockerized documentation</title>
+        <title>Attach a Container - mailcow: dockerized documentation</title>
       
     
     
@@ -83,7 +83,7 @@
                 </span>
               
             
-            Service Descriptions
+            Attach a Container
           
         </span>
       </div>
@@ -457,18 +457,6 @@
           
           
 
-
-  <li class="md-nav__item">
-    <a href="../reset_pw/" title="Reset Passwords" class="md-nav__link">
-      Reset Passwords
-    </a>
-  </li>
-
-        
-          
-          
-          
-
   
 
 
@@ -480,11 +468,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="toc">
-        Service Descriptions
+        Attach a Container
       </label>
     
-    <a href="./" title="Service Descriptions" class="md-nav__link md-nav__link--active">
-      Service Descriptions
+    <a href="./" title="Attach a Container" class="md-nav__link md-nav__link--active">
+      Attach a Container
     </a>
     
       
@@ -535,12 +523,31 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#service-descriptions" title="Service Descriptions" class="md-nav__link">
+    Service Descriptions
+  </a>
+  
+</li>
+      
       
       
     </ul>
   
 </nav>
     
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../reset_pw/" title="Reset Passwords" class="md-nav__link">
+      Reset Passwords
+    </a>
   </li>
 
         
@@ -1003,6 +1010,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#service-descriptions" title="Service Descriptions" class="md-nav__link">
+    Service Descriptions
+  </a>
+  
+</li>
+      
       
       
     </ul>
@@ -1017,12 +1031,32 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/service_desc.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
+                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/attach_service.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
                 
                 
-                  <h1>Service Descriptions</h1>
+                  <h1>Attach a Container</h1>
                 
-                <p>Here is a brief overview of what container / service does what:</p>
+                <h2 id="attaching-a-container-to-your-shell">Attaching a Container to your Shell<a class="headerlink" href="#attaching-a-container-to-your-shell" title="Permanent link">&para;</a></h2>
+<p>To attach a container to your shell you can simply run</p>
+<div class="codehilite"><pre><span></span>docker-compose exec $Service_Name /bin/bash
+</pre></div>
+
+
+<h3 id="connecting-to-services">Connecting to Services<a class="headerlink" href="#connecting-to-services" title="Permanent link">&para;</a></h3>
+<p>If you whant to connect to a service / application directly it is always a good idea to <code>source mailcow.conf</code> to get all relevant variables in your environment.</p>
+<h4 id="mysql">MySQL<a class="headerlink" href="#mysql" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>source mailcow.conf
+docker-compose exec mysql-mailcow mysql -u<span class="cp">${</span><span class="n">DBUSER</span><span class="cp">}</span> -p<span class="cp">${</span><span class="n">DBPASS</span><span class="cp">}</span> <span class="cp">${</span><span class="n">DBNAME</span><span class="cp">}</span>
+</pre></div>
+
+
+<h4 id="redis">Redis<a class="headerlink" href="#redis" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>docker-compose exec redis-mailcow redis-cli
+</pre></div>
+
+
+<h2 id="service-descriptions">Service Descriptions<a class="headerlink" href="#service-descriptions" title="Permanent link">&para;</a></h2>
+<p>Here is a brief overview of what container / service does what:</p>
 <table>
 <thead>
 <tr>
@@ -1073,23 +1107,6 @@
 </tr>
 </tbody>
 </table>
-<h2 id="attaching-a-container-to-your-shell">Attaching a Container to your Shell<a class="headerlink" href="#attaching-a-container-to-your-shell" title="Permanent link">&para;</a></h2>
-<p>To attach a container to your shell you can simply run</p>
-<div class="codehilite"><pre><span></span>docker-compose exec $Service_Name /bin/bash
-</pre></div>
-
-
-<h3 id="connecting-to-services">Connecting to Services<a class="headerlink" href="#connecting-to-services" title="Permanent link">&para;</a></h3>
-<p>If you whant to connect to a service / application directly it is always a good idea to <code>source mailcow.conf</code> to get all relevant variables in your environment.</p>
-<h4 id="mysql">MySQL<a class="headerlink" href="#mysql" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>source mailcow.conf
-docker-compose exec mysql-mailcow mysql -u<span class="cp">${</span><span class="n">DBUSER</span><span class="cp">}</span> -p<span class="cp">${</span><span class="n">DBPASS</span><span class="cp">}</span> <span class="cp">${</span><span class="n">DBNAME</span><span class="cp">}</span>
-</pre></div>
-
-
-<h4 id="redis">Redis<a class="headerlink" href="#redis" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>docker-compose exec redis-mailcow redis-cli
-</pre></div>
                 
                   
                 
@@ -1108,7 +1125,7 @@ docker-compose exec mysql-mailcow mysql -u<span class="cp">${</span><span class=
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../reset_pw/" title="Reset Passwords" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../debug_logs/" title="Logs" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1117,19 +1134,19 @@ docker-compose exec mysql-mailcow mysql -u<span class="cp">${</span><span class=
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Reset Passwords
+                Logs
               </span>
             </div>
           </a>
         
         
-          <a href="../rm_volumes/" title="Remove Persistent Data" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../reset_pw/" title="Reset Passwords" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Remove Persistent Data
+                Reset Passwords
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

@@ -110,13 +110,13 @@
     </url>
         
     <url>
-     <loc>/reset_pw/</loc>
+     <loc>/attach_service/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/service_desc/</loc>
+     <loc>/reset_pw/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>

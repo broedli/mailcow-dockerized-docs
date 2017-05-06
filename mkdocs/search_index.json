@@ -241,6 +241,36 @@
             "title": "Logs"
         },
         {
+            "location": "/attach_service/",
+            "text": "Attaching a Container to your Shell\n\u00b6\n\n\nTo attach a container to your shell you can simply run\n\n\ndocker-compose exec $Service_Name /bin/bash\n\n\n\n\n\nConnecting to Services\n\u00b6\n\n\nIf you whant to connect to a service / application directly it is always a good idea to \nsource mailcow.conf\n to get all relevant variables in your environment.\n\n\nMySQL\n\u00b6\n\n\nsource mailcow.conf\ndocker-compose exec mysql-mailcow mysql -u\n${\nDBUSER\n}\n -p\n${\nDBPASS\n}\n \n${\nDBNAME\n}\n\n\n\n\n\n\nRedis\n\u00b6\n\n\ndocker-compose exec redis-mailcow redis-cli\n\n\n\n\n\nService Descriptions\n\u00b6\n\n\nHere is a brief overview of what container / service does what:\n\n\n\n\n\n\n\n\nService Name\n\n\nService Descriptions\n\n\n\n\n\n\n\n\n\n\nbind9-mailcow\n\n\nLocal (DNSSEC) DNS Resolver\n\n\n\n\n\n\nmysql-mailcow\n\n\nStores SOGo's and most of mailcow's settings\n\n\n\n\n\n\npostfix-mailcow\n\n\nReceives and sends mails\n\n\n\n\n\n\ndovecot-mailcow\n\n\nUser logins and sieve filter\n\n\n\n\n\n\nredis-mailcow\n\n\nStorage backend for DKIM keys, Rmilter and Rspamd\n\n\n\n\n\n\nrspamd-mailcow\n\n\nMail filtering system. Used for av handling, dkim signing, spam handling\n\n\n\n\n\n\nrmilter-mailcow\n\n\nIntegrates Rspamd into postfix\n\n\n\n\n\n\nclamd-mailcow\n\n\nScans attachments for viruses\n\n\n\n\n\n\nsogo-mailcow\n\n\nWebmail client that handles Microsoft ActiveSync and Cal- / CardDav\n\n\n\n\n\n\nnginx-mailcow\n\n\nNginx remote proxy that handles all mailcow related HTTP / HTTPS requests",
+            "title": "Attach a Container"
+        },
+        {
+            "location": "/attach_service/#attaching-a-container-to-your-shell",
+            "text": "To attach a container to your shell you can simply run  docker-compose exec $Service_Name /bin/bash",
+            "title": "Attaching a Container to your Shell"
+        },
+        {
+            "location": "/attach_service/#connecting-to-services",
+            "text": "If you whant to connect to a service / application directly it is always a good idea to  source mailcow.conf  to get all relevant variables in your environment.",
+            "title": "Connecting to Services"
+        },
+        {
+            "location": "/attach_service/#mysql",
+            "text": "source mailcow.conf\ndocker-compose exec mysql-mailcow mysql -u ${ DBUSER }  -p ${ DBPASS }   ${ DBNAME }",
+            "title": "MySQL"
+        },
+        {
+            "location": "/attach_service/#redis",
+            "text": "docker-compose exec redis-mailcow redis-cli",
+            "title": "Redis"
+        },
+        {
+            "location": "/attach_service/#service-descriptions",
+            "text": "Here is a brief overview of what container / service does what:     Service Name  Service Descriptions      bind9-mailcow  Local (DNSSEC) DNS Resolver    mysql-mailcow  Stores SOGo's and most of mailcow's settings    postfix-mailcow  Receives and sends mails    dovecot-mailcow  User logins and sieve filter    redis-mailcow  Storage backend for DKIM keys, Rmilter and Rspamd    rspamd-mailcow  Mail filtering system. Used for av handling, dkim signing, spam handling    rmilter-mailcow  Integrates Rspamd into postfix    clamd-mailcow  Scans attachments for viruses    sogo-mailcow  Webmail client that handles Microsoft ActiveSync and Cal- / CardDav    nginx-mailcow  Nginx remote proxy that handles all mailcow related HTTP / HTTPS requests",
+            "title": "Service Descriptions"
+        },
+        {
             "location": "/reset_pw/",
             "text": "Mailcow Admin Account\n\u00b6\n\n\nReset mailcow admin to \nadmin:moohoo\n:\n\n\ncd mailcow_path\nbash mailcow-reset-admin.sh\n\n\n\n\n\nRemove Two-Factor Authentication\n\u00b6\n\n\n\n\n\n\n\n\nReset MySQL Passwords\n\u00b6\n\n\nStop the stack by running \ndocker-compose stop\n.\n\n\nWhen the containers came to a stop, run this command:\n\n\ndocker-compose run --rm --entrypoint '/bin/sh -c \"gosu mysql mysqld --skip-grant-tables & sleep 10 && mysql -hlocalhost -uroot && exit 0\"' mysql-mailcow\n\n\n\n\n\n1. Find database name\n\u00b6\n\n\nMariaDB [(none)]> show databases;\n+--------------------+\n| Database           |\n+--------------------+\n| information_schema |\n| mailcow_database   | <=====\n| mysql              |\n| performance_schema |\n+--------------------+\n4 rows in set (0.00 sec)\n\n\n\n\n\n2. Reset one or more users\n\u00b6\n\n\nBoth \"password\" and \"authentication_string\" exist. Currently \"password\" is used, but better set both.\n\n\nMariaDB [(none)]> SELECT user FROM mysql.user;\n+--------------+\n| user         |\n+--------------+\n| mailcow_user | <=====\n| root         |\n+--------------+\n2 rows in set (0.00 sec)\n\nMariaDB [(none)]> FLUSH PRIVILEGES;\nMariaDB [(none)]> UPDATE mysql.user SET authentication_string = PASSWORD('gotr00t'), password = PASSWORD('gotr00t') WHERE User = 'root' AND Host = '%';\nMariaDB [(none)]> UPDATE mysql.user SET authentication_string = PASSWORD('mookuh'), password = PASSWORD('mookuh') WHERE User = 'mailcow' AND Host = '%';\nMariaDB [(none)]> FLUSH PRIVILEGES;",
             "title": "Reset Passwords"
@@ -269,31 +299,6 @@
             "location": "/reset_pw/#246-reset-one-or-more-users",
             "text": "Both \"password\" and \"authentication_string\" exist. Currently \"password\" is used, but better set both.  MariaDB [(none)]> SELECT user FROM mysql.user;\n+--------------+\n| user         |\n+--------------+\n| mailcow_user | <=====\n| root         |\n+--------------+\n2 rows in set (0.00 sec)\n\nMariaDB [(none)]> FLUSH PRIVILEGES;\nMariaDB [(none)]> UPDATE mysql.user SET authentication_string = PASSWORD('gotr00t'), password = PASSWORD('gotr00t') WHERE User = 'root' AND Host = '%';\nMariaDB [(none)]> UPDATE mysql.user SET authentication_string = PASSWORD('mookuh'), password = PASSWORD('mookuh') WHERE User = 'mailcow' AND Host = '%';\nMariaDB [(none)]> FLUSH PRIVILEGES;",
             "title": "2. Reset one or more users"
-        },
-        {
-            "location": "/service_desc/",
-            "text": "Here is a brief overview of what container / service does what:\n\n\n\n\n\n\n\n\nService Name\n\n\nService Descriptions\n\n\n\n\n\n\n\n\n\n\nbind9-mailcow\n\n\nLocal (DNSSEC) DNS Resolver\n\n\n\n\n\n\nmysql-mailcow\n\n\nStores SOGo's and most of mailcow's settings\n\n\n\n\n\n\npostfix-mailcow\n\n\nReceives and sends mails\n\n\n\n\n\n\ndovecot-mailcow\n\n\nUser logins and sieve filter\n\n\n\n\n\n\nredis-mailcow\n\n\nStorage backend for DKIM keys, Rmilter and Rspamd\n\n\n\n\n\n\nrspamd-mailcow\n\n\nMail filtering system. Used for av handling, dkim signing, spam handling\n\n\n\n\n\n\nrmilter-mailcow\n\n\nIntegrates Rspamd into postfix\n\n\n\n\n\n\nclamd-mailcow\n\n\nScans attachments for viruses\n\n\n\n\n\n\nsogo-mailcow\n\n\nWebmail client that handles Microsoft ActiveSync and Cal- / CardDav\n\n\n\n\n\n\nnginx-mailcow\n\n\nNginx remote proxy that handles all mailcow related HTTP / HTTPS requests\n\n\n\n\n\n\n\n\nAttaching a Container to your Shell\n\u00b6\n\n\nTo attach a container to your shell you can simply run\n\n\ndocker-compose exec $Service_Name /bin/bash\n\n\n\n\n\nConnecting to Services\n\u00b6\n\n\nIf you whant to connect to a service / application directly it is always a good idea to \nsource mailcow.conf\n to get all relevant variables in your environment.\n\n\nMySQL\n\u00b6\n\n\nsource mailcow.conf\ndocker-compose exec mysql-mailcow mysql -u\n${\nDBUSER\n}\n -p\n${\nDBPASS\n}\n \n${\nDBNAME\n}\n\n\n\n\n\n\nRedis\n\u00b6\n\n\ndocker-compose exec redis-mailcow redis-cli",
-            "title": "Service Descriptions"
-        },
-        {
-            "location": "/service_desc/#attaching-a-container-to-your-shell",
-            "text": "To attach a container to your shell you can simply run  docker-compose exec $Service_Name /bin/bash",
-            "title": "Attaching a Container to your Shell"
-        },
-        {
-            "location": "/service_desc/#connecting-to-services",
-            "text": "If you whant to connect to a service / application directly it is always a good idea to  source mailcow.conf  to get all relevant variables in your environment.",
-            "title": "Connecting to Services"
-        },
-        {
-            "location": "/service_desc/#mysql",
-            "text": "source mailcow.conf\ndocker-compose exec mysql-mailcow mysql -u ${ DBUSER }  -p ${ DBPASS }   ${ DBNAME }",
-            "title": "MySQL"
-        },
-        {
-            "location": "/service_desc/#redis",
-            "text": "docker-compose exec redis-mailcow redis-cli",
-            "title": "Redis"
         },
         {
             "location": "/rm_volumes/",
