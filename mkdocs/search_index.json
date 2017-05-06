@@ -306,6 +306,41 @@
             "title": "Remove Persistent Data"
         },
         {
+            "location": "/troubles/",
+            "text": "Here we list common problems and possible solutions:\n\n\nMail loops back to myself\n\u00b6\n\n\nPlease check in your mailcow UI if you made the domain a \nbackup MX\n:\n\n\n\n\nI can receive but not send mails\n\u00b6\n\n\nThere are a lot of things that could prevent you from sending mail:\n\n\n\n\nCheck if your IP is on any blacklists. You could use \ndnsbl.info\n or any other similar service to check for your IP.\n\n\nThere are some consumer ISP routers out there, that block mailports for non whitelisted domains. Please check if you can reach your server on the ports \n465\n or \n587\n:\n\n\n\n\n# telnet 74.125.133.27 465\nTrying 74.125.133.27...\nConnected to 74.125.133.27.\nEscape character is '^]'.\n\n\n\n\n\nMy mails are identified as Spam\n\u00b6\n\n\nPlease read our guide on \nDNS configuration\n.\n\n\ndocker-compose throws weird erros\n\u00b6\n\n\n... like:\n\n\n\n\nERROR: Invalid interpolation format ...\n\n\nAttributeError: 'NoneType' object has no attribute 'keys'\n.\n\n\nERROR: In file './docker-compose.yml' service 'version' doesn't have any configuration options\n.\n\n\n\n\nWhen you encounter one or similar messages while trying to run mailcow: dockerized please check if you have the \nlatest\n version of \nDocker\n and \ndocker-compose\n\n\nContainer XY is unhealthy\n\u00b6\n\n\nThis error tries to tell you that one of the (health) conditions for a certain container are not met. Therefore it can't be started. This can have several reasons, the most common one is an updated git clone but old docker image or vice versa.\n\n\nA wrong configured firewall could also cause such a failure. The containers need to be able to talk to each other over the network 172.22.1.1/24.\n\n\nIt might also be wrongly linked file (i.e. SSL certificate) that prevents a crucial container (nginx) from starting, so always check your logs to get an Idea where your problem is coming from.\n\n\nAddress already in use\n\u00b6\n\n\nIf you get an error message like:\n\n\nERROR\n:\n \nfor\n \npostfix\n-\nmailcow\n  \nCannot\n \nstart\n \nservice\n \npostfix\n-\nmailcow\n:\n \ndriver\n \nfailed\n \nprogramming\n \nexternal\n     \nconnectivity\n \non\n \nendpoint\n \nmailcowdockerized_postfix\n-\nmailcow_1\n:\n \nError\n \nstarting\n \nuserland\n \nproxy\n:\n \nlisten\n \ntcp\n \n0.0\n.\n0.0\n:\n25\n:\n \nbind\n:\n \naddress\n \nalready\n \nin\n \nuse\n\n\n\n\n\n\nwhile trying to start / install mailcow: dockerized, make sure you've followed our section on the \nprerequisites\n.",
+            "title": "Common Problems"
+        },
+        {
+            "location": "/troubles/#mail-loops-back-to-myself",
+            "text": "Please check in your mailcow UI if you made the domain a  backup MX :",
+            "title": "Mail loops back to myself"
+        },
+        {
+            "location": "/troubles/#i-can-receive-but-not-send-mails",
+            "text": "There are a lot of things that could prevent you from sending mail:   Check if your IP is on any blacklists. You could use  dnsbl.info  or any other similar service to check for your IP.  There are some consumer ISP routers out there, that block mailports for non whitelisted domains. Please check if you can reach your server on the ports  465  or  587 :   # telnet 74.125.133.27 465\nTrying 74.125.133.27...\nConnected to 74.125.133.27.\nEscape character is '^]'.",
+            "title": "I can receive but not send mails"
+        },
+        {
+            "location": "/troubles/#my-mails-are-identified-as-spam",
+            "text": "Please read our guide on  DNS configuration .",
+            "title": "My mails are identified as Spam"
+        },
+        {
+            "location": "/troubles/#docker-compose-throws-weird-erros",
+            "text": "... like:   ERROR: Invalid interpolation format ...  AttributeError: 'NoneType' object has no attribute 'keys' .  ERROR: In file './docker-compose.yml' service 'version' doesn't have any configuration options .   When you encounter one or similar messages while trying to run mailcow: dockerized please check if you have the  latest  version of  Docker  and  docker-compose",
+            "title": "docker-compose throws weird erros"
+        },
+        {
+            "location": "/troubles/#container-xy-is-unhealthy",
+            "text": "This error tries to tell you that one of the (health) conditions for a certain container are not met. Therefore it can't be started. This can have several reasons, the most common one is an updated git clone but old docker image or vice versa.  A wrong configured firewall could also cause such a failure. The containers need to be able to talk to each other over the network 172.22.1.1/24.  It might also be wrongly linked file (i.e. SSL certificate) that prevents a crucial container (nginx) from starting, so always check your logs to get an Idea where your problem is coming from.",
+            "title": "Container XY is unhealthy"
+        },
+        {
+            "location": "/troubles/#address-already-in-use",
+            "text": "If you get an error message like:  ERROR :   for   postfix - mailcow    Cannot   start   service   postfix - mailcow :   driver   failed   programming   external       connectivity   on   endpoint   mailcowdockerized_postfix - mailcow_1 :   Error   starting   userland   proxy :   listen   tcp   0.0 . 0.0 : 25 :   bind :   address   already   in   use   while trying to start / install mailcow: dockerized, make sure you've followed our section on the  prerequisites .",
+            "title": "Address already in use"
+        },
+        {
             "location": "/mailcow_ui/",
             "text": "Several configuration parameters of the mailcow UI can be changed by creating a file \ndata/web/inc/vars.local.inc.php\n which overrides defaults settings found in \ndata/web/inc/vars.inc.php\n.\n\n\nThe local configuration file is persistent over updates of mailcow. Try not to change values inside \ndata/web/inc/vars.inc.php\n, but use them as template for the local override.\n\n\nmailcow UI configuration parameters can be to...\n\n\n\n\n...change the default language*\n\n\n...change the default bootstrap theme\n\n\n...set a password complexity regex\n\n\n...add mailcow app buttons to the login screen\n\n\n...set a pagination trigger\n\n\n...set action after submitting forms (stay in form, return to previous page)\n\n\n\n\n* To change SOGos default language, you will need to edit \ndata/conf/sogo/sogo.conf\n and replace \"English\" by your preferred language.",
             "title": "Configuration"

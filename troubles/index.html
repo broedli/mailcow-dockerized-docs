@@ -15,7 +15,7 @@
     
     
       
-        <title>Logs - mailcow: dockerized documentation</title>
+        <title>Common Problems - mailcow: dockerized documentation</title>
       
     
     
@@ -83,7 +83,7 @@
                 </span>
               
             
-            Logs
+            Common Problems
           
         </span>
       </div>
@@ -445,18 +445,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-    
-    <a href="./" title="Logs" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../debug_logs/" title="Logs" class="md-nav__link">
       Logs
     </a>
-    
   </li>
 
         
@@ -500,11 +493,20 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../troubles/" title="Common Problems" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+    <a href="./" title="Common Problems" class="md-nav__link md-nav__link--active">
       Common Problems
     </a>
+    
   </li>
 
         
@@ -912,6 +914,55 @@
   
   
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mail-loops-back-to-myself" title="Mail loops back to myself" class="md-nav__link">
+    Mail loops back to myself
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-can-receive-but-not-send-mails" title="I can receive but not send mails" class="md-nav__link">
+    I can receive but not send mails
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#my-mails-are-identified-as-spam" title="My mails are identified as Spam" class="md-nav__link">
+    My mails are identified as Spam
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-compose-throws-weird-erros" title="docker-compose throws weird erros" class="md-nav__link">
+    docker-compose throws weird erros
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-xy-is-unhealthy" title="Container XY is unhealthy" class="md-nav__link">
+    Container XY is unhealthy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#address-already-in-use" title="Address already in use" class="md-nav__link">
+    Address already in use
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -922,23 +973,49 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/debug_logs.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
+                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/troubles.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
                 
                 
-                  <h1>Logs</h1>
+                  <h1>Common Problems</h1>
                 
-                <p>To view the logs of all mailcow: dockerized related containers, you can use <code>docker-compose logs</code> inside your mailcow-dockerized folder that contains your <code>mailcow.conf</code>. This is usually a bit mutch but you could trim the output with <code>--tail=100</code> to the last 100 lines, or add a <code>-f</code> to follow the live output of all your services.</p>
-<p>To view the logs of a specific service you can use <code>docker-compose logs [options] $Service_Name</code></p>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>The available options for the command <strong>docker-compose logs</strong> are:</p>
+                <p>Here we list common problems and possible solutions:</p>
+<h2 id="mail-loops-back-to-myself">Mail loops back to myself<a class="headerlink" href="#mail-loops-back-to-myself" title="Permanent link">&para;</a></h2>
+<p>Please check in your mailcow UI if you made the domain a <strong>backup MX</strong>:</p>
+<p><img alt="Check your MX Backup settings" src="../images/mailcow-backupmx.png" /></p>
+<h2 id="i-can-receive-but-not-send-mails">I can receive but not send mails<a class="headerlink" href="#i-can-receive-but-not-send-mails" title="Permanent link">&para;</a></h2>
+<p>There are a lot of things that could prevent you from sending mail:</p>
 <ul>
-<li><strong>--no-color</strong>: Produce monochrome output.</li>
-<li><strong>-f</strong>: Follow the log output.</li>
-<li><strong>-t</strong>: Show timestamps.</li>
-<li><strong>--tail="all"</strong>: Number of lines to show from the end of the logs for each container.</li>
+<li>Check if your IP is on any blacklists. You could use <a href="http://www.dnsbl.info/">dnsbl.info</a> or any other similar service to check for your IP.</li>
+<li>There are some consumer ISP routers out there, that block mailports for non whitelisted domains. Please check if you can reach your server on the ports <code>465</code> or <code>587</code>:</li>
 </ul>
-</div>
+<div class="codehilite"><pre><span></span># telnet 74.125.133.27 465
+Trying 74.125.133.27...
+Connected to 74.125.133.27.
+Escape character is &#39;^]&#39;.
+</pre></div>
+
+
+<h2 id="my-mails-are-identified-as-spam">My mails are identified as Spam<a class="headerlink" href="#my-mails-are-identified-as-spam" title="Permanent link">&para;</a></h2>
+<p>Please read our guide on <a href="../dns/">DNS configuration</a>.</p>
+<h2 id="docker-compose-throws-weird-erros">docker-compose throws weird erros<a class="headerlink" href="#docker-compose-throws-weird-erros" title="Permanent link">&para;</a></h2>
+<p>... like:</p>
+<ul>
+<li><code>ERROR: Invalid interpolation format ...</code></li>
+<li><code>AttributeError: 'NoneType' object has no attribute 'keys'</code>.</li>
+<li><code>ERROR: In file './docker-compose.yml' service 'version' doesn't have any configuration options</code>.</li>
+</ul>
+<p>When you encounter one or similar messages while trying to run mailcow: dockerized please check if you have the <strong>latest</strong> version of <strong>Docker</strong> and <strong>docker-compose</strong></p>
+<h2 id="container-xy-is-unhealthy">Container XY is unhealthy<a class="headerlink" href="#container-xy-is-unhealthy" title="Permanent link">&para;</a></h2>
+<p>This error tries to tell you that one of the (health) conditions for a certain container are not met. Therefore it can't be started. This can have several reasons, the most common one is an updated git clone but old docker image or vice versa.</p>
+<p>A wrong configured firewall could also cause such a failure. The containers need to be able to talk to each other over the network 172.22.1.1/24.</p>
+<p>It might also be wrongly linked file (i.e. SSL certificate) that prevents a crucial container (nginx) from starting, so always check your logs to get an Idea where your problem is coming from.</p>
+<h2 id="address-already-in-use">Address already in use<a class="headerlink" href="#address-already-in-use" title="Permanent link">&para;</a></h2>
+<p>If you get an error message like:</p>
+<div class="codehilite"><pre><span></span><span class="n">ERROR</span><span class="o">:</span> <span class="k">for</span> <span class="n">postfix</span><span class="o">-</span><span class="n">mailcow</span>  <span class="n">Cannot</span> <span class="n">start</span> <span class="n">service</span> <span class="n">postfix</span><span class="o">-</span><span class="n">mailcow</span><span class="o">:</span> <span class="n">driver</span> <span class="n">failed</span> <span class="n">programming</span> <span class="n">external</span>     <span class="n">connectivity</span> <span class="n">on</span> <span class="n">endpoint</span> <span class="n">mailcowdockerized_postfix</span><span class="o">-</span><span class="n">mailcow_1</span><span class="o">:</span> <span class="n">Error</span> <span class="n">starting</span> <span class="n">userland</span> <span class="n">proxy</span><span class="o">:</span> <span class="n">listen</span> <span class="n">tcp</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">:</span><span class="mi">25</span><span class="o">:</span> <span class="n">bind</span><span class="o">:</span> <span class="n">address</span> <span class="n">already</span> <span class="k">in</span> <span class="n">use</span>
+</pre></div>
+
+
+<p>while trying to start / install mailcow: dockerized, make sure you've followed our section on the <a href="../requirements/#firewall-ports">prerequisites</a>.</p>
                 
                   
                 
@@ -957,7 +1034,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../debug/" title="Introduction" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../rm_volumes/" title="Remove Persistent Data" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -966,19 +1043,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Introduction
+                Remove Persistent Data
               </span>
             </div>
           </a>
         
         
-          <a href="../attach_service/" title="Attach a Container" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../mailcow_ui/" title="Configuration" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Attach a Container
+                Configuration
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
