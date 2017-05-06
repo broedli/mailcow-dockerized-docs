@@ -232,7 +232,7 @@
         },
         {
             "location": "/debug/",
-            "text": "When a problem occurs, then always for a reason! :slight_smile: What you want to do in such a case is:\n\n\n\n\nRead your logs; follow them to see what the reason for your problem is.\n\n\nFollow the leads given to you in your logfiles and start investigating.\n\n\nRestarting the troubled service or the whole stack to see if the problem persists.\n\n\nRead the documentation of the troubled service and search it's bugtracker for your problem.\n\n\nSearch our \nissues\n and \nforum\n for topics related to your problem.\n\n\nCreate an issue\n over at our GitHub repository if you think your problem might be a bug or a missing feature you badly need. But please make sure, that you include \nall the logs\n and a full description to your problem.\n\n\nIf you need help with a problem on a configuration or a setup, or got a question please head over to our \nforum\n and open a thread.\n\n\nConnect to IRC (\nchat.freenode.net\n) and join our IRC channel \n#mailcow\n.",
+            "text": "When a problem occurs, then always for a reason! What you want to do in such a case is:\n\n\n\n\nRead your logs; follow them to see what the reason for your problem is.\n\n\nFollow the leads given to you in your logfiles and start investigating.\n\n\nRestarting the troubled service or the whole stack to see if the problem persists.\n\n\nRead the documentation of the troubled service and search it's bugtracker for your problem.\n\n\nSearch our \nissues\n and \nforum\n for topics related to your problem.\n\n\nCreate an issue\n over at our GitHub repository if you think your problem might be a bug or a missing feature you badly need. But please make sure, that you include \nall the logs\n and a full description to your problem.\n\n\nIf you need help with a problem on a configuration or a setup, or got a question please head over to our \nforum\n and open a thread.\n\n\nConnect to IRC (\nchat.freenode.net\n) and join our IRC channel \n#mailcow\n.",
             "title": "Introduction"
         },
         {
@@ -242,7 +242,7 @@
         },
         {
             "location": "/reset_pw/",
-            "text": "Mailcow Admin Account\n\u00b6\n\n\nReset mailcow admin to \nadmin:moohoo\n:\n\n\ncd mailcow_path\nbash mailcow-reset-admin.sh\n\n\n\n\n\nRemove Two-Factor Authentication\n\u00b6\n\n\n\n\n\n\n\n\nMySQL Passwords\n\u00b6\n\n\nPlease refere to our (MySQL section)(mysql/#reset-mysql-passwords) for instructions on resetting your MySQL passwords.",
+            "text": "Mailcow Admin Account\n\u00b6\n\n\nReset mailcow admin to \nadmin:moohoo\n:\n\n\ncd mailcow_path\nbash mailcow-reset-admin.sh\n\n\n\n\n\nRemove Two-Factor Authentication\n\u00b6\n\n\n\n\n\n\n\n\nReset MySQL Passwords\n\u00b6\n\n\nStop the stack by running \ndocker-compose stop\n.\n\n\nWhen the containers came to a stop, run this command:\n\n\ndocker-compose run --rm --entrypoint '/bin/sh -c \"gosu mysql mysqld --skip-grant-tables & sleep 10 && mysql -hlocalhost -uroot && exit 0\"' mysql-mailcow\n\n\n\n\n\n1. Find database name\n\u00b6\n\n\nMariaDB [(none)]> show databases;\n+--------------------+\n| Database           |\n+--------------------+\n| information_schema |\n| mailcow_database   | <=====\n| mysql              |\n| performance_schema |\n+--------------------+\n4 rows in set (0.00 sec)\n\n\n\n\n\n2. Reset one or more users\n\u00b6\n\n\nBoth \"password\" and \"authentication_string\" exist. Currently \"password\" is used, but better set both.\n\n\nMariaDB [(none)]> SELECT user FROM mysql.user;\n+--------------+\n| user         |\n+--------------+\n| mailcow_user | <=====\n| root         |\n+--------------+\n2 rows in set (0.00 sec)\n\nMariaDB [(none)]> FLUSH PRIVILEGES;\nMariaDB [(none)]> UPDATE mysql.user SET authentication_string = PASSWORD('gotr00t'), password = PASSWORD('gotr00t') WHERE User = 'root' AND Host = '%';\nMariaDB [(none)]> UPDATE mysql.user SET authentication_string = PASSWORD('mookuh'), password = PASSWORD('mookuh') WHERE User = 'mailcow' AND Host = '%';\nMariaDB [(none)]> FLUSH PRIVILEGES;",
             "title": "Reset Passwords"
         },
         {
@@ -256,14 +256,44 @@
             "title": "Remove Two-Factor Authentication"
         },
         {
-            "location": "/reset_pw/#mysql-passwords",
-            "text": "Please refere to our (MySQL section)(mysql/#reset-mysql-passwords) for instructions on resetting your MySQL passwords.",
-            "title": "MySQL Passwords"
+            "location": "/reset_pw/#reset-mysql-passwords",
+            "text": "Stop the stack by running  docker-compose stop .  When the containers came to a stop, run this command:  docker-compose run --rm --entrypoint '/bin/sh -c \"gosu mysql mysqld --skip-grant-tables & sleep 10 && mysql -hlocalhost -uroot && exit 0\"' mysql-mailcow",
+            "title": "Reset MySQL Passwords"
+        },
+        {
+            "location": "/reset_pw/#146-find-database-name",
+            "text": "MariaDB [(none)]> show databases;\n+--------------------+\n| Database           |\n+--------------------+\n| information_schema |\n| mailcow_database   | <=====\n| mysql              |\n| performance_schema |\n+--------------------+\n4 rows in set (0.00 sec)",
+            "title": "1. Find database name"
+        },
+        {
+            "location": "/reset_pw/#246-reset-one-or-more-users",
+            "text": "Both \"password\" and \"authentication_string\" exist. Currently \"password\" is used, but better set both.  MariaDB [(none)]> SELECT user FROM mysql.user;\n+--------------+\n| user         |\n+--------------+\n| mailcow_user | <=====\n| root         |\n+--------------+\n2 rows in set (0.00 sec)\n\nMariaDB [(none)]> FLUSH PRIVILEGES;\nMariaDB [(none)]> UPDATE mysql.user SET authentication_string = PASSWORD('gotr00t'), password = PASSWORD('gotr00t') WHERE User = 'root' AND Host = '%';\nMariaDB [(none)]> UPDATE mysql.user SET authentication_string = PASSWORD('mookuh'), password = PASSWORD('mookuh') WHERE User = 'mailcow' AND Host = '%';\nMariaDB [(none)]> FLUSH PRIVILEGES;",
+            "title": "2. Reset one or more users"
         },
         {
             "location": "/service_desc/",
-            "text": "Here is a brief overview of what container / service does what:\n\n\n\n\n\n\n\n\nService Name\n\n\nService Descriptions\n\n\n\n\n\n\n\n\n\n\nbind9-mailcow\n\n\nLocal (DNSSEC) DNS Resolver\n\n\n\n\n\n\nmysql-mailcow\n\n\nStores SOGo's and most of mailcow's settings\n\n\n\n\n\n\npostfix-mailcow\n\n\nReceives and sends mails\n\n\n\n\n\n\ndovecot-mailcow\n\n\nUser logins and sieve filter\n\n\n\n\n\n\nredis-mailcow\n\n\nStorage backend for DKIM keys, Rmilter and Rspamd\n\n\n\n\n\n\nrspamd-mailcow\n\n\nMail filtering system. Used for av handling, dkim signing, spam handling\n\n\n\n\n\n\nrmilter-mailcow\n\n\nIntegrates Rspamd into postfix\n\n\n\n\n\n\nclamd-mailcow\n\n\nScans attachments for viruses\n\n\n\n\n\n\nsogo-mailcow\n\n\nWebmail client that handles Microsoft ActiveSync and Cal- / CardDav\n\n\n\n\n\n\nnginx-mailcow\n\n\nNginx remote proxy that handles all mailcow related HTTP / HTTPS requests",
+            "text": "Here is a brief overview of what container / service does what:\n\n\n\n\n\n\n\n\nService Name\n\n\nService Descriptions\n\n\n\n\n\n\n\n\n\n\nbind9-mailcow\n\n\nLocal (DNSSEC) DNS Resolver\n\n\n\n\n\n\nmysql-mailcow\n\n\nStores SOGo's and most of mailcow's settings\n\n\n\n\n\n\npostfix-mailcow\n\n\nReceives and sends mails\n\n\n\n\n\n\ndovecot-mailcow\n\n\nUser logins and sieve filter\n\n\n\n\n\n\nredis-mailcow\n\n\nStorage backend for DKIM keys, Rmilter and Rspamd\n\n\n\n\n\n\nrspamd-mailcow\n\n\nMail filtering system. Used for av handling, dkim signing, spam handling\n\n\n\n\n\n\nrmilter-mailcow\n\n\nIntegrates Rspamd into postfix\n\n\n\n\n\n\nclamd-mailcow\n\n\nScans attachments for viruses\n\n\n\n\n\n\nsogo-mailcow\n\n\nWebmail client that handles Microsoft ActiveSync and Cal- / CardDav\n\n\n\n\n\n\nnginx-mailcow\n\n\nNginx remote proxy that handles all mailcow related HTTP / HTTPS requests\n\n\n\n\n\n\n\n\nAttaching a Container to your Shell\n\u00b6\n\n\nTo attach a container to your shell you can simply run\n\n\ndocker-compose exec $Service_Name /bin/bash\n\n\n\n\n\nConnecting to Services\n\u00b6\n\n\nIf you whant to connect to a service / application directly it is always a good idea to \nsource mailcow.conf\n to get all relevant variables in your environment.\n\n\nMySQL\n\u00b6\n\n\nsource mailcow.conf\ndocker-compose exec mysql-mailcow mysql -u\n${\nDBUSER\n}\n -p\n${\nDBPASS\n}\n \n${\nDBNAME\n}\n\n\n\n\n\n\nRedis\n\u00b6\n\n\ndocker-compose exec redis-mailcow redis-cli",
             "title": "Service Descriptions"
+        },
+        {
+            "location": "/service_desc/#attaching-a-container-to-your-shell",
+            "text": "To attach a container to your shell you can simply run  docker-compose exec $Service_Name /bin/bash",
+            "title": "Attaching a Container to your Shell"
+        },
+        {
+            "location": "/service_desc/#connecting-to-services",
+            "text": "If you whant to connect to a service / application directly it is always a good idea to  source mailcow.conf  to get all relevant variables in your environment.",
+            "title": "Connecting to Services"
+        },
+        {
+            "location": "/service_desc/#mysql",
+            "text": "source mailcow.conf\ndocker-compose exec mysql-mailcow mysql -u ${ DBUSER }  -p ${ DBPASS }   ${ DBNAME }",
+            "title": "MySQL"
+        },
+        {
+            "location": "/service_desc/#redis",
+            "text": "docker-compose exec redis-mailcow redis-cli",
+            "title": "Redis"
         },
         {
             "location": "/rm_volumes/",
@@ -351,41 +381,6 @@
             "title": "PING"
         },
         {
-            "location": "/mysql/",
-            "text": "MySQL is used for SOGo's and most of mailcow's settings.\n\n\nConnect\n\u00b6\n\n\nsource mailcow.conf\ndocker-compose exec mysql-mailcow mysql -u\n${\nDBUSER\n}\n -p\n${\nDBPASS\n}\n \n${\nDBNAME\n}\n\n\n\n\n\n\nBackup\n\u00b6\n\n\ncd /path/to/mailcow-dockerized\nsource mailcow.conf\nDATE=$(date +\"%Y%m%d_%H%M%S\")\ndocker-compose exec mysql-mailcow mysqldump --default-character-set=utf8mb4 -u\n${\nDBUSER\n}\n -p\n${\nDBPASS\n}\n \n${\nDBNAME\n}\n > backup_\n${\nDBNAME\n}\n_\n${\nDATE\n}\n.sql\n\n\n\n\n\nRestore\n\u00b6\n\n\nYou should redirect the sql dump without Docker-Compose to prevent parsing errors.\n\n\ncd /path/to/mailcow-dockerized\nsource mailcow.conf\ndocker exec -i $(docker-compose ps -q mysql-mailcow) mysql -u\n${\nDBUSER\n}\n -p\n${\nDBPASS\n}\n \n${\nDBNAME\n}\n \n< backup\n_file.sql\n\n\n\n\n\n\nReset MySQL passwords\n\u00b6\n\n\nStop the stack by running \ndocker-compose stop\n.\n\n\nWhen the containers came to a stop, run this command:\n\n\ndocker-compose run --rm --entrypoint '/bin/sh -c \"gosu mysql mysqld --skip-grant-tables & sleep 10 && mysql -hlocalhost -uroot && exit 0\"' mysql-mailcow\n\n\n\n\n\n1. Find database name\n\u00b6\n\n\nMariaDB [(none)]> show databases;\n+--------------------+\n| Database           |\n+--------------------+\n| information_schema |\n| mailcow_database   | <=====\n| mysql              |\n| performance_schema |\n+--------------------+\n4 rows in set (0.00 sec)\n\n\n\n\n\n2. Reset one or more users\n\u00b6\n\n\nBoth \"password\" and \"authentication_string\" exist. Currently \"password\" is used, but better set both.\n\n\nMariaDB [(none)]> SELECT user FROM mysql.user;\n+--------------+\n| user         |\n+--------------+\n| mailcow_user | <=====\n| root         |\n+--------------+\n2 rows in set (0.00 sec)\n\nMariaDB [(none)]> FLUSH PRIVILEGES;\nMariaDB [(none)]> UPDATE mysql.user SET authentication_string = PASSWORD('gotr00t'), password = PASSWORD('gotr00t') WHERE User = 'root' AND Host = '%';\nMariaDB [(none)]> UPDATE mysql.user SET authentication_string = PASSWORD('mookuh'), password = PASSWORD('mookuh') WHERE User = 'mailcow' AND Host = '%';\nMariaDB [(none)]> FLUSH PRIVILEGES;",
-            "title": "MySQL"
-        },
-        {
-            "location": "/mysql/#connect",
-            "text": "source mailcow.conf\ndocker-compose exec mysql-mailcow mysql -u ${ DBUSER }  -p ${ DBPASS }   ${ DBNAME }",
-            "title": "Connect"
-        },
-        {
-            "location": "/mysql/#backup",
-            "text": "cd /path/to/mailcow-dockerized\nsource mailcow.conf\nDATE=$(date +\"%Y%m%d_%H%M%S\")\ndocker-compose exec mysql-mailcow mysqldump --default-character-set=utf8mb4 -u ${ DBUSER }  -p ${ DBPASS }   ${ DBNAME }  > backup_ ${ DBNAME } _ ${ DATE } .sql",
-            "title": "Backup"
-        },
-        {
-            "location": "/mysql/#restore",
-            "text": "You should redirect the sql dump without Docker-Compose to prevent parsing errors.  cd /path/to/mailcow-dockerized\nsource mailcow.conf\ndocker exec -i $(docker-compose ps -q mysql-mailcow) mysql -u ${ DBUSER }  -p ${ DBPASS }   ${ DBNAME }   < backup _file.sql",
-            "title": "Restore"
-        },
-        {
-            "location": "/mysql/#reset-mysql-passwords",
-            "text": "Stop the stack by running  docker-compose stop .  When the containers came to a stop, run this command:  docker-compose run --rm --entrypoint '/bin/sh -c \"gosu mysql mysqld --skip-grant-tables & sleep 10 && mysql -hlocalhost -uroot && exit 0\"' mysql-mailcow",
-            "title": "Reset MySQL passwords"
-        },
-        {
-            "location": "/mysql/#146-find-database-name",
-            "text": "MariaDB [(none)]> show databases;\n+--------------------+\n| Database           |\n+--------------------+\n| information_schema |\n| mailcow_database   | <=====\n| mysql              |\n| performance_schema |\n+--------------------+\n4 rows in set (0.00 sec)",
-            "title": "1. Find database name"
-        },
-        {
-            "location": "/mysql/#246-reset-one-or-more-users",
-            "text": "Both \"password\" and \"authentication_string\" exist. Currently \"password\" is used, but better set both.  MariaDB [(none)]> SELECT user FROM mysql.user;\n+--------------+\n| user         |\n+--------------+\n| mailcow_user | <=====\n| root         |\n+--------------+\n2 rows in set (0.00 sec)\n\nMariaDB [(none)]> FLUSH PRIVILEGES;\nMariaDB [(none)]> UPDATE mysql.user SET authentication_string = PASSWORD('gotr00t'), password = PASSWORD('gotr00t') WHERE User = 'root' AND Host = '%';\nMariaDB [(none)]> UPDATE mysql.user SET authentication_string = PASSWORD('mookuh'), password = PASSWORD('mookuh') WHERE User = 'mailcow' AND Host = '%';\nMariaDB [(none)]> FLUSH PRIVILEGES;",
-            "title": "2. Reset one or more users"
-        },
-        {
             "location": "/rspamd/",
             "text": "Rspamd is used for av handling, dkim signing and spam handling. It's a powerfull and fast filter system. For a more in-depth documentation on Rspamd please visit it's \nown documentation\n.\n\n\nLearn Spam & Ham\n\u00b6\n\n\nRspamd learns mail as spam or ham when you move a message in or out of the junk folder to any mailbox besides trash.\nThis is archived by using the Dovecot plugin \"antispam\" and a simple parser script.\n\n\nRspamd also auto-learns mail when a high or low score is detected (see \nhttps://rspamd.com/doc/configuration/statistic.html#autolearning\n)\n\n\nThe bayes statistics are written to Redis as keys \nBAYES_HAM\n and \nBAYES_SPAM\n.\n\n\nYou can also use Rspamd's web ui to learn ham and/or spam.\n\n\nLearn Spam or Ham from existing directory\n\u00b6\n\n\nYou can use a one-liner to learn mail in plain-text (uncompressed) format:\n\n\n# Ham\nfor file in /my/folder/cur/*; do docker exec -i $(docker-compose ps -q rspamd-mailcow) rspamc learn_ham < $file; done\n# Spam\nfor file in /my/folder/.Junk/cur/*; do docker exec -i $(docker-compose ps -q rspamd-mailcow) rspamc learn_spam < $file; done\n\n\n\n\n\nConsider attaching a local folder as new volume to \nrspamd-mailcow\n in \ndocker-compose.yml\n and learn given files inside the container. This can be used as workaround to parse compressed data with zcat. Example:\n\n\nfor file in /data/old_mail/.Junk/cur/*; do rspamc learn_spam < zcat $file; done\n\n\n\n\n\nCLI tools\n\u00b6\n\n\ndocker-compose exec rspamd-mailcow rspamc --help\ndocker-compose exec rspamd-mailcow rspamadm --help\n\n\n\n\n\nSee \nRspamd documentation",
             "title": "Rspamd"
@@ -433,6 +428,21 @@
         {
             "location": "/backup_maildir/#restore",
             "text": "cd /path/to/mailcow-dockerized\nsource mailcow.conf\nDATE=$(date +\"%Y%m%d_%H%M%S\")\n{% raw %}docker run --rm -it -v $(docker inspect --format '{{ range .Mounts }}{{ if eq .Destination \"/var/vmail\" }}{{ .Name }}{{ end }}{{ end }}' $(docker-compose ps -q dovecot-mailcow)):/vmail -v  ${ PWD } :/backup debian:jessie tar xvfz /backup/backup_vmail.tar.gz{% endraw %}",
+            "title": "Restore"
+        },
+        {
+            "location": "/mysql/",
+            "text": "MySQL is used to store the settings and / or usertables of the whole mail-stack (mailcow UI, SOGo, dovecot, postfix).\n\n\nBackup\n\u00b6\n\n\ncd /path/to/mailcow-dockerized\nsource mailcow.conf\nDATE=$(date +\"%Y%m%d_%H%M%S\")\ndocker-compose exec mysql-mailcow mysqldump --default-character-set=utf8mb4 -u\n${\nDBUSER\n}\n -p\n${\nDBPASS\n}\n \n${\nDBNAME\n}\n > backup_\n${\nDBNAME\n}\n_\n${\nDATE\n}\n.sql\n\n\n\n\n\nRestore\n\u00b6\n\n\nYou should redirect the sql dump without Docker-Compose to prevent parsing errors.\n\n\ncd /path/to/mailcow-dockerized\nsource mailcow.conf\ndocker exec -i $(docker-compose ps -q mysql-mailcow) mysql -u\n${\nDBUSER\n}\n -p\n${\nDBPASS\n}\n \n${\nDBNAME\n}\n \n< backup\n_file.sql",
+            "title": "MySQL"
+        },
+        {
+            "location": "/mysql/#backup",
+            "text": "cd /path/to/mailcow-dockerized\nsource mailcow.conf\nDATE=$(date +\"%Y%m%d_%H%M%S\")\ndocker-compose exec mysql-mailcow mysqldump --default-character-set=utf8mb4 -u ${ DBUSER }  -p ${ DBPASS }   ${ DBNAME }  > backup_ ${ DBNAME } _ ${ DATE } .sql",
+            "title": "Backup"
+        },
+        {
+            "location": "/mysql/#restore",
+            "text": "You should redirect the sql dump without Docker-Compose to prevent parsing errors.  cd /path/to/mailcow-dockerized\nsource mailcow.conf\ndocker exec -i $(docker-compose ps -q mysql-mailcow) mysql -u ${ DBUSER }  -p ${ DBPASS }   ${ DBNAME }   < backup _file.sql",
             "title": "Restore"
         },
         {

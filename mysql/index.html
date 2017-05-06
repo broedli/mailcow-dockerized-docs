@@ -82,6 +82,10 @@
                   Usage & Examples
                 </span>
               
+                <span class="md-header-nav__parent">
+                  Backup & Restore
+                </span>
+              
             
             MySQL
           
@@ -625,27 +629,6 @@
           
           
 
-  
-
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-      
-    
-    
-    <a href="./" title="MySQL" class="md-nav__link md-nav__link--active">
-      MySQL
-    </a>
-    
-  </li>
-
-        
-          
-          
-          
-
 
   <li class="md-nav__item">
     <a href="../rspamd/" title="Rspamd" class="md-nav__link">
@@ -661,13 +644,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-5" type="checkbox" id="nav-7-5">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-4" type="checkbox" id="nav-7-4">
     
-    <label class="md-nav__link" for="nav-7-5">
+    <label class="md-nav__link" for="nav-7-4">
       Postfix
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-7-5">
+      <label class="md-nav__title" for="nav-7-4">
         Postfix
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -718,16 +701,18 @@
           
           
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-7" type="checkbox" id="nav-7-7">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-6" type="checkbox" id="nav-7-6" checked>
     
-    <label class="md-nav__link" for="nav-7-7">
+    <label class="md-nav__link" for="nav-7-6">
       Backup & Restore
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-7-7">
+      <label class="md-nav__title" for="nav-7-6">
         Backup & Restore
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -742,6 +727,27 @@
     <a href="../backup_maildir/" title="Backup Maildir" class="md-nav__link">
       Backup Maildir
     </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+    <a href="./" title="MySQL" class="md-nav__link md-nav__link--active">
+      MySQL
+    </a>
+    
   </li>
 
         
@@ -906,13 +912,6 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#connect" title="Connect" class="md-nav__link">
-    Connect
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#backup" title="Backup" class="md-nav__link">
     Backup
   </a>
@@ -923,33 +922,6 @@
   <a href="#restore" title="Restore" class="md-nav__link">
     Restore
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reset-mysql-passwords" title="Reset MySQL passwords" class="md-nav__link">
-    Reset MySQL passwords
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#146-find-database-name" title="1. Find database name" class="md-nav__link">
-    1. Find database name
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#246-reset-one-or-more-users" title="2. Reset one or more users" class="md-nav__link">
-    2. Reset one or more users
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -972,13 +944,7 @@
                 
                   <h1>MySQL</h1>
                 
-                <p>MySQL is used for SOGo's and most of mailcow's settings.</p>
-<h2 id="connect">Connect<a class="headerlink" href="#connect" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>source mailcow.conf
-docker-compose exec mysql-mailcow mysql -u<span class="cp">${</span><span class="n">DBUSER</span><span class="cp">}</span> -p<span class="cp">${</span><span class="n">DBPASS</span><span class="cp">}</span> <span class="cp">${</span><span class="n">DBNAME</span><span class="cp">}</span>
-</pre></div>
-
-
+                <p>MySQL is used to store the settings and / or usertables of the whole mail-stack (mailcow UI, SOGo, dovecot, postfix).</p>
 <h2 id="backup">Backup<a class="headerlink" href="#backup" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>cd /path/to/mailcow-dockerized
 source mailcow.conf
@@ -992,45 +958,6 @@ docker-compose exec mysql-mailcow mysqldump --default-character-set=utf8mb4 -u<s
 <div class="codehilite"><pre><span></span>cd /path/to/mailcow-dockerized
 source mailcow.conf
 docker exec -i $(docker-compose ps -q mysql-mailcow) mysql -u<span class="cp">${</span><span class="n">DBUSER</span><span class="cp">}</span> -p<span class="cp">${</span><span class="n">DBPASS</span><span class="cp">}</span> <span class="cp">${</span><span class="n">DBNAME</span><span class="cp">}</span> <span class="nt">&lt; backup</span><span class="err">_file.sql</span>
-</pre></div>
-
-
-<h2 id="reset-mysql-passwords">Reset MySQL passwords<a class="headerlink" href="#reset-mysql-passwords" title="Permanent link">&para;</a></h2>
-<p>Stop the stack by running <code>docker-compose stop</code>.</p>
-<p>When the containers came to a stop, run this command:</p>
-<div class="codehilite"><pre><span></span>docker-compose run --rm --entrypoint &#39;/bin/sh -c &quot;gosu mysql mysqld --skip-grant-tables &amp; sleep 10 &amp;&amp; mysql -hlocalhost -uroot &amp;&amp; exit 0&quot;&#39; mysql-mailcow
-</pre></div>
-
-
-<h3 id="146-find-database-name">1. Find database name<a class="headerlink" href="#146-find-database-name" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span>MariaDB [(none)]&gt; show databases;
-+--------------------+
-| Database           |
-+--------------------+
-| information_schema |
-| mailcow_database   | &lt;=====
-| mysql              |
-| performance_schema |
-+--------------------+
-4 rows in set (0.00 sec)
-</pre></div>
-
-
-<h3 id="246-reset-one-or-more-users">2. Reset one or more users<a class="headerlink" href="#246-reset-one-or-more-users" title="Permanent link">&para;</a></h3>
-<p>Both "password" and "authentication_string" exist. Currently "password" is used, but better set both.</p>
-<div class="codehilite"><pre><span></span>MariaDB [(none)]&gt; SELECT user FROM mysql.user;
-+--------------+
-| user         |
-+--------------+
-| mailcow_user | &lt;=====
-| root         |
-+--------------+
-2 rows in set (0.00 sec)
-
-MariaDB [(none)]&gt; FLUSH PRIVILEGES;
-MariaDB [(none)]&gt; UPDATE mysql.user SET authentication_string = PASSWORD(&#39;gotr00t&#39;), password = PASSWORD(&#39;gotr00t&#39;) WHERE User = &#39;root&#39; AND Host = &#39;%&#39;;
-MariaDB [(none)]&gt; UPDATE mysql.user SET authentication_string = PASSWORD(&#39;mookuh&#39;), password = PASSWORD(&#39;mookuh&#39;) WHERE User = &#39;mailcow&#39; AND Host = &#39;%&#39;;
-MariaDB [(none)]&gt; FLUSH PRIVILEGES;
 </pre></div>
                 
                   
@@ -1050,7 +977,7 @@ MariaDB [(none)]&gt; FLUSH PRIVILEGES;
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../redis/" title="Redis" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../backup_maildir/" title="Backup Maildir" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1059,19 +986,19 @@ MariaDB [(none)]&gt; FLUSH PRIVILEGES;
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Redis
+                Backup Maildir
               </span>
             </div>
           </a>
         
         
-          <a href="../rspamd/" title="Rspamd" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../autodiscover_config/" title="Autodiscover / Autoconfig" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Rspamd
+                Autodiscover / Autoconfig
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

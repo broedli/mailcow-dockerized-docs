@@ -636,18 +636,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../mysql/" title="MySQL" class="md-nav__link">
-      MySQL
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../rspamd/" title="Rspamd" class="md-nav__link">
       Rspamd
     </a>
@@ -661,13 +649,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-5" type="checkbox" id="nav-7-5">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-4" type="checkbox" id="nav-7-4">
     
-    <label class="md-nav__link" for="nav-7-5">
+    <label class="md-nav__link" for="nav-7-4">
       Postfix
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-7-5">
+      <label class="md-nav__title" for="nav-7-4">
         Postfix
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -721,13 +709,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-7" type="checkbox" id="nav-7-7">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-6" type="checkbox" id="nav-7-6">
     
-    <label class="md-nav__link" for="nav-7-7">
+    <label class="md-nav__link" for="nav-7-6">
       Backup & Restore
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-7-7">
+      <label class="md-nav__title" for="nav-7-6">
         Backup & Restore
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -741,6 +729,18 @@
   <li class="md-nav__item">
     <a href="../backup_maildir/" title="Backup Maildir" class="md-nav__link">
       Backup Maildir
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../mysql/" title="MySQL" class="md-nav__link">
+      MySQL
     </a>
   </li>
 
@@ -920,9 +920,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mysql-passwords" title="MySQL Passwords" class="md-nav__link">
-    MySQL Passwords
+  <a href="#reset-mysql-passwords" title="Reset MySQL Passwords" class="md-nav__link">
+    Reset MySQL Passwords
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#146-find-database-name" title="1. Find database name" class="md-nav__link">
+    1. Find database name
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#246-reset-one-or-more-users" title="2. Reset one or more users" class="md-nav__link">
+    2. Reset one or more users
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -957,8 +977,43 @@ bash mailcow-reset-admin.sh
 </pre></div>
 
 
-<h2 id="mysql-passwords">MySQL Passwords<a class="headerlink" href="#mysql-passwords" title="Permanent link">&para;</a></h2>
-<p>Please refere to our (MySQL section)(mysql/#reset-mysql-passwords) for instructions on resetting your MySQL passwords.</p>
+<h2 id="reset-mysql-passwords">Reset MySQL Passwords<a class="headerlink" href="#reset-mysql-passwords" title="Permanent link">&para;</a></h2>
+<p>Stop the stack by running <code>docker-compose stop</code>.</p>
+<p>When the containers came to a stop, run this command:</p>
+<div class="codehilite"><pre><span></span>docker-compose run --rm --entrypoint &#39;/bin/sh -c &quot;gosu mysql mysqld --skip-grant-tables &amp; sleep 10 &amp;&amp; mysql -hlocalhost -uroot &amp;&amp; exit 0&quot;&#39; mysql-mailcow
+</pre></div>
+
+
+<h3 id="146-find-database-name">1. Find database name<a class="headerlink" href="#146-find-database-name" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span>MariaDB [(none)]&gt; show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mailcow_database   | &lt;=====
+| mysql              |
+| performance_schema |
++--------------------+
+4 rows in set (0.00 sec)
+</pre></div>
+
+
+<h3 id="246-reset-one-or-more-users">2. Reset one or more users<a class="headerlink" href="#246-reset-one-or-more-users" title="Permanent link">&para;</a></h3>
+<p>Both "password" and "authentication_string" exist. Currently "password" is used, but better set both.</p>
+<div class="codehilite"><pre><span></span>MariaDB [(none)]&gt; SELECT user FROM mysql.user;
++--------------+
+| user         |
++--------------+
+| mailcow_user | &lt;=====
+| root         |
++--------------+
+2 rows in set (0.00 sec)
+
+MariaDB [(none)]&gt; FLUSH PRIVILEGES;
+MariaDB [(none)]&gt; UPDATE mysql.user SET authentication_string = PASSWORD(&#39;gotr00t&#39;), password = PASSWORD(&#39;gotr00t&#39;) WHERE User = &#39;root&#39; AND Host = &#39;%&#39;;
+MariaDB [(none)]&gt; UPDATE mysql.user SET authentication_string = PASSWORD(&#39;mookuh&#39;), password = PASSWORD(&#39;mookuh&#39;) WHERE User = &#39;mailcow&#39; AND Host = &#39;%&#39;;
+MariaDB [(none)]&gt; FLUSH PRIVILEGES;
+</pre></div>
                 
                   
                 

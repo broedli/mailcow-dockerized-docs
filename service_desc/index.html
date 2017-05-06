@@ -476,10 +476,70 @@
     
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
     
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Service Descriptions
+      </label>
     
     <a href="./" title="Service Descriptions" class="md-nav__link md-nav__link--active">
       Service Descriptions
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#attaching-a-container-to-your-shell" title="Attaching a Container to your Shell" class="md-nav__link">
+    Attaching a Container to your Shell
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connecting-to-services" title="Connecting to Services" class="md-nav__link">
+    Connecting to Services
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mysql" title="MySQL" class="md-nav__link">
+    MySQL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#redis" title="Redis" class="md-nav__link">
+    Redis
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -634,18 +694,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../mysql/" title="MySQL" class="md-nav__link">
-      MySQL
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../rspamd/" title="Rspamd" class="md-nav__link">
       Rspamd
     </a>
@@ -659,13 +707,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-5" type="checkbox" id="nav-7-5">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-4" type="checkbox" id="nav-7-4">
     
-    <label class="md-nav__link" for="nav-7-5">
+    <label class="md-nav__link" for="nav-7-4">
       Postfix
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-7-5">
+      <label class="md-nav__title" for="nav-7-4">
         Postfix
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -719,13 +767,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-7" type="checkbox" id="nav-7-7">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-6" type="checkbox" id="nav-7-6">
     
-    <label class="md-nav__link" for="nav-7-7">
+    <label class="md-nav__link" for="nav-7-6">
       Backup & Restore
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-7-7">
+      <label class="md-nav__title" for="nav-7-6">
         Backup & Restore
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -739,6 +787,18 @@
   <li class="md-nav__item">
     <a href="../backup_maildir/" title="Backup Maildir" class="md-nav__link">
       Backup Maildir
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../mysql/" title="MySQL" class="md-nav__link">
+      MySQL
     </a>
   </li>
 
@@ -900,6 +960,53 @@
   
   
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#attaching-a-container-to-your-shell" title="Attaching a Container to your Shell" class="md-nav__link">
+    Attaching a Container to your Shell
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connecting-to-services" title="Connecting to Services" class="md-nav__link">
+    Connecting to Services
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mysql" title="MySQL" class="md-nav__link">
+    MySQL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#redis" title="Redis" class="md-nav__link">
+    Redis
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -966,6 +1073,23 @@
 </tr>
 </tbody>
 </table>
+<h2 id="attaching-a-container-to-your-shell">Attaching a Container to your Shell<a class="headerlink" href="#attaching-a-container-to-your-shell" title="Permanent link">&para;</a></h2>
+<p>To attach a container to your shell you can simply run</p>
+<div class="codehilite"><pre><span></span>docker-compose exec $Service_Name /bin/bash
+</pre></div>
+
+
+<h3 id="connecting-to-services">Connecting to Services<a class="headerlink" href="#connecting-to-services" title="Permanent link">&para;</a></h3>
+<p>If you whant to connect to a service / application directly it is always a good idea to <code>source mailcow.conf</code> to get all relevant variables in your environment.</p>
+<h4 id="mysql">MySQL<a class="headerlink" href="#mysql" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>source mailcow.conf
+docker-compose exec mysql-mailcow mysql -u<span class="cp">${</span><span class="n">DBUSER</span><span class="cp">}</span> -p<span class="cp">${</span><span class="n">DBPASS</span><span class="cp">}</span> <span class="cp">${</span><span class="n">DBNAME</span><span class="cp">}</span>
+</pre></div>
+
+
+<h4 id="redis">Redis<a class="headerlink" href="#redis" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>docker-compose exec redis-mailcow redis-cli
+</pre></div>
                 
                   
                 

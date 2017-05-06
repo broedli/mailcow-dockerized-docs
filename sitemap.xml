@@ -144,12 +144,6 @@
     </url>
         
     <url>
-     <loc>/mysql/</loc>
-     <lastmod>2017-05-06</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
      <loc>/rspamd/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
