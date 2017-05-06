@@ -71,6 +71,8 @@ mysqldump --replace --no-create-info --default-character-set=utf8mb4 \
 
 To initiate your fresh installed database, visit **https://${MAILCOW_HOSTNAME}** with a browser of your choice. Check if the DB is initiated correctly afterwards:
 
+![mailcow DB initialization](images/mailcow-db_init.png)
+
 ```
 # source mailcow.conf
 # docker-compose exec mysql-mailcow mysql -u${DBUSER} -p${DBPASS} ${DBNAME}
