@@ -15,7 +15,7 @@
     
     
       
-        <title>Installation - mailcow: dockerized documentation</title>
+        <title>Gogs - mailcow: dockerized documentation</title>
       
     
     
@@ -79,11 +79,11 @@
             
               
                 <span class="md-header-nav__parent">
-                  Installation & Update
+                  Third party apps
                 </span>
               
             
-            Installation
+            Gogs
           
         </span>
       </div>
@@ -256,12 +256,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
     <label class="md-nav__link" for="nav-4">
       Installation & Update
@@ -277,18 +275,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-    
-    <a href="./" title="Installation" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../install/" title="Installation" class="md-nav__link">
       Installation
     </a>
-    
   </li>
 
         
@@ -865,10 +856,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" checked>
     
     <label class="md-nav__link" for="nav-8">
       Third party apps
@@ -908,11 +901,18 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../third_party-gogs/" title="Gogs" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+    
+    <a href="./" title="Gogs" class="md-nav__link md-nav__link--active">
       Gogs
     </a>
+    
   </li>
 
         
@@ -946,56 +946,66 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/install.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
+                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/third_party-gogs.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
                 
                 
-                  <h1>Installation</h1>
+                  <h1>Gogs</h1>
                 
-                <p>You need Docker and Docker Compose.</p>
-<p>1. Learn how to install <a href="https://docs.docker.com/engine/installation/linux/">Docker</a> and <a href="https://docs.docker.com/compose/install/">Docker Compose</a>.</p>
-<p>Quick installation for most operation systems:</p>
-<ul>
-<li>Docker</li>
-</ul>
-<div class="codehilite"><pre><span></span>curl -sSL https://get.docker.com/ | sh
+                <p>With Gogs' ability to authenticate over SMTP it is trivial to integrate it with mailcow. Few changes are needed:</p>
+<p>1. Open <code>docker-compose.yml</code> and add gogs:</p>
+<div class="codehilite"><pre><span></span>    <span class="s s-Atom">gogs</span><span class="o">-</span><span class="nn">mailcow</span><span class="p">:</span>
+      <span class="nn">image</span><span class="p">:</span> <span class="s s-Atom">gogs</span><span class="o">/</span><span class="s s-Atom">gogs</span>
+      <span class="nn">volumes</span><span class="p">:</span>
+        <span class="o">-</span> <span class="p">.</span><span class="o">/</span><span class="s s-Atom">data</span><span class="o">/</span><span class="nn">gogs</span><span class="p">:</span><span class="o">/</span><span class="s s-Atom">data</span>
+      <span class="nn">networks</span><span class="p">:</span>
+        <span class="s s-Atom">mailcow</span><span class="o">-</span><span class="nn">network</span><span class="p">:</span>
+          <span class="s s-Atom">ipv4_address:</span> <span class="mf">172.22.1.123</span>
+          <span class="nn">aliases</span><span class="p">:</span>
+            <span class="o">-</span> <span class="s s-Atom">gogs</span>
+      <span class="nn">ports</span><span class="p">:</span>
+        <span class="o">-</span> <span class="s2">&quot;${GOGS_SSH_PORT:-50022}:22&quot;</span>
+        <span class="o">-</span> <span class="s2">&quot;${GOGS_WWW_PORT:-50080}:3000&quot;</span>
+      <span class="nn">dns</span><span class="p">:</span>
+        <span class="o">-</span> <span class="mf">172.22.1.254</span>
 </pre></div>
 
 
-<ul>
-<li>Docker-Compose</li>
-</ul>
-<div class="codehilite"><pre><span></span>curl -L https://github.com/docker/compose/releases/download/$(curl -Ls https://www.servercow.de/docker-compose/latest.php)/docker-compose-$(uname -s)-$(uname -m) &gt; /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
+<p>2. Open <code>data/conf/nginx/site.conf</code> and add in each <code>server{}</code> block</p>
+<div class="codehilite"><pre><span></span><span class="nt">location</span> <span class="o">/</span><span class="nt">gogs</span><span class="o">/</span> <span class="p">{</span>
+    <span class="err">proxy_pass</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">172.22.1.123</span><span class="o">:</span><span class="mi">3000</span><span class="o">/</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 
 
-<p>Please use the latest Docker engine available and do not use the engine that ships with your distros repository.</p>
-<p>2. Clone the master branch of the repository</p>
-<div class="codehilite"><pre><span></span>git clone https://github.com/andryyy/mailcow-dockerized &amp;&amp; cd mailcow-dockerized
+<p>3. Open <code>mailcow.conf</code> and define ports you want gogs to open, as well as future database password. Example:</p>
+<div class="codehilite"><pre><span></span>GOGS_WWW_PORT=3000
+GOGS_SSH_PORT=4000
+DBGOGS=CorrectHorseBatteryStaple
 </pre></div>
 
 
-<p>3. Generate a configuration file. Use a FQDN (<code>host.domain.tld</code>) as hostname when asked.</p>
-<div class="codehilite"><pre><span></span>./generate_config.sh
+<p>4. Create database and user for Gogs to use.</p>
+<div class="codehilite"><pre><span></span>. ./mailcow.conf
+docker-compose exec mysql-mailcow mysql -uroot -p$DBROOT
+mysql&gt; CREATE USER gogs IDENTIFIED BY &#39;CorrectHorseBatteryStaple&#39;;
+mysql&gt; CREATE DATABASE gogs;
+mysql&gt; GRANT ALL PRIVILEGES ON gogs.* to gogs;
 </pre></div>
 
 
-<p>4. Change configuration if you want or need to.</p>
-<div class="codehilite"><pre><span></span>nano mailcow.conf
+<p>5. Run <code>docker-compose up -d</code> to bring up Gogs container. Verify with <code>curl http://172.22.1.123:3000/</code> that it is running.</p>
+<p>6. Proceed to installer from browser, for the time being using direct url <code>http://${MAILCOW_HOSTNAME}:${GOGS_WWW_PORT}/</code>, for example <code>http://example.org:3000/</code>. For database details set <code>172.22.1.2</code> as database host, user <code>gogs</code>, database name <code>gogs</code> and password as set above</p>
+<p>7. Once install is complete, login as admin and in settings - authorization enable SMTP. SMTP Host should be <code>172.22.1.8</code> with port <code>587</code>. You'll probably want to set <code>Skip TLS Verify</code>.</p>
+<p>8. Edit <code>data/gogs/gogs/conf/app.ini</code> and set following values. You can consult <a href="https://gogs.io/docs/advanced/configuration_cheat_sheet">Gogs cheat sheet</a> for their meaning and other possible values.</p>
+<div class="codehilite"><pre><span></span><span class="k">[server]</span>
+<span class="na">SSH_LISTEN_PORT</span> <span class="o">=</span> <span class="s">22</span>
+<span class="na">SSH_DOMAIN</span> <span class="o">=</span> <span class="s">[domain where ssh is available - used for ssh clone url]</span>
+<span class="na">SSH_PORT</span> <span class="o">=</span> <span class="s">[port where ssh is open on host - used for ssh clone url]</span>
+<span class="na">ROOT_URL</span> <span class="o">=</span> <span class="s">https://[url]/gogs/</span>
 </pre></div>
 
 
-<p>If you plan to use a reverse proxy, you can, for example, bind HTTPS to 127.0.0.1 on port 8443 and HTTP to 127.0.0.1 on port 8080.</p>
-<p>You may need to stop an existing pre-installed MTA which blocks port 25/tcp. See <a href="https://andryyy.github.io/mailcow-dockerized/first_steps/#install-a-local-mta">this chapter</a> to learn how to reconfigure Postfix to run besides mailcow after a successful installation.</p>
-<p>5. Pull the images and run the composer file. The paramter <code>-d</code> will start mailcow: dockerized detached:</p>
-<div class="codehilite"><pre><span></span>docker-compose pull
-docker-compose up -d
-</pre></div>
-
-
-<p>Done!</p>
-<p>You can now access <strong>https://${MAILCOW_HOSTNAME}</strong> with the default credentials <code>admin</code> + password <code>moohoo</code>.</p>
-<p>The database will be initialized right after a connection to MySQL can be established.</p>
+<p>9. Restart Gogs with <code>docker-compose restart gogs-mailcow</code>. Your users should be able to login with mailcow managed accounts.</p>
                 
                   
                 
@@ -1014,7 +1024,7 @@ docker-compose up -d
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../migrate-mc014/" title="Migrating from mailcow 0.14" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../third_party-portainer/" title="Portainer" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1023,25 +1033,11 @@ docker-compose up -d
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Migrating from mailcow 0.14
+                Portainer
               </span>
             </div>
           </a>
         
-        
-          <a href="../install-update/" title="Update" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                Update
-              </span>
-            </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
-          </a>
         
       </nav>
     </div>

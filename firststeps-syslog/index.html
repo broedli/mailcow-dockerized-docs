@@ -15,7 +15,7 @@
     
     
       
-        <title>Installation - mailcow: dockerized documentation</title>
+        <title>Log to Syslog - mailcow: dockerized documentation</title>
       
     
     
@@ -79,11 +79,11 @@
             
               
                 <span class="md-header-nav__parent">
-                  Installation & Update
+                  First Steps (optional)
                 </span>
               
             
-            Installation
+            Log to Syslog
           
         </span>
       </div>
@@ -256,12 +256,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
     <label class="md-nav__link" for="nav-4">
       Installation & Update
@@ -277,18 +275,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-    
-    <a href="./" title="Installation" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../install/" title="Installation" class="md-nav__link">
       Installation
     </a>
-    
   </li>
 
         
@@ -313,10 +304,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
     
     <label class="md-nav__link" for="nav-5">
       First Steps (optional)
@@ -380,11 +373,20 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../firststeps-syslog/" title="Log to Syslog" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+    <a href="./" title="Log to Syslog" class="md-nav__link md-nav__link--active">
       Log to Syslog
     </a>
+    
   </li>
 
         
@@ -936,6 +938,20 @@
   
   
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#fail2ban" title="Fail2ban" class="md-nav__link">
+    Fail2ban
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -946,56 +962,82 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/install.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
+                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/firststeps-syslog.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
                 
                 
-                  <h1>Installation</h1>
+                  <h1>Log to Syslog</h1>
                 
-                <p>You need Docker and Docker Compose.</p>
-<p>1. Learn how to install <a href="https://docs.docker.com/engine/installation/linux/">Docker</a> and <a href="https://docs.docker.com/compose/install/">Docker Compose</a>.</p>
-<p>Quick installation for most operation systems:</p>
-<ul>
-<li>Docker</li>
-</ul>
-<div class="codehilite"><pre><span></span>curl -sSL https://get.docker.com/ | sh
+                <p>Enable Rsyslog to receive logs on 524/tcp:</p>
+<div class="codehilite"><pre><span></span># This setting depends on your Rsyslog version and configuration format.
+# For most Debian derivates it will work like this...
+$ModLoad imtcp
+$TCPServerAddress 127.0.0.1
+$InputTCPServerRun 524
+
+# ...while for Ubuntu 16.04 it looks like this:
+module(load=&quot;imtcp&quot;)
+input(type=&quot;imtcp&quot; address=&quot;127.0.0.1&quot; port=&quot;524&quot;)
+
+# No matter your Rsyslog version, you should set this option to off
+# if you plan to use Fail2ban
+$RepeatedMsgReduction off
 </pre></div>
 
 
-<ul>
-<li>Docker-Compose</li>
-</ul>
-<div class="codehilite"><pre><span></span>curl -L https://github.com/docker/compose/releases/download/$(curl -Ls https://www.servercow.de/docker-compose/latest.php)/docker-compose-$(uname -s)-$(uname -m) &gt; /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
+<p>Restart rsyslog after enabling the TCP listener.</p>
+<p>Now setup Docker daemon to start with the syslog driver.
+This enables the syslog driver for all containers!</p>
+<p>Debian users can change the startup configuration in <code>/etc/default/docker</code> while CentOS users find it in <code>/etc/sysconfig/docker</code>:</p>
+<div class="codehilite"><pre><span></span>...
+DOCKER_OPTS=&quot;--log-driver=syslog --log-opt syslog-address=tcp://127.0.0.1:524&quot;
+...
 </pre></div>
 
 
-<p>Please use the latest Docker engine available and do not use the engine that ships with your distros repository.</p>
-<p>2. Clone the master branch of the repository</p>
-<div class="codehilite"><pre><span></span>git clone https://github.com/andryyy/mailcow-dockerized &amp;&amp; cd mailcow-dockerized
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For some reason Ubuntu 16.04 and some, but not all, systemd based distros do not read the defaults file parameters.</p>
+</div>
+<p>Just run <code>systemctl edit docker.service</code> and add the following content to fix it.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>If "systemctl edit" is not available, just copy the content to <code>/etc/systemd/system/docker.service.d/override.conf</code>.</p>
+</div>
+<p>The first empty ExecStart parameter is not a mistake.</p>
+<div class="codehilite"><pre><span></span><span class="k">[Service]</span>
+<span class="na">EnvironmentFile</span><span class="o">=</span><span class="s">/etc/default/docker</span>
+<span class="na">ExecStart</span><span class="o">=</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/bin/docker daemon -H fd:// $DOCKER_OPTS</span>
 </pre></div>
 
 
-<p>3. Generate a configuration file. Use a FQDN (<code>host.domain.tld</code>) as hostname when asked.</p>
-<div class="codehilite"><pre><span></span>./generate_config.sh
+<p>Restart the Docker daemon and run <code>docker-compose down &amp;&amp; docker-compose up -d</code> to recreate the containers.</p>
+<h3 id="fail2ban">Fail2ban<a class="headerlink" href="#fail2ban" title="Permanent link">&para;</a></h3>
+<p><strong>This is a subsection of "Log to Syslog", which is required for Fail2ban to work.</strong></p>
+<p>Open <code>/etc/fail2ban/filter.d/common.conf</code> and search for the prefix_line parameter, change it to ".*":</p>
+<div class="codehilite"><pre><span></span>__prefix_line = .*
 </pre></div>
 
 
-<p>4. Change configuration if you want or need to.</p>
-<div class="codehilite"><pre><span></span>nano mailcow.conf
+<p>Create <code>/etc/fail2ban/jail.d/dovecot.conf</code>...</p>
+<div class="codehilite"><pre><span></span><span class="k">[dovecot]</span>
+<span class="na">enabled</span> <span class="o">=</span> <span class="s">true</span>
+<span class="na">filter</span>  <span class="o">=</span> <span class="s">dovecot</span>
+<span class="na">logpath</span> <span class="o">=</span> <span class="s">/var/log/syslog</span>
+<span class="na">chain</span> <span class="o">=</span> <span class="s">FORWARD</span>
 </pre></div>
 
 
-<p>If you plan to use a reverse proxy, you can, for example, bind HTTPS to 127.0.0.1 on port 8443 and HTTP to 127.0.0.1 on port 8080.</p>
-<p>You may need to stop an existing pre-installed MTA which blocks port 25/tcp. See <a href="https://andryyy.github.io/mailcow-dockerized/first_steps/#install-a-local-mta">this chapter</a> to learn how to reconfigure Postfix to run besides mailcow after a successful installation.</p>
-<p>5. Pull the images and run the composer file. The paramter <code>-d</code> will start mailcow: dockerized detached:</p>
-<div class="codehilite"><pre><span></span>docker-compose pull
-docker-compose up -d
+<p>and <code>jail.d/postfix-sasl.conf</code>:</p>
+<div class="codehilite"><pre><span></span><span class="k">[postfix-sasl]</span>
+<span class="na">enabled</span> <span class="o">=</span> <span class="s">true</span>
+<span class="na">filter</span>  <span class="o">=</span> <span class="s">postfix-sasl</span>
+<span class="na">logpath</span> <span class="o">=</span> <span class="s">/var/log/syslog</span>
+<span class="na">chain</span> <span class="o">=</span> <span class="s">FORWARD</span>
 </pre></div>
 
 
-<p>Done!</p>
-<p>You can now access <strong>https://${MAILCOW_HOSTNAME}</strong> with the default credentials <code>admin</code> + password <code>moohoo</code>.</p>
-<p>The database will be initialized right after a connection to MySQL can be established.</p>
+<p>Restart Fail2ban.</p>
                 
                   
                 
@@ -1014,7 +1056,7 @@ docker-compose up -d
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../migrate-mc014/" title="Migrating from mailcow 0.14" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../firststeps-relayhost/" title="Setup a relayhost" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1023,19 +1065,19 @@ docker-compose up -d
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Migrating from mailcow 0.14
+                Setup a relayhost
               </span>
             </div>
           </a>
         
         
-          <a href="../install-update/" title="Update" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../firststeps-local_mta/" title="Local MTA on Docker host" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Update
+                Local MTA on Docker host
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

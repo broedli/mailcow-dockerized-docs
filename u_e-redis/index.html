@@ -15,7 +15,7 @@
     
     
       
-        <title>Installation - mailcow: dockerized documentation</title>
+        <title>Redis - mailcow: dockerized documentation</title>
       
     
     
@@ -79,11 +79,11 @@
             
               
                 <span class="md-header-nav__parent">
-                  Installation & Update
+                  Usage & Examples
                 </span>
               
             
-            Installation
+            Redis
           
         </span>
       </div>
@@ -256,12 +256,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
     <label class="md-nav__link" for="nav-4">
       Installation & Update
@@ -277,18 +275,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-    
-    <a href="./" title="Installation" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../install/" title="Installation" class="md-nav__link">
       Installation
     </a>
-    
   </li>
 
         
@@ -517,10 +508,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
     
     <label class="md-nav__link" for="nav-7">
       Usage & Examples
@@ -632,11 +625,85 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../u_e-redis/" title="Redis" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Redis
+      </label>
+    
+    <a href="./" title="Redis" class="md-nav__link md-nav__link--active">
       Redis
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#client" title="Client" class="md-nav__link">
+    Client
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#debugging" title="Debugging" class="md-nav__link">
+    Debugging
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#monitor" title="MONITOR" class="md-nav__link">
+    MONITOR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keys" title="KEYS" class="md-nav__link">
+    KEYS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ping" title="PING" class="md-nav__link">
+    PING
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -936,6 +1003,60 @@
   
   
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#client" title="Client" class="md-nav__link">
+    Client
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#debugging" title="Debugging" class="md-nav__link">
+    Debugging
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#monitor" title="MONITOR" class="md-nav__link">
+    MONITOR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keys" title="KEYS" class="md-nav__link">
+    KEYS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ping" title="PING" class="md-nav__link">
+    PING
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -946,56 +1067,45 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/install.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
+                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/u_e-redis.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
                 
                 
-                  <h1>Installation</h1>
+                  <h1>Redis</h1>
                 
-                <p>You need Docker and Docker Compose.</p>
-<p>1. Learn how to install <a href="https://docs.docker.com/engine/installation/linux/">Docker</a> and <a href="https://docs.docker.com/compose/install/">Docker Compose</a>.</p>
-<p>Quick installation for most operation systems:</p>
-<ul>
-<li>Docker</li>
-</ul>
-<div class="codehilite"><pre><span></span>curl -sSL https://get.docker.com/ | sh
+                <p>Redis is used as a key-value store for (some of) mailcow's and rspamd's settings and data. If you are unfamilliar with redis please read the <a href="https://redis.io/topics/introduction">introduction to redis</a> and maybe visit this <a href="http://try.redis.io/">wonderfull guide</a> on how to use it.</p>
+<h2 id="client">Client<a class="headerlink" href="#client" title="Permanent link">&para;</a></h2>
+<p>To connect to the redis cli execute:</p>
+<div class="codehilite"><pre><span></span>docker-compose exec redis-mailcow redis-cli
 </pre></div>
 
 
-<ul>
-<li>Docker-Compose</li>
-</ul>
-<div class="codehilite"><pre><span></span>curl -L https://github.com/docker/compose/releases/download/$(curl -Ls https://www.servercow.de/docker-compose/latest.php)/docker-compose-$(uname -s)-$(uname -m) &gt; /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
+<h3 id="debugging">Debugging<a class="headerlink" href="#debugging" title="Permanent link">&para;</a></h3>
+<p>Here are some usefull commands for the redis-cli for debugging:</p>
+<h5 id="monitor">MONITOR<a class="headerlink" href="#monitor" title="Permanent link">&para;</a></h5>
+<p>Listens for all requests received by the server in real time:</p>
+<div class="codehilite"><pre><span></span># docker-compose exec redis-mailcow redis-cli
+127.0.0.1:6379&gt; monitor
+OK
+1494077286.401963 [0 172.22.1.253:41228] &quot;SMEMBERS&quot; &quot;BAYES_SPAM_keys&quot;
+1494077288.292970 [0 172.22.1.253:41229] &quot;SMEMBERS&quot; &quot;BAYES_SPAM_keys&quot;
+[...]
 </pre></div>
 
 
-<p>Please use the latest Docker engine available and do not use the engine that ships with your distros repository.</p>
-<p>2. Clone the master branch of the repository</p>
-<div class="codehilite"><pre><span></span>git clone https://github.com/andryyy/mailcow-dockerized &amp;&amp; cd mailcow-dockerized
+<h5 id="keys">KEYS<a class="headerlink" href="#keys" title="Permanent link">&para;</a></h5>
+<p>Get all keys matching your pattern:</p>
+<div class="codehilite"><pre><span></span>KEYS *
 </pre></div>
 
 
-<p>3. Generate a configuration file. Use a FQDN (<code>host.domain.tld</code>) as hostname when asked.</p>
-<div class="codehilite"><pre><span></span>./generate_config.sh
+<h5 id="ping">PING<a class="headerlink" href="#ping" title="Permanent link">&para;</a></h5>
+<p>Test a connection:</p>
+<div class="codehilite"><pre><span></span>127.0.0.1:6379&gt; PING
+PONG
 </pre></div>
 
 
-<p>4. Change configuration if you want or need to.</p>
-<div class="codehilite"><pre><span></span>nano mailcow.conf
-</pre></div>
-
-
-<p>If you plan to use a reverse proxy, you can, for example, bind HTTPS to 127.0.0.1 on port 8443 and HTTP to 127.0.0.1 on port 8080.</p>
-<p>You may need to stop an existing pre-installed MTA which blocks port 25/tcp. See <a href="https://andryyy.github.io/mailcow-dockerized/first_steps/#install-a-local-mta">this chapter</a> to learn how to reconfigure Postfix to run besides mailcow after a successful installation.</p>
-<p>5. Pull the images and run the composer file. The paramter <code>-d</code> will start mailcow: dockerized detached:</p>
-<div class="codehilite"><pre><span></span>docker-compose pull
-docker-compose up -d
-</pre></div>
-
-
-<p>Done!</p>
-<p>You can now access <strong>https://${MAILCOW_HOSTNAME}</strong> with the default credentials <code>admin</code> + password <code>moohoo</code>.</p>
-<p>The database will be initialized right after a connection to MySQL can be established.</p>
+<p>If you want to know more, here is a <a href="https://www.cheatography.com/tasjaevan/cheat-sheets/redis/">cheat sheet</a>.</p>
                 
                   
                 
@@ -1014,7 +1124,7 @@ docker-compose up -d
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../migrate-mc014/" title="Migrating from mailcow 0.14" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../u_e-mailcow_ui-tfa/" title="Two-Factor Authentication" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1023,19 +1133,19 @@ docker-compose up -d
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Migrating from mailcow 0.14
+                Two-Factor Authentication
               </span>
             </div>
           </a>
         
         
-          <a href="../install-update/" title="Update" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../u_e-rspamd/" title="Rspamd" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Update
+                Rspamd
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

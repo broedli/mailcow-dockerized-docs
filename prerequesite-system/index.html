@@ -15,7 +15,7 @@
     
     
       
-        <title>Installation - mailcow: dockerized documentation</title>
+        <title>Prepare Your System - mailcow: dockerized documentation</title>
       
     
     
@@ -79,11 +79,11 @@
             
               
                 <span class="md-header-nav__parent">
-                  Installation & Update
+                  Prerequisites
                 </span>
               
             
-            Installation
+            Prepare Your System
           
         </span>
       </div>
@@ -196,10 +196,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
     
     <label class="md-nav__link" for="nav-2">
       Prerequisites
@@ -215,11 +217,20 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../prerequesite-system/" title="Prepare Your System" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+    <a href="./" title="Prepare Your System" class="md-nav__link md-nav__link--active">
       Prepare Your System
     </a>
+    
   </li>
 
         
@@ -256,12 +267,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
     <label class="md-nav__link" for="nav-4">
       Installation & Update
@@ -277,18 +286,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-    
-    <a href="./" title="Installation" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../install/" title="Installation" class="md-nav__link">
       Installation
     </a>
-    
   </li>
 
         
@@ -936,6 +938,47 @@
   
   
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#minimum-system-resources" title="Minimum System Resources" class="md-nav__link">
+    Minimum System Resources
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#firewall-ports" title="Firewall &amp; Ports" class="md-nav__link">
+    Firewall &amp; Ports
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#default-ports" title="Default Ports" class="md-nav__link">
+    Default Ports
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#date-and-time" title="Date and Time" class="md-nav__link">
+    Date and Time
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -946,56 +989,163 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/install.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
+                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/prerequesite-system.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
                 
                 
-                  <h1>Installation</h1>
+                  <h1>Prepare Your System</h1>
                 
-                <p>You need Docker and Docker Compose.</p>
-<p>1. Learn how to install <a href="https://docs.docker.com/engine/installation/linux/">Docker</a> and <a href="https://docs.docker.com/compose/install/">Docker Compose</a>.</p>
-<p>Quick installation for most operation systems:</p>
+                <p>Before you run <strong>mailcow: dockerized</strong>, there are a few requirements that you should check:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When you want to run the dockerized version on your Debian 8 (Jessie) box you should <a href="https://packages.debian.org/jessie-backports/linux-image-amd64">switch to the kernel 4.9 from jessie backports</a> because there is a bug (kernel panic) with the kernel 3.16 when running docker containers with <em>healthchecks</em>! For more details read: <a href="https://github.com/docker/docker/issues/30402">github.com/docker/docker/issues/30402</a> and <a href="https://forum.mailcow.email/t/solved-mailcow-docker-causes-kernel-panic-edit/448">forum.mailcow.email/t/solved-mailcow-docker-causes-kernel-panic-edit/448</a></p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
 <ul>
-<li>Docker</li>
+<li>Mailcow: dockerized requires <a href="#default-ports">some ports</a> to be open for incomming connections, so make sure that your firewall is not bloking these. Also make sure that no other application is interferring with mailcow's configuration.</li>
+<li>A correct DNS setup is crucial to every good mailserver setup, so please make sure you got at least the <a href="../prerequesite-dns/#the-minimal-dns-configuration">basics</a> covered bevore you begin!</li>
+<li>Make sure that your system has a correct date and <a href="#date-and-time">time setup</a>. This is crucial for stuff like two factor TOTP authentication.</li>
 </ul>
-<div class="codehilite"><pre><span></span>curl -sSL https://get.docker.com/ | sh
+</div>
+<h2 id="minimum-system-resources">Minimum System Resources<a class="headerlink" href="#minimum-system-resources" title="Permanent link">&para;</a></h2>
+<p>Please make sure that your system has at least the following resources:</p>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>mailcow: dockerized</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU</td>
+<td>1 GHz</td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>1 GiB</td>
+</tr>
+<tr>
+<td>Disk</td>
+<td>5 GiB</td>
+</tr>
+<tr>
+<td>System Type</td>
+<td>x86_64</td>
+</tr>
+</tbody>
+</table>
+<h2 id="firewall-ports">Firewall &amp; Ports<a class="headerlink" href="#firewall-ports" title="Permanent link">&para;</a></h2>
+<p>Please check if any of mailcow's standard ports are open and not blocked by other applications:</p>
+<div class="codehilite"><pre><span></span># netstat -tulpn | grep -E -w &#39;25|80|110|143|443|465|587|993|995&#39;
 </pre></div>
 
 
-<ul>
-<li>Docker-Compose</li>
-</ul>
-<div class="codehilite"><pre><span></span>curl -L https://github.com/docker/compose/releases/download/$(curl -Ls https://www.servercow.de/docker-compose/latest.php)/docker-compose-$(uname -s)-$(uname -m) &gt; /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
+<p>If this command returns any results please remove or stop the application running on that port. You may also adjust mailcows ports via the <code>mailcow.conf</code> configuration file.</p>
+<h3 id="default-ports">Default Ports<a class="headerlink" href="#default-ports" title="Permanent link">&para;</a></h3>
+<p>If you have a firewall already up and running please make sure that these ports are open for incomming connections:</p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th align="center">Protocol</th>
+<th align="left">Port</th>
+<th align="left">Container</th>
+<th>Variable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Postfix SMTP</td>
+<td align="center">TCP</td>
+<td align="left">25</td>
+<td align="left">postfix-mailcow</td>
+<td><code>${SMTP_PORT}</code></td>
+</tr>
+<tr>
+<td>Postfix SMTPS</td>
+<td align="center">TCP</td>
+<td align="left">465</td>
+<td align="left">postfix-mailcow</td>
+<td><code>${SMTPS_PORT}</code></td>
+</tr>
+<tr>
+<td>Postfix Submission</td>
+<td align="center">TCP</td>
+<td align="left">587</td>
+<td align="left">postfix-mailcow</td>
+<td><code>${SUBMISSION_PORT}</code></td>
+</tr>
+<tr>
+<td>Dovecot IMAP</td>
+<td align="center">TCP</td>
+<td align="left">143</td>
+<td align="left">dovecot-mailcow</td>
+<td><code>${IMAP_PORT}</code></td>
+</tr>
+<tr>
+<td>Dovecot IMAPS</td>
+<td align="center">TCP</td>
+<td align="left">993</td>
+<td align="left">dovecot-mailcow</td>
+<td><code>${IMAPS_PORT}</code></td>
+</tr>
+<tr>
+<td>Dovecot POP3</td>
+<td align="center">TCP</td>
+<td align="left">110</td>
+<td align="left">dovecot-mailcow</td>
+<td><code>${POP_PORT}</code></td>
+</tr>
+<tr>
+<td>Dovecot POP3S</td>
+<td align="center">TCP</td>
+<td align="left">995</td>
+<td align="left">dovecot-mailcow</td>
+<td><code>${POPS_PORT}</code></td>
+</tr>
+<tr>
+<td>Dovecot ManageSieve</td>
+<td align="center">TCP</td>
+<td align="left">4190</td>
+<td align="left">dovecot-mailcow</td>
+<td><code>${SIEVE_PORT}</code></td>
+</tr>
+<tr>
+<td>HTTP(S)</td>
+<td align="center">TCP</td>
+<td align="left">80/443</td>
+<td align="left">nginx-mailcow</td>
+<td><code>${HTTP_PORT}</code> / <code>${HTTPS_PORT}</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="date-and-time">Date and Time<a class="headerlink" href="#date-and-time" title="Permanent link">&para;</a></h2>
+<p>To ensure that you have the correct date and time setup on your system, please check the output of <code>timedatectl status</code>:</p>
+<div class="codehilite"><pre><span></span>$ timedatectl status
+      Local time: Sat <span class="m">2017</span>-05-06 <span class="m">02</span>:12:33 CEST
+  Universal time: Sat <span class="m">2017</span>-05-06 <span class="m">00</span>:12:33 UTC
+        RTC time: Sat <span class="m">2017</span>-05-06 <span class="m">00</span>:12:32
+       Time zone: Europe/Berlin <span class="o">(</span>CEST, +0200<span class="o">)</span>
+     NTP enabled: yes
+NTP synchronized: yes
+ RTC in <span class="nb">local</span> TZ: no
+      DST active: yes
+ Last DST change: DST began at
+                  Sun <span class="m">2017</span>-03-26 <span class="m">01</span>:59:59 CET
+                  Sun <span class="m">2017</span>-03-26 <span class="m">03</span>:00:00 CEST
+ Next DST change: DST ends <span class="o">(</span>the clock jumps one hour backwards<span class="o">)</span> at
+                  Sun <span class="m">2017</span>-10-29 <span class="m">02</span>:59:59 CEST
+                  Sun <span class="m">2017</span>-10-29 <span class="m">02</span>:00:00 CET
 </pre></div>
 
 
-<p>Please use the latest Docker engine available and do not use the engine that ships with your distros repository.</p>
-<p>2. Clone the master branch of the repository</p>
-<div class="codehilite"><pre><span></span>git clone https://github.com/andryyy/mailcow-dockerized &amp;&amp; cd mailcow-dockerized
+<p>The lines <code>NTP enabled: yes</code> and <code>NTP synchronized: yes</code> indicate wether you have NTP enabled and if it's syncronized.</p>
+<p>To enable NTP you need to run the command <code>timedatectl set-ntp true</code>. You also need to edit your <code>/etc/systemd/timesyncd.conf</code>:</p>
+<div class="codehilite"><pre><span></span># vim /etc/systemd/timesyncd.conf
+[Time]
+Servers=0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org
 </pre></div>
-
-
-<p>3. Generate a configuration file. Use a FQDN (<code>host.domain.tld</code>) as hostname when asked.</p>
-<div class="codehilite"><pre><span></span>./generate_config.sh
-</pre></div>
-
-
-<p>4. Change configuration if you want or need to.</p>
-<div class="codehilite"><pre><span></span>nano mailcow.conf
-</pre></div>
-
-
-<p>If you plan to use a reverse proxy, you can, for example, bind HTTPS to 127.0.0.1 on port 8443 and HTTP to 127.0.0.1 on port 8080.</p>
-<p>You may need to stop an existing pre-installed MTA which blocks port 25/tcp. See <a href="https://andryyy.github.io/mailcow-dockerized/first_steps/#install-a-local-mta">this chapter</a> to learn how to reconfigure Postfix to run besides mailcow after a successful installation.</p>
-<p>5. Pull the images and run the composer file. The paramter <code>-d</code> will start mailcow: dockerized detached:</p>
-<div class="codehilite"><pre><span></span>docker-compose pull
-docker-compose up -d
-</pre></div>
-
-
-<p>Done!</p>
-<p>You can now access <strong>https://${MAILCOW_HOSTNAME}</strong> with the default credentials <code>admin</code> + password <code>moohoo</code>.</p>
-<p>The database will be initialized right after a connection to MySQL can be established.</p>
                 
                   
                 
@@ -1014,7 +1164,7 @@ docker-compose up -d
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../migrate-mc014/" title="Migrating from mailcow 0.14" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href=".." title="Information & Support" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1023,19 +1173,19 @@ docker-compose up -d
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Migrating from mailcow 0.14
+                Information & Support
               </span>
             </div>
           </a>
         
         
-          <a href="../install-update/" title="Update" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../prerequesite-dns/" title="DNS Setup" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Update
+                DNS Setup
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

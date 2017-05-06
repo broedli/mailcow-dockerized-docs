@@ -15,7 +15,7 @@
     
     
       
-        <title>Installation - mailcow: dockerized documentation</title>
+        <title>Roundcube - mailcow: dockerized documentation</title>
       
     
     
@@ -79,11 +79,11 @@
             
               
                 <span class="md-header-nav__parent">
-                  Installation & Update
+                  Third party apps
                 </span>
               
             
-            Installation
+            Roundcube
           
         </span>
       </div>
@@ -256,12 +256,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
     <label class="md-nav__link" for="nav-4">
       Installation & Update
@@ -277,18 +275,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-    
-    <a href="./" title="Installation" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../install/" title="Installation" class="md-nav__link">
       Installation
     </a>
-    
   </li>
 
         
@@ -865,10 +856,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" checked>
     
     <label class="md-nav__link" for="nav-8">
       Third party apps
@@ -884,11 +877,20 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../third_party-roundcube/" title="Roundcube" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+    <a href="./" title="Roundcube" class="md-nav__link md-nav__link--active">
       Roundcube
     </a>
+    
   </li>
 
         
@@ -936,6 +938,20 @@
   
   
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#enable-change-password-function-in-roundcube" title="Enable change password function in Roundcube" class="md-nav__link">
+    Enable change password function in Roundcube
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -946,56 +962,85 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/install.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
+                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/third_party-roundcube.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
                 
                 
-                  <h1>Installation</h1>
+                  <h1>Roundcube</h1>
                 
-                <p>You need Docker and Docker Compose.</p>
-<p>1. Learn how to install <a href="https://docs.docker.com/engine/installation/linux/">Docker</a> and <a href="https://docs.docker.com/compose/install/">Docker Compose</a>.</p>
-<p>Quick installation for most operation systems:</p>
-<ul>
-<li>Docker</li>
-</ul>
-<div class="codehilite"><pre><span></span>curl -sSL https://get.docker.com/ | sh
+                <p>Download Roundcube 1.3.x (beta at the time of Feb 2017) to the web htdocs directory and extract it (here <code>rc/</code>):</p>
+<div class="codehilite"><pre><span></span>cd data/web/rc
+wget -O - https://github.com/roundcube/roundcubemail/releases/download/1.3-beta/roundcubemail-1.3-beta-complete.tar.gz | tar xfvz -
+# Change folder name
+mv roundcubemail-1.3* rc
+# Change permissions
+chown -R root: rc/
 </pre></div>
 
 
-<ul>
-<li>Docker-Compose</li>
-</ul>
-<div class="codehilite"><pre><span></span>curl -L https://github.com/docker/compose/releases/download/$(curl -Ls https://www.servercow.de/docker-compose/latest.php)/docker-compose-$(uname -s)-$(uname -m) &gt; /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
+<p>Create a file <code>data/web/rc/config/config.inc.php</code> with the following content.</p>
+<p><strong>Change the <code>des_key</code> parameter to a random value.</strong> It is used to temporarily store your IMAP password.</p>
+<div class="codehilite"><pre><span></span><span class="cp">&lt;?php</span>
+<span class="nb">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">file_exists</span><span class="p">(</span><span class="s1">&#39;/tmp/mime.types&#39;</span><span class="p">))</span> <span class="p">{</span>
+<span class="nb">file_put_contents</span><span class="p">(</span><span class="s2">&quot;/tmp/mime.types&quot;</span><span class="p">,</span> <span class="nb">fopen</span><span class="p">(</span><span class="s2">&quot;http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;db_dsnw&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;mysql://&#39;</span> <span class="o">.</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;DBUSER&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;:&#39;</span> <span class="o">.</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;DBPASS&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;@mysql/&#39;</span> <span class="o">.</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;DBNAME&#39;</span><span class="p">);</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;default_host&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;tls://dovecot&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;default_port&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;143&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;smtp_server&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;tls://postfix&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;smtp_port&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">587</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;smtp_user&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;%u&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;smtp_pass&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;%p&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;support_url&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;product_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Roundcube Webmail&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;des_key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;rcmail-!24ByteDESkey*Str&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;log_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/dev/null&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;temp_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/tmp&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;plugins&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;archive&#39;</span><span class="p">,</span>
+<span class="p">);</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;skin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;larry&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;mime_types&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/tmp/mime.types&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;imap_conn_options&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<span class="s1">&#39;ssl&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;verify_peer&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span> <span class="s1">&#39;verify_peer_name&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span> <span class="s1">&#39;allow_self_signed&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">)</span>
+<span class="p">);</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;enable_installer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;smtp_conn_options&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<span class="s1">&#39;ssl&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;verify_peer&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span> <span class="s1">&#39;verify_peer_name&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span> <span class="s1">&#39;allow_self_signed&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">)</span>
+<span class="p">);</span>
 </pre></div>
 
 
-<p>Please use the latest Docker engine available and do not use the engine that ships with your distros repository.</p>
-<p>2. Clone the master branch of the repository</p>
-<div class="codehilite"><pre><span></span>git clone https://github.com/andryyy/mailcow-dockerized &amp;&amp; cd mailcow-dockerized
+<p>Point your browser to <code>https://myserver/rc/installer</code> and follow the instructions.
+Initialize the database and leave the installer.</p>
+<p><strong>Delete the directory <code>data/web/rc/installer</code> after a successful installation!</strong></p>
+<h3 id="enable-change-password-function-in-roundcube">Enable change password function in Roundcube<a class="headerlink" href="#enable-change-password-function-in-roundcube" title="Permanent link">&para;</a></h3>
+<p>Open <code>data/web/rc/config/config.inc.php</code> and enable the password plugin:</p>
+<div class="codehilite"><pre><span></span>...
+$config[&#39;plugins&#39;] = array(
+    &#39;archive&#39;,
+    &#39;password&#39;,
+);
+...
 </pre></div>
 
 
-<p>3. Generate a configuration file. Use a FQDN (<code>host.domain.tld</code>) as hostname when asked.</p>
-<div class="codehilite"><pre><span></span>./generate_config.sh
+<p>Open <code>data/web/rc/plugins/password/password.php</code>, search for <code>case 'ssha':</code> and add above:</p>
+<div class="codehilite"><pre><span></span>        <span class="nt">case</span> <span class="s1">&#39;ssha256&#39;</span><span class="o">:</span>
+            <span class="o">$</span><span class="nt">salt</span> <span class="o">=</span> <span class="nt">rcube_utils</span><span class="p">::</span><span class="nd">random_bytes</span><span class="o">(</span><span class="nt">8</span><span class="o">);</span>
+            <span class="o">$</span><span class="nt">crypted</span> <span class="o">=</span> <span class="nt">base64_encode</span><span class="o">(</span> <span class="nt">hash</span><span class="o">(</span><span class="s1">&#39;sha256&#39;</span><span class="o">,</span> <span class="o">$</span><span class="nt">password</span> <span class="o">.</span> <span class="o">$</span><span class="nt">salt</span><span class="o">,</span> <span class="nt">TRUE</span> <span class="o">)</span> <span class="o">.</span> <span class="o">$</span><span class="nt">salt</span> <span class="o">);</span>
+            <span class="o">$</span><span class="nt">prefix</span>  <span class="o">=</span> <span class="s1">&#39;{SSHA256}&#39;</span><span class="o">;</span>
+            <span class="nt">break</span><span class="o">;</span>
 </pre></div>
 
 
-<p>4. Change configuration if you want or need to.</p>
-<div class="codehilite"><pre><span></span>nano mailcow.conf
+<p>Open <code>data/web/rc/plugins/password/config.inc.php</code> and change the following parameters (or add them at the bottom of that file):</p>
+<div class="codehilite"><pre><span></span>$config[&#39;password_driver&#39;] = &#39;sql&#39;;
+$config[&#39;password_algorithm&#39;] = &#39;ssha256&#39;;
+$config[&#39;password_algorithm_prefix&#39;] = &#39;{SSHA256}&#39;;
+$config[&#39;password_query&#39;] = &quot;UPDATE mailbox SET password = %P WHERE username = %u&quot;;
 </pre></div>
-
-
-<p>If you plan to use a reverse proxy, you can, for example, bind HTTPS to 127.0.0.1 on port 8443 and HTTP to 127.0.0.1 on port 8080.</p>
-<p>You may need to stop an existing pre-installed MTA which blocks port 25/tcp. See <a href="https://andryyy.github.io/mailcow-dockerized/first_steps/#install-a-local-mta">this chapter</a> to learn how to reconfigure Postfix to run besides mailcow after a successful installation.</p>
-<p>5. Pull the images and run the composer file. The paramter <code>-d</code> will start mailcow: dockerized detached:</p>
-<div class="codehilite"><pre><span></span>docker-compose pull
-docker-compose up -d
-</pre></div>
-
-
-<p>Done!</p>
-<p>You can now access <strong>https://${MAILCOW_HOSTNAME}</strong> with the default credentials <code>admin</code> + password <code>moohoo</code>.</p>
-<p>The database will be initialized right after a connection to MySQL can be established.</p>
                 
                   
                 
@@ -1014,7 +1059,7 @@ docker-compose up -d
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../migrate-mc014/" title="Migrating from mailcow 0.14" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../u_e-deinstall/" title="Deinstall" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1023,19 +1068,19 @@ docker-compose up -d
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Migrating from mailcow 0.14
+                Deinstall
               </span>
             </div>
           </a>
         
         
-          <a href="../install-update/" title="Update" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../third_party-portainer/" title="Portainer" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Update
+                Portainer
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

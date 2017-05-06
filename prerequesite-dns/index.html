@@ -15,7 +15,7 @@
     
     
       
-        <title>Installation - mailcow: dockerized documentation</title>
+        <title>DNS Setup - mailcow: dockerized documentation</title>
       
     
     
@@ -79,11 +79,11 @@
             
               
                 <span class="md-header-nav__parent">
-                  Installation & Update
+                  Prerequisites
                 </span>
               
             
-            Installation
+            DNS Setup
           
         </span>
       </div>
@@ -196,10 +196,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
     
     <label class="md-nav__link" for="nav-2">
       Prerequisites
@@ -227,11 +229,20 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../prerequesite-dns/" title="DNS Setup" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+    <a href="./" title="DNS Setup" class="md-nav__link md-nav__link--active">
       DNS Setup
     </a>
+    
   </li>
 
         
@@ -256,12 +267,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
     <label class="md-nav__link" for="nav-4">
       Installation & Update
@@ -277,18 +286,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-    
-    <a href="./" title="Installation" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../install/" title="Installation" class="md-nav__link">
       Installation
     </a>
-    
   </li>
 
         
@@ -936,6 +938,62 @@
   
   
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#references" title="References" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reverse-dns-of-your-ip" title="Reverse DNS of your IP" class="md-nav__link">
+    Reverse DNS of your IP
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-minimal-dns-configuration" title="The minimal DNS configuration" class="md-nav__link">
+    The minimal DNS configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dkim-spf-and-dmarc" title="DKIM, SPF and DMARC" class="md-nav__link">
+    DKIM, SPF and DMARC
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-advanced-dns-configuration" title="The advanced DNS configuration" class="md-nav__link">
+    The advanced DNS configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" title="Testing" class="md-nav__link">
+    Testing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#misc" title="Misc" class="md-nav__link">
+    Misc
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -946,56 +1004,84 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/install.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
+                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/prerequesite-dns.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
                 
                 
-                  <h1>Installation</h1>
+                  <h1>DNS Setup</h1>
                 
-                <p>You need Docker and Docker Compose.</p>
-<p>1. Learn how to install <a href="https://docs.docker.com/engine/installation/linux/">Docker</a> and <a href="https://docs.docker.com/compose/install/">Docker Compose</a>.</p>
-<p>Quick installation for most operation systems:</p>
+                <p>Below you can find a list of <strong>recommended DNS records</strong>. While some are mandatory for a mail server (A, MX), others are recommended to build a good reputation score (TXT/SPF) or used for auto-configuration of mail clients (SRV).</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Docker</li>
+<li>A good article covering all relevant topics:
+  <a href="https://www.rackaid.com/blog/email-dns-records">"3 DNS Records Every Email Marketer Must Know"</a>      </li>
+<li>Another great one, but Zimbra as an example platform:
+  <a href="https://wiki.zimbra.com/wiki/Best_Practices_on_Email_Protection:_SPF,_DKIM_and_DMARC">"Best Practices on Email Protection: SPF, DKIM and DMARC"</a>       </li>
+<li>An in-depth discussion of SPF, DKIM and DMARC:
+  <a href="https://www.skelleton.net/2015/03/21/how-to-eliminate-spam-and-protect-your-name-with-dmarc/">"How to eliminate spam and protect your name with DMARC"</a></li>
 </ul>
-<div class="codehilite"><pre><span></span>curl -sSL https://get.docker.com/ | sh
+<h2 id="reverse-dns-of-your-ip">Reverse DNS of your IP<a class="headerlink" href="#reverse-dns-of-your-ip" title="Permanent link">&para;</a></h2>
+<p>Make sure that the PTR record of your IP matches the FQDN of your mailcow host: <code>${MAILCOW_HOSTNAME}</code> <sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup>. This record is usually set at the provider you leased the IP (server) from.</p>
+<h2 id="the-minimal-dns-configuration">The minimal DNS configuration<a class="headerlink" href="#the-minimal-dns-configuration" title="Permanent link">&para;</a></h2>
+<p>This example shows you a set of records for one domain managed by mailcow. Each domain that is added to mailcow needs at least this set or records to function correctly.</p>
+<div class="codehilite"><pre><span></span># Name              Type       Value
+mail                IN A       1.2.3.4
+autodiscover        IN A       1.2.3.4
+autoconfig          IN A       1.2.3.4
+
+@                   IN MX 10   mail
 </pre></div>
 
 
+<h2 id="dkim-spf-and-dmarc">DKIM, SPF and DMARC<a class="headerlink" href="#dkim-spf-and-dmarc" title="Permanent link">&para;</a></h2>
+<p>In the example DNS zone file snippet below, a simple <strong>SPF</strong> TXT record is used to only allow THIS server (the MX) to send mail for your domain. Every other server is disallowed but able to ("<code>~all</code>"). Please refer to <a href="http://www.openspf.org">SPF Project</a> for further reading.</p>
+<div class="codehilite"><pre><span></span>@                   IN TXT     &quot;v=spf1 mx ~all&quot;
+</pre></div>
+
+
+<p>It is highly recommended to create a <strong>DKIM</strong> TXT record in your mailcow UI and set the corresponding TXT record in your DNS records. Please refer to <a href="http://www.opendkim.org">OpenDKIM</a> for further reading.</p>
+<div class="codehilite"><pre><span></span>default._domainkey  IN TXT     &quot;v=DKIM1; k=rsa; t=s; s=email; p=...&quot;
+</pre></div>
+
+
+<p>The last step in protecting yourself and others is the implementation of a <strong>DMARC</strong> TXT record, for example by using the <a href="http://www.kitterman.com/dmarc/assistant.html">DMARC Assistant</a> (<a href="https://dmarcian.com/dmarc-inspector/google.com">check</a>).</p>
+<div class="codehilite"><pre><span></span>_dmarc              IN TXT     &quot;v=DMARC1; p=reject; rua=mailto:mailauth-reports@example.org&quot;
+</pre></div>
+
+
+<h2 id="the-advanced-dns-configuration">The advanced DNS configuration<a class="headerlink" href="#the-advanced-dns-configuration" title="Permanent link">&para;</a></h2>
+<p><strong>SRV</strong> records specify the server(s) for a specific protocol on your domain. If you want to explicitly announce a service as not provided, give "." as the target address (instead of "mail.example.tld."). Please refer to <a href="https://tools.ietf.org/html/rfc2782">RFC 2782</a>.</p>
+<div class="codehilite"><pre><span></span>_imap._tcp          IN SRV     0 1 143 mail.example.org.
+_imaps._tcp         IN SRV     0 1 993 mail.example.org.
+_pop3._tcp          IN SRV     0 1 110 mail.example.org.
+_pop3s._tcp         IN SRV     0 1 995 mail.example.org.
+_submission._tcp    IN SRV     0 1 587 mail.example.org.
+_autoconfig._tcp    IN SRV     0 1 443 autoconfig.example.org.
+_autodiscover._tcp  IN SRV     0 1 443 autodiscover.example.org.
+</pre></div>
+
+
+<h2 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">&para;</a></h2>
+<p>Here are some tools you can use to verify your DNS configuration:</p>
 <ul>
-<li>Docker-Compose</li>
+<li><a href="https://mxtoolbox.com/SuperTool.aspx">MX Toolbox</a> (DNS, SMTP, RBL)</li>
+<li><a href="https://www.port25.com/dkim-wizard/">port25.com</a> (DKIM, SPF)</li>
+<li><a href="https://www.had-pilot.com/testdetails.html">HAD Pilot</a> (DKIM, DMARC, SPF)</li>
+<li><a href="https://www.dmarcanalyzer.com/spf-record-check/">DMARC Analyzer</a> (DMARC, SPF)</li>
 </ul>
-<div class="codehilite"><pre><span></span>curl -L https://github.com/docker/compose/releases/download/$(curl -Ls https://www.servercow.de/docker-compose/latest.php)/docker-compose-$(uname -s)-$(uname -m) &gt; /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
+<h2 id="misc">Misc<a class="headerlink" href="#misc" title="Permanent link">&para;</a></h2>
+<p>If you are interested in statistics, you can additionally register with the <a href="https://gmail.com/postmaster">Postmaster Tool</a>  by Google and supply a <strong>google-site-verification</strong> TXT record, which will give you details about spam-classified mails by your domain. This is clearly optional.</p>
+<div class="codehilite"><pre><span></span>@                   IN TXT     &quot;google-site-verification=...&quot;
 </pre></div>
 
 
-<p>Please use the latest Docker engine available and do not use the engine that ships with your distros repository.</p>
-<p>2. Clone the master branch of the repository</p>
-<div class="codehilite"><pre><span></span>git clone https://github.com/andryyy/mailcow-dockerized &amp;&amp; cd mailcow-dockerized
-</pre></div>
-
-
-<p>3. Generate a configuration file. Use a FQDN (<code>host.domain.tld</code>) as hostname when asked.</p>
-<div class="codehilite"><pre><span></span>./generate_config.sh
-</pre></div>
-
-
-<p>4. Change configuration if you want or need to.</p>
-<div class="codehilite"><pre><span></span>nano mailcow.conf
-</pre></div>
-
-
-<p>If you plan to use a reverse proxy, you can, for example, bind HTTPS to 127.0.0.1 on port 8443 and HTTP to 127.0.0.1 on port 8080.</p>
-<p>You may need to stop an existing pre-installed MTA which blocks port 25/tcp. See <a href="https://andryyy.github.io/mailcow-dockerized/first_steps/#install-a-local-mta">this chapter</a> to learn how to reconfigure Postfix to run besides mailcow after a successful installation.</p>
-<p>5. Pull the images and run the composer file. The paramter <code>-d</code> will start mailcow: dockerized detached:</p>
-<div class="codehilite"><pre><span></span>docker-compose pull
-docker-compose up -d
-</pre></div>
-
-
-<p>Done!</p>
-<p>You can now access <strong>https://${MAILCOW_HOSTNAME}</strong> with the default credentials <code>admin</code> + password <code>moohoo</code>.</p>
-<p>The database will be initialized right after a connection to MySQL can be established.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>A <strong>Fully Qualified Domain Name</strong> (<strong>FQDN</strong>) is the complete (absolute) domain name for a specific computer or host, on the Internet. The FQDN consists of at least three parts devided by a dot: the hostname (myhost), the domain name (mydomain) and the toplevel domain in short <strong>tld</strong> (com). In the example of <code>mx.mailcow.email</code> the hostname would be <code>mx</code>, the domain name 'mailcow' and the tld <code>email</code>.&#160;<a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
                 
                   
                 
@@ -1014,7 +1100,7 @@ docker-compose up -d
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../migrate-mc014/" title="Migrating from mailcow 0.14" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../prerequesite-system/" title="Prepare Your System" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1023,19 +1109,19 @@ docker-compose up -d
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Migrating from mailcow 0.14
+                Prepare Your System
               </span>
             </div>
           </a>
         
         
-          <a href="../install-update/" title="Update" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../migrate-mc014/" title="Migrating from mailcow 0.14" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Update
+                Migrating from mailcow 0.14
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

@@ -12,13 +12,13 @@
     
         
     <url>
-     <loc>/requirements/</loc>
+     <loc>/prerequesite-system/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/dns/</loc>
+     <loc>/prerequesite-dns/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -27,7 +27,7 @@
 
     
     <url>
-     <loc>/mc14_migrate/</loc>
+     <loc>/migrate-mc014/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -42,7 +42,7 @@
     </url>
         
     <url>
-     <loc>/update/</loc>
+     <loc>/install-update/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -52,43 +52,43 @@
     
         
     <url>
-     <loc>/ssl/</loc>
+     <loc>/firststeps-ssl/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/rspamd_ui/</loc>
+     <loc>/firststeps-rspamd_ui/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/rp/</loc>
+     <loc>/firststeps-rp/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/relayhost/</loc>
+     <loc>/firststeps-relayhost/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/syslog/</loc>
+     <loc>/firststeps-syslog/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/local_mta/</loc>
+     <loc>/firststeps-local_mta/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/sender_rcv/</loc>
+     <loc>/firststeps-sender_rcv/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -104,107 +104,31 @@
     </url>
         
     <url>
-     <loc>/debug_logs/</loc>
+     <loc>/debug-logs/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/attach_service/</loc>
+     <loc>/debug-attach_service/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/reset_pw/</loc>
+     <loc>/debug-reset_pw/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/rm_volumes/</loc>
+     <loc>/debug-rm_volumes/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/troubles/</loc>
-     <lastmod>2017-05-06</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    
-
-    
-        
-    <url>
-     <loc></loc>
-     <lastmod></lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/redis/</loc>
-     <lastmod>2017-05-06</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/rspamd/</loc>
-     <lastmod>2017-05-06</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc></loc>
-     <lastmod></lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/why_bind9/</loc>
-     <lastmod>2017-05-06</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc></loc>
-     <lastmod></lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/autodiscover_config/</loc>
-     <lastmod>2017-05-06</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/80_to_443/</loc>
-     <lastmod>2017-05-06</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/change_config/</loc>
-     <lastmod>2017-05-06</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/cust_dockerfiles/</loc>
-     <lastmod>2017-05-06</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/dc_bash_compl/</loc>
-     <lastmod>2017-05-06</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/deinstall/</loc>
+     <loc>/debug-common_problems/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -214,19 +138,89 @@
     
         
     <url>
-     <loc>/roundcube/</loc>
+     <loc></loc>
+     <lastmod></lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/u_e-redis/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/portainer/</loc>
+     <loc>/u_e-rspamd/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/gogs/</loc>
+     <loc></loc>
+     <lastmod></lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc></loc>
+     <lastmod></lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/u_e-why_bind9/</loc>
+     <lastmod>2017-05-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc></loc>
+     <lastmod></lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/u_e-autodiscover_config/</loc>
+     <lastmod>2017-05-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/u_e-80_to_443/</loc>
+     <lastmod>2017-05-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/u_e-change_config/</loc>
+     <lastmod>2017-05-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/u_e-deinstall/</loc>
+     <lastmod>2017-05-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>/third_party-roundcube/</loc>
+     <lastmod>2017-05-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/third_party-portainer/</loc>
+     <lastmod>2017-05-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/third_party-gogs/</loc>
      <lastmod>2017-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
