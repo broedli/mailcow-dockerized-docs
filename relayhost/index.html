@@ -642,6 +642,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../deinstall/" title="Deinstall" class="md-nav__link">
+      Deinstall
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -751,7 +763,7 @@
                 
                   <h1>Setup a relayhost</h1>
                 
-                <p>Insert these lines to <code>data/conf/postfix/main.cf</code>. "relayhost" does already exist (empty), just change its value.</p>
+                <p>Insert these lines into <code>data/conf/postfix/main.cf</code>. "relayhost" does already exist (empty), just change its value.</p>
 <div class="codehilite"><pre><span></span>relayhost = [your-relayhost]:587
 smtp_sasl_password_maps = hash:/opt/postfix/conf/smarthost_passwd
 smtp_sasl_auth_enable = yes

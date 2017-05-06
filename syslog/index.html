@@ -642,6 +642,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../deinstall/" title="Deinstall" class="md-nav__link">
+      Deinstall
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -778,9 +790,15 @@ DOCKER_OPTS=&quot;--log-driver=syslog --log-opt syslog-address=tcp://127.0.0.1:5
 </pre></div>
 
 
-<p><strong>Caution:</strong> For some reason Ubuntu 16.04 and some, but not all, systemd based distros do not read the defaults file parameters.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For some reason Ubuntu 16.04 and some, but not all, systemd based distros do not read the defaults file parameters.</p>
+</div>
 <p>Just run <code>systemctl edit docker.service</code> and add the following content to fix it.</p>
-<p><strong>Note:</strong> If "systemctl edit" is not available, just copy the content to <code>/etc/systemd/system/docker.service.d/override.conf</code>.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>If "systemctl edit" is not available, just copy the content to <code>/etc/systemd/system/docker.service.d/override.conf</code>.</p>
+</div>
 <p>The first empty ExecStart parameter is not a mistake.</p>
 <div class="codehilite"><pre><span></span><span class="k">[Service]</span>
 <span class="na">EnvironmentFile</span><span class="o">=</span><span class="s">/etc/default/docker</span>

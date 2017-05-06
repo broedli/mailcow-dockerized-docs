@@ -642,6 +642,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../deinstall/" title="Deinstall" class="md-nav__link">
+      Deinstall
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -784,7 +796,10 @@ certbot certonly <span class="se">\</span>
 </pre></div>
 
 
-<p><strong>Remember to replace the example.org domain with your own domain, this command will not work if you dont.</strong></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Remember to replace the example.org domain with your own domain, this command will not work if you dont.</p>
+</div>
 <p>4. Create hard links to the full path of the new certificates. Assuming you are still in the mailcow root folder:</p>
 <div class="codehilite"><pre><span></span>mv data/assets/ssl/cert.<span class="o">{</span>pem,pem.backup<span class="o">}</span>
 mv data/assets/ssl/key.<span class="o">{</span>pem,pem.backup<span class="o">}</span>

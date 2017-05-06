@@ -199,6 +199,12 @@
      <changefreq>daily</changefreq>
     </url>
         
+    <url>
+     <loc>/deinstall/</loc>
+     <lastmod>2017-05-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
     

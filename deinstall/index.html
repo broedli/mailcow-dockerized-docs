@@ -15,7 +15,7 @@
     
     
       
-        <title>Blacklist / Whitelist - mailcow: dockerized documentation</title>
+        <title>Deinstall - mailcow: dockerized documentation</title>
       
     
     
@@ -83,7 +83,7 @@
                 </span>
               
             
-            Blacklist / Whitelist
+            Deinstall
           
         </span>
       </div>
@@ -601,18 +601,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-    
-    <a href="./" title="Blacklist / Whitelist" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../bl_wl/" title="Blacklist / Whitelist" class="md-nav__link">
       Blacklist / Whitelist
     </a>
-    
   </li>
 
         
@@ -644,11 +637,18 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../deinstall/" title="Deinstall" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+    
+    <a href="./" title="Deinstall" class="md-nav__link md-nav__link--active">
       Deinstall
     </a>
+    
   </li>
 
         
@@ -742,14 +742,25 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/bl_wl.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
+                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/deinstall.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
                 
                 
-                  <h1>Blacklist / Whitelist</h1>
+                  <h1>Deinstall</h1>
                 
-                <p>To add or edit an entry to your <strong>domain wide</strong> filter table, login to your <em>mailcow UI</em> as (domain) administrator.</p>
-<p><img alt="Black- and Whitelist configuration" src="../images/bl_wl.png" /></p>
-<p>Beware that a mailbox user can login to mailcow and override a domain policy filter item.</p>
+                <p>To remove mailcow: dockerized with all it's volumes, images and containers do:</p>
+<div class="codehilite"><pre><span></span>docker-compose down -v --rmi all --remove-orphans
+</pre></div>
+
+
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<ul>
+<li><strong>-v</strong> Remove named volumes declared in the <code>volumes</code> section of the Compose file and anonymous volumes attached to containers.</li>
+<li><strong>--rmi <type></strong> Remove images. Type must be one of: <code>all</code>: Remove all images used by any service. <code>local</code>: Remove only images that don't have a custom tag set by the <code>image</code> field.</li>
+<li><strong>--remove-orphans</strong> Remove containsers for services not defined in the compose file.</li>
+<li>By default <code>docker-compose down</code> only removes currently active containers and networks devinded in the <code>docker-compose.yml</code>.</li>
+</ul>
+</div>
                 
                   
                 
@@ -768,7 +779,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../tagging/" title="Tagging" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../disable_sender_verification/" title="Disable Sender Addresses Verification" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -777,19 +788,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Tagging
+                Disable Sender Addresses Verification
               </span>
             </div>
           </a>
         
         
-          <a href="../autodiscover_config/" title="Autodiscover / Autoconfig" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../roundcube/" title="Roundcube" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Autodiscover / Autoconfig
+                Roundcube
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
