@@ -232,23 +232,43 @@
         },
         {
             "location": "/debug/",
-            "text": "Logs\n\u00b6\n\n\nYou can use \ndocker-compose logs $service-name\n for all containers.\n\n\nRun \ndocker-compose logs\n for all logs at once.\n\n\nFollow the log output by running docker-compose with \nlogs -f\n.\n\n\nLimit the output by calling logs with \n--tail=300\n like \ndocker-compose logs --tail=300 mysql-mailcow\n.\n\n\nReset admin password\n\u00b6\n\n\nReset mailcow admin to \nadmin:moohoo\n:\n\n\ncd mailcow_path\nbash mailcow-reset-admin.sh\n\n\n\n\n\nWhat container does what\n\u00b6\n\n\nHere is a brief overview of what container does what:\n\n\n\n\n\n\n\n\nService Name\n\n\nService Descriptions\n\n\n\n\n\n\n\n\n\n\nbind9-mailcow\n\n\nLocal (DNSSEC) DNS Resolver\n\n\n\n\n\n\nmysql-mailcow\n\n\nStores SOGo's and most of mailcow's settings\n\n\n\n\n\n\npostfix-mailcow\n\n\nReceives and sends mails\n\n\n\n\n\n\ndovecot-mailcow\n\n\nUser logins and sieve filter\n\n\n\n\n\n\nredis-mailcow\n\n\nStorage backend for DKIM keys, Rmilter and Rspamd\n\n\n\n\n\n\nrspamd-mailcow\n\n\nMail filtering system. Used for av handling, dkim signing, spam handling\n\n\n\n\n\n\nrmilter-mailcow\n\n\nIntegrates Rspamd into postfix\n\n\n\n\n\n\nclamd-mailcow\n\n\nScans attachments for viruses\n\n\n\n\n\n\nsogo-mailcow\n\n\nWebmail client that handles Microsoft ActiveSync and Cal- / CardDav\n\n\n\n\n\n\nnginx-mailcow\n\n\nNginx remote proxy that handles all mailcow related HTTP / HTTPS requests",
-            "title": "Debugging & Troubleshooting"
+            "text": "When a problem occurs, then always for a reason! :slight_smile: What you want to do in such a case is:\n\n\n\n\nRead your logs; follow them to see what the reason for your problem is.\n\n\nFollow the leads given to you in your logfiles and start investigating.\n\n\nRestarting the troubled service or the whole stack to see if the problem persists.\n\n\nRead the documentation of the troubled service and search it's bugtracker for your problem.\n\n\nSearch our \nissues\n and \nforum\n for topics related to your problem.\n\n\nCreate an issue\n over at our GitHub repository if you think your problem might be a bug or a missing feature you badly need. But please make sure, that you include \nall the logs\n and a full description to your problem.\n\n\nIf you need help with a problem on a configuration or a setup, or got a question please head over to our \nforum\n and open a thread.",
+            "title": "Introduction"
         },
         {
-            "location": "/debug/#logs",
-            "text": "You can use  docker-compose logs $service-name  for all containers.  Run  docker-compose logs  for all logs at once.  Follow the log output by running docker-compose with  logs -f .  Limit the output by calling logs with  --tail=300  like  docker-compose logs --tail=300 mysql-mailcow .",
+            "location": "/debug_logs/",
+            "text": "To view the logs of all mailcow: dockerized related containers, you can use \ndocker-compose logs\n inside your mailcow-dockerized folder that contains your \nmailcow.conf\n. This is usually a bit mutch but you could trim the output with \n--tail=100\n to the last 100 lines, or add a \n-f\n to follow the live output of all your services.\n\n\nTo view the logs of a specific service you can use \ndocker-compose logs [options] $Service_Name\n\n\n\n\nInfo\n\n\nThe available options for the command \ndocker-compose logs\n are:\n- \n--no-color\n: Produce monochrome output.\n- \n-f\n: Follow the log output.\n- \n-t\n: Show timestamps.\n- \n--tail=\"all\"\n: Number of lines to show from the end of the logs for each container.",
             "title": "Logs"
         },
         {
-            "location": "/debug/#reset-admin-password",
-            "text": "Reset mailcow admin to  admin:moohoo :  cd mailcow_path\nbash mailcow-reset-admin.sh",
-            "title": "Reset admin password"
+            "location": "/reset_pw/",
+            "text": "Mailcow Admin Account\n\u00b6\n\n\nReset mailcow admin to \nadmin:moohoo\n:\n\n\ncd mailcow_path\nbash mailcow-reset-admin.sh\n\n\n\n\n\nRemove Two-Factor Authentication\n\u00b6\n\n\n\n\n\n\n\n\nMySQL Passwords\n\u00b6\n\n\nPlease refere to our (MySQL section)(mysql/#reset-mysql-passwords) for instructions on resetting your MySQL passwords.",
+            "title": "Reset Passwords"
         },
         {
-            "location": "/debug/#what-container-does-what",
-            "text": "Here is a brief overview of what container does what:     Service Name  Service Descriptions      bind9-mailcow  Local (DNSSEC) DNS Resolver    mysql-mailcow  Stores SOGo's and most of mailcow's settings    postfix-mailcow  Receives and sends mails    dovecot-mailcow  User logins and sieve filter    redis-mailcow  Storage backend for DKIM keys, Rmilter and Rspamd    rspamd-mailcow  Mail filtering system. Used for av handling, dkim signing, spam handling    rmilter-mailcow  Integrates Rspamd into postfix    clamd-mailcow  Scans attachments for viruses    sogo-mailcow  Webmail client that handles Microsoft ActiveSync and Cal- / CardDav    nginx-mailcow  Nginx remote proxy that handles all mailcow related HTTP / HTTPS requests",
-            "title": "What container does what"
+            "location": "/reset_pw/#mailcow-admin-account",
+            "text": "Reset mailcow admin to  admin:moohoo :  cd mailcow_path\nbash mailcow-reset-admin.sh",
+            "title": "Mailcow Admin Account"
+        },
+        {
+            "location": "/reset_pw/#remove-two-factor-authentication",
+            "text": "",
+            "title": "Remove Two-Factor Authentication"
+        },
+        {
+            "location": "/reset_pw/#mysql-passwords",
+            "text": "Please refere to our (MySQL section)(mysql/#reset-mysql-passwords) for instructions on resetting your MySQL passwords.",
+            "title": "MySQL Passwords"
+        },
+        {
+            "location": "/service_desc/",
+            "text": "Here is a brief overview of what container / service does what:\n\n\n\n\n\n\n\n\nService Name\n\n\nService Descriptions\n\n\n\n\n\n\n\n\n\n\nbind9-mailcow\n\n\nLocal (DNSSEC) DNS Resolver\n\n\n\n\n\n\nmysql-mailcow\n\n\nStores SOGo's and most of mailcow's settings\n\n\n\n\n\n\npostfix-mailcow\n\n\nReceives and sends mails\n\n\n\n\n\n\ndovecot-mailcow\n\n\nUser logins and sieve filter\n\n\n\n\n\n\nredis-mailcow\n\n\nStorage backend for DKIM keys, Rmilter and Rspamd\n\n\n\n\n\n\nrspamd-mailcow\n\n\nMail filtering system. Used for av handling, dkim signing, spam handling\n\n\n\n\n\n\nrmilter-mailcow\n\n\nIntegrates Rspamd into postfix\n\n\n\n\n\n\nclamd-mailcow\n\n\nScans attachments for viruses\n\n\n\n\n\n\nsogo-mailcow\n\n\nWebmail client that handles Microsoft ActiveSync and Cal- / CardDav\n\n\n\n\n\n\nnginx-mailcow\n\n\nNginx remote proxy that handles all mailcow related HTTP / HTTPS requests",
+            "title": "Service Descriptions"
+        },
+        {
+            "location": "/rm_volumes/",
+            "text": "You may want to remove a set of persistend data to resolve a conflict or to start over:\n\n\ndocker volume rm mailcowdockerized_\n${\nVOLUME_NAME\n}\n\n\n\n\n\n\n\n\nRemove volume \nmysql-vol-1\n to remove all MySQL data.\n\n\nRemove volume \nredis-vol-1\n to remove all Redis data.\n\n\nRemove volume \nvmail-vol-1\n to remove all contents of \n/var/vmail\n mounted to \ndovecot-mailcow\n.\n\n\nRemove volume \ndkim-vol-1\n to remove all DKIM keys.\n\n\nRemove volume \nrspamd-vol-1\n to remove all Rspamd data.\n\n\n\n\nRunning \ndocker-compose down -v\n will \ndestroy all mailcow: dockerized volumes\n and delete any related containers and networks.",
+            "title": "Remove Persistent Data"
         },
         {
             "location": "/mailcow_ui/",

@@ -104,6 +104,34 @@
     </url>
         
     <url>
+     <loc>/debug_logs/</loc>
+     <lastmod>2017-05-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/reset_pw/</loc>
+     <lastmod>2017-05-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/service_desc/</loc>
+     <lastmod>2017-05-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/rm_volumes/</loc>
+     <lastmod>2017-05-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
      <loc></loc>
      <lastmod></lastmod>
      <changefreq>daily</changefreq>
