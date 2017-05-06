@@ -818,11 +818,12 @@ mysqldump --replace --no-create-info --default-character-set<span class="o">=</s
 </pre></div>
 
 
-<ul>
-<li><strong>--replace</strong>: Write <code>REPLACE</code> statements rather than <code>INSERT</code> statements</li>
-<li><strong>--no-create-info</strong>: Don't write <code>CREATE TABLE</code> statements.</li>
-<li><strong>--default-character-set</strong> make sure our exported default charset is <em>utf8mb4</em>.</li>
-</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p><strong>--replace</strong>: Write <code>REPLACE</code> statements rather than <code>INSERT</code> statements
+<strong>--no-create-info</strong>: Don't write <code>CREATE TABLE</code> statements.
+<strong>--default-character-set</strong> make sure our exported default charset is <em>utf8mb4</em>.</p>
+</div>
 <h2 id="prepare-mailcow-dockerized">Prepare mailcow: dockerized<a class="headerlink" href="#prepare-mailcow-dockerized" title="Permanent link">&para;</a></h2>
 <p>To initiate your fresh installed database, visit <strong>https://${MAILCOW_HOSTNAME}</strong> with a browser of your choice. Check if the DB is initiated correctly afterwards:</p>
 <div class="codehilite"><pre><span></span># source mailcow.conf
