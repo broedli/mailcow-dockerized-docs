@@ -761,13 +761,13 @@
                 
                 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-</div>
 <p>Please be adviced that this guide is a first draft. Mailcow: dockerized changed quite a lot on its DB configuration. It now uses the InnoDB file format <code>Barracuda</code> and the <code>utf8mb4</code> character set. There is also some change to the DB / TABLE structure.</p>
+</div>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-</div>
 <p>Also note that this guide doesn't touch on the users settings like <em>Spamlevels</em>, <em>TLS Settings</em>, etc. nor the export / import of your roundcube or SOGo settings.</p>
 <p>Lastly please check the section on how to <a href="../backup_maildir/#restore">import / restore</a> your maildir backup to get an idea how to migrate your mails.</p>
+</div>
 <h2 id="create-mailcow-db-backups">Create mailcow db backups<a class="headerlink" href="#create-mailcow-db-backups" title="Permanent link">&para;</a></h2>
 <p>First you need to modify the table <code>mailcow</code>. Mailcow-dockerized adds three and moves two existing columns in the table <code>mailbox</code>. The columns <code>tls_enforce_in</code> and <code>tls_enforce_out</code> get moved two rows up (behind <code>domain</code>). The columns <code>key</code>, <code>multiple_bookings</code> and <code>wants_tagged_subject</code> need to be added after <code>tls_enforce_out</code>.</p>
 <p>It should look like this:</p>
