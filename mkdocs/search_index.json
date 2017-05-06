@@ -261,6 +261,11 @@
             "title": "Blacklist / Whitelist"
         },
         {
+            "location": "/spamalias/",
+            "text": "These temporary email aliases are mostly used for places where we need to provide an email address but don't want future correspondence with. They are also called spam alias.\n\n\nTo create, delete or extend a temporary email aliase you need to login to mailcow's UI as a mailbox user and navigate to the tab \nTemporary email aliases\n:",
+            "title": "Temporary email aliase"
+        },
+        {
             "location": "/tagging/",
             "text": "Mailbox users can tag their mail address like in \nme+facebook@example.org\n. They can control the taghandling in the users \nmailcow UI\n panel.\n\n\n\n\n1. Move this message to a subfolder \"facebook\" (will be created lower case if not existing)\n\n\n2. Prepend the tag to the subject: \"[facebook] Subject\"",
             "title": "Tagging"
