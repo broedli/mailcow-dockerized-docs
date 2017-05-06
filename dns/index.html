@@ -804,7 +804,7 @@
   <a href="https://www.skelleton.net/2015/03/21/how-to-eliminate-spam-and-protect-your-name-with-dmarc/">"How to eliminate spam and protect your name with DMARC"</a></li>
 </ul>
 <h2 id="reverse-dns-of-your-ip">Reverse DNS of your IP<a class="headerlink" href="#reverse-dns-of-your-ip" title="Permanent link">&para;</a></h2>
-<p>Make sure that the PTR record of your IP matches the FQDN hostname of your mailcow host: <code>mail.domain.tld</code>. This record is usually set at the provider you leased the IP (server) from.</p>
+<p>Make sure that the PTR record of your IP matches the FQDN of your mailcow host: <code>${MAILCOW_HOSTNAME}</code> [^1]. This record is usually set at the provider you leased the IP (server) from.</p>
 <h2 id="the-minimal-dns-configuration">The minimal DNS configuration<a class="headerlink" href="#the-minimal-dns-configuration" title="Permanent link">&para;</a></h2>
 <p>This example shows you a set of records for one domain managed by mailcow. Each domain that is added to mailcow needs at least this set or records to function correctly.</p>
 <div class="codehilite"><pre><span></span># Name              Type       Value
@@ -817,12 +817,12 @@ autoconfig          IN A       1.2.3.4
 
 
 <h2 id="dkim-spf-and-dmarc">DKIM, SPF and DMARC<a class="headerlink" href="#dkim-spf-and-dmarc" title="Permanent link">&para;</a></h2>
-<p>In the example DNS zone file snippet below, a simple <strong>SPF</strong> TXT record is used to only allow THIS server (the MX) to send mail for your domain. Every other server is disallowed but able to ("<code>~all</code>"). Please refer to <a href="http://www.openspf.org">SPF Project</a>.</p>
+<p>In the example DNS zone file snippet below, a simple <strong>SPF</strong> TXT record is used to only allow THIS server (the MX) to send mail for your domain. Every other server is disallowed but able to ("<code>~all</code>"). Please refer to <a href="http://www.openspf.org">SPF Project</a> for further reading.</p>
 <div class="codehilite"><pre><span></span>@                   IN TXT     &quot;v=spf1 mx ~all&quot;
 </pre></div>
 
 
-<p>It is highly recommended to create a <strong>DKIM</strong> TXT record in your mailcow UI and set the corresponding TXT record in your DNS records. Please refer to <a href="http://www.opendkim.org">OpenDKIM</a>.</p>
+<p>It is highly recommended to create a <strong>DKIM</strong> TXT record in your mailcow UI and set the corresponding TXT record in your DNS records. Please refer to <a href="http://www.opendkim.org">OpenDKIM</a> for further reading.</p>
 <div class="codehilite"><pre><span></span>default._domainkey  IN TXT     &quot;v=DKIM1; k=rsa; t=s; s=email; p=...&quot;
 </pre></div>
 
@@ -856,6 +856,9 @@ _autodiscover._tcp  IN SRV     0 1 443 autodiscover.example.org.
 <p>If you are interested in statistics, you can additionally register with the <a href="https://gmail.com/postmaster">Postmaster Tool</a>  by Google and supply a <strong>google-site-verification</strong> TXT record, which will give you details about spam-classified mails by your domain. This is clearly optional.</p>
 <div class="codehilite"><pre><span></span>@                   IN TXT     &quot;google-site-verification=...&quot;
 </pre></div>
+
+
+<p>[^1]: A <strong>Fully Qualified Domain Name</strong> (<strong>FQDN</strong>) is the complete (absolute) domain name for a specific computer or host, on the Internet. The FQDN consists of at least three parts devided by a dot: the hostname (myhost), the domain name (mydomain) and the toplevel domain in short <strong>tld</strong> (com). In the example of <code>mx.mailcow.email</code> the hostname would be <code>mx</code>, the domain name 'mailcow' and the tld <code>email</code>.</p>
                 
                   
                 
