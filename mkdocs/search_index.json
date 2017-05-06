@@ -253,7 +253,37 @@
         {
             "location": "/mailcow_ui/",
             "text": "Several configuration parameters of the mailcow UI can be changed by creating a file \ndata/web/inc/vars.local.inc.php\n which overrides defaults settings found in \ndata/web/inc/vars.inc.php\n.\n\n\nThe local configuration file is persistent over updates of mailcow. Try not to change values inside \ndata/web/inc/vars.inc.php\n, but use them as template for the local override.\n\n\nmailcow UI configuration parameters can be to...\n\n\n\n\n...change the default language*\n\n\n...change the default bootstrap theme\n\n\n...set a password complexity regex\n\n\n...add mailcow app buttons to the login screen\n\n\n...set a pagination trigger\n\n\n...set action after submitting forms (stay in form, return to previous page)\n\n\n\n\n* To change SOGos default language, you will need to edit \ndata/conf/sogo/sogo.conf\n and replace \"English\" by your preferred language.",
-            "title": "mailcow UI Configuration"
+            "title": "Configuration"
+        },
+        {
+            "location": "/bl_wl/",
+            "text": "To add or edit an entry to your \ndomain wide\n filter table, login to your \nmailcow UI\n as (domain) administrator.\n\n\n\n\nBeware that a mailbox user can login to mailcow and override a domain policy filter item.",
+            "title": "Blacklist / Whitelist"
+        },
+        {
+            "location": "/tagging/",
+            "text": "Mailbox users can tag their mail address like in \nme+facebook@example.org\n. They can control the taghandling in the users \nmailcow UI\n panel.\n\n\n\n\n1. Move this message to a subfolder \"facebook\" (will be created lower case if not existing)\n\n\n2. Prepend the tag to the subject: \"[facebook] Subject\"",
+            "title": "Tagging"
+        },
+        {
+            "location": "/tfa/",
+            "text": "So far three methods for \nTwo-Factor Authentication\n are implemented: U2F, Yubi OTP, and TOTP\n\n\n\n\nFor U2F to work, you need an encrypted connection to the server (HTTPS) as well as a FIDO security key.\n\n\nBoth U2F and Yubi OTP work well with the fantastic \nYubikey\n.\n\n\n\nWhile Yubi OTP needs an active internet connection and an API ID + key, U2F will work with any FIDO U2F USB key out of the box, but can only be used when mailcow is accessed over HTTPS.\n\n\nU2F and Yubi OTP support multiple keys per user.\n\n\nAs the third TFA method mailcow uses TOTP: time-based one-time passwords. Those psaswords can be generated with apps like \"Google Authenticator\" after initially scanning a QR code or entering the given secret manually.\n\n\n\n\nAs administrator you are able to temporary disable a domain administrators TFA login until they successfully logged in.\n\n\nThe key used to login will be displayed in green, while other keys remain grey.\n\n\nYubi OTP\n\u00b6\n\n\nThe Yubi API ID and Key will be checked against the Yubico Cloud API. When setting up TFA you will be asked for your personal API account for this key.\nThe API ID, API key and the first 12 characters (your YubiKeys ID in modhex) are stored in the MySQL table as secret.\n\n\nU2F\n\u00b6\n\n\nOnly Google Chrome (+derivates) and Opera support U2F authentication to this day natively.\nFor Firefox you will need to install the \"U2F Support Add-on\" as provided on \nmozilla.org\n.\n\n\nU2F works without an internet connection.\n\n\nTOTP\n\u00b6\n\n\nThe best known TFA method mostly used with a smartphone.",
+            "title": "Two-Factor Authentication"
+        },
+        {
+            "location": "/tfa/#yubi-otp",
+            "text": "The Yubi API ID and Key will be checked against the Yubico Cloud API. When setting up TFA you will be asked for your personal API account for this key.\nThe API ID, API key and the first 12 characters (your YubiKeys ID in modhex) are stored in the MySQL table as secret.",
+            "title": "Yubi OTP"
+        },
+        {
+            "location": "/tfa/#u2f",
+            "text": "Only Google Chrome (+derivates) and Opera support U2F authentication to this day natively.\nFor Firefox you will need to install the \"U2F Support Add-on\" as provided on  mozilla.org .  U2F works without an internet connection.",
+            "title": "U2F"
+        },
+        {
+            "location": "/tfa/#totp",
+            "text": "The best known TFA method mostly used with a smartphone.",
+            "title": "TOTP"
         },
         {
             "location": "/redis/",
@@ -287,7 +317,7 @@
         },
         {
             "location": "/mysql/",
-            "text": "Connect\n\u00b6\n\n\nsource mailcow.conf\ndocker-compose exec mysql-mailcow mysql -u\n${\nDBUSER\n}\n -p\n${\nDBPASS\n}\n \n${\nDBNAME\n}\n\n\n\n\n\n\nBackup\n\u00b6\n\n\ncd /path/to/mailcow-dockerized\nsource mailcow.conf\nDATE=$(date +\"%Y%m%d_%H%M%S\")\ndocker-compose exec mysql-mailcow mysqldump --default-character-set=utf8mb4 -u\n${\nDBUSER\n}\n -p\n${\nDBPASS\n}\n \n${\nDBNAME\n}\n > backup_\n${\nDBNAME\n}\n_\n${\nDATE\n}\n.sql\n\n\n\n\n\nRestore\n\u00b6\n\n\nYou should redirect the sql dump without Docker-Compose to prevent parsing errors.\n\n\ncd /path/to/mailcow-dockerized\nsource mailcow.conf\ndocker exec -i $(docker-compose ps -q mysql-mailcow) mysql -u\n${\nDBUSER\n}\n -p\n${\nDBPASS\n}\n \n${\nDBNAME\n}\n \n< backup\n_file.sql\n\n\n\n\n\n\nReset MySQL passwords\n\u00b6\n\n\nStop the stack by running \ndocker-compose stop\n.\n\n\nWhen the containers came to a stop, run this command:\n\n\ndocker-compose run --rm --entrypoint '/bin/sh -c \"gosu mysql mysqld --skip-grant-tables & sleep 10 && mysql -hlocalhost -uroot && exit 0\"' mysql-mailcow\n\n\n\n\n\n1. Find database name\n\n\nMariaDB [(none)]> show databases;\n+--------------------+\n| Database           |\n+--------------------+\n| information_schema |\n| mailcow_database   | <=====\n| mysql              |\n| performance_schema |\n+--------------------+\n4 rows in set (0.00 sec)\n\n\n\n\n\n2. Reset one or more users\n\n\nBoth \"password\" and \"authentication_string\" exist. Currently \"password\" is used, but better set both.\n\n\nMariaDB [(none)]> SELECT user FROM mysql.user;\n+--------------+\n| user         |\n+--------------+\n| mailcow_user | <=====\n| root         |\n+--------------+\n2 rows in set (0.00 sec)\n\nMariaDB [(none)]> FLUSH PRIVILEGES;\nMariaDB [(none)]> UPDATE mysql.user SET authentication_string = PASSWORD('gotr00t'), password = PASSWORD('gotr00t') WHERE User = 'root' AND Host = '%';\nMariaDB [(none)]> UPDATE mysql.user SET authentication_string = PASSWORD('mookuh'), password = PASSWORD('mookuh') WHERE User = 'mailcow' AND Host = '%';\nMariaDB [(none)]> FLUSH PRIVILEGES;",
+            "text": "MySQL is used for most of mailcow's and SOGo's settings.\n\n\nConnect\n\u00b6\n\n\nsource mailcow.conf\ndocker-compose exec mysql-mailcow mysql -u\n${\nDBUSER\n}\n -p\n${\nDBPASS\n}\n \n${\nDBNAME\n}\n\n\n\n\n\n\nBackup\n\u00b6\n\n\ncd /path/to/mailcow-dockerized\nsource mailcow.conf\nDATE=$(date +\"%Y%m%d_%H%M%S\")\ndocker-compose exec mysql-mailcow mysqldump --default-character-set=utf8mb4 -u\n${\nDBUSER\n}\n -p\n${\nDBPASS\n}\n \n${\nDBNAME\n}\n > backup_\n${\nDBNAME\n}\n_\n${\nDATE\n}\n.sql\n\n\n\n\n\nRestore\n\u00b6\n\n\nYou should redirect the sql dump without Docker-Compose to prevent parsing errors.\n\n\ncd /path/to/mailcow-dockerized\nsource mailcow.conf\ndocker exec -i $(docker-compose ps -q mysql-mailcow) mysql -u\n${\nDBUSER\n}\n -p\n${\nDBPASS\n}\n \n${\nDBNAME\n}\n \n< backup\n_file.sql\n\n\n\n\n\n\nReset MySQL passwords\n\u00b6\n\n\nStop the stack by running \ndocker-compose stop\n.\n\n\nWhen the containers came to a stop, run this command:\n\n\ndocker-compose run --rm --entrypoint '/bin/sh -c \"gosu mysql mysqld --skip-grant-tables & sleep 10 && mysql -hlocalhost -uroot && exit 0\"' mysql-mailcow\n\n\n\n\n\n1. Find database name\n\n\nMariaDB [(none)]> show databases;\n+--------------------+\n| Database           |\n+--------------------+\n| information_schema |\n| mailcow_database   | <=====\n| mysql              |\n| performance_schema |\n+--------------------+\n4 rows in set (0.00 sec)\n\n\n\n\n\n2. Reset one or more users\n\n\nBoth \"password\" and \"authentication_string\" exist. Currently \"password\" is used, but better set both.\n\n\nMariaDB [(none)]> SELECT user FROM mysql.user;\n+--------------+\n| user         |\n+--------------+\n| mailcow_user | <=====\n| root         |\n+--------------+\n2 rows in set (0.00 sec)\n\nMariaDB [(none)]> FLUSH PRIVILEGES;\nMariaDB [(none)]> UPDATE mysql.user SET authentication_string = PASSWORD('gotr00t'), password = PASSWORD('gotr00t') WHERE User = 'root' AND Host = '%';\nMariaDB [(none)]> UPDATE mysql.user SET authentication_string = PASSWORD('mookuh'), password = PASSWORD('mookuh') WHERE User = 'mailcow' AND Host = '%';\nMariaDB [(none)]> FLUSH PRIVILEGES;",
             "title": "MySQL"
         },
         {
@@ -331,24 +361,19 @@
             "title": "CLI tools"
         },
         {
+            "location": "/anonym_headers/",
+            "text": "Save as \ndata/conf/postfix/mailcow_anonymize_headers.pcre\n:\n\n\n/^\\s*Received:[^\\)]+\\)\\s+\\(Authenticated sender:(.+)/\n    REPLACE Received: from localhost (localhost [127.0.0.1]) (Authenticated sender:$1\n/^\\s*User-Agent/        IGNORE\n/^\\s*X-Enigmail/        IGNORE\n/^\\s*X-Mailer/          IGNORE\n/^\\s*X-Originating-IP/  IGNORE\n/^\\s*X-Forward/         IGNORE\n\n\n\n\n\nAdd this to \ndata/conf/postfix/main.cf\n:\n\n\nsmtp_header_checks = pcre:/opt/postfix/conf/mailcow_anonymize_headers.pcre",
+            "title": "Anonymize Headers"
+        },
+        {
+            "location": "/disable_sender_verification/",
+            "text": "This option is not best-practice and should only be implemented when there is no other option available to archive whatever you are trying to do.\n\n\nSimply create a file \ndata/conf/postfix/check_sasl_access\n and enter the following content. This user must exist in your installation and needs to authenticate before sending mail.\n\n\nuser-to-allow-everything@example.com OK\n\n\n\n\n\nOpen \ndata/conf/postfix/main.cf\n and find \nsmtpd_sender_restrictions\n. Prepend \ncheck_sasl_access hash:/opt/postfix/conf/check_sasl_access\n like this:\n\n\nsmtpd_sender_restrictions = check_sasl_access hash:/opt/postfix/conf/check_sasl_access reject_authenticated_sender_login_mismatch [...]\n\n\n\n\n\nRun postmap on check_sasl_access:\n\n\ndocker-compose exec postfix-mailcow postmap /opt/postfix/conf/check_sasl_access\n\n\n\n\n\nRestart the Postfix container.",
+            "title": "Disable Sender Addresses Verification"
+        },
+        {
             "location": "/why_bind9/",
             "text": "For DNS blacklist lookups and DNSSEC.\n\n\nMost systems use either a public or a local caching DNS resolver.\nThat's a very bad idea when it comes to filter spam using DNS-based blackhole lists (DNSBL) or similar technics.\nMost if not all providers apply a rate limit based on the DNS resolver that is used to query their service.\nUsing a public resolver like Googles 4x8, OpenDNS or any other shared DNS resolver like your ISPs will hit that limit very soon.",
             "title": "Why bind9?"
-        },
-        {
-            "location": "/change_config/",
-            "text": "The most important configuration files are mounted from the host into the related containers:\n\n\ndata/conf\n\u251c\u2500\u2500 bind9\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 named.conf\n\u251c\u2500\u2500 dovecot\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 dovecot.conf\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 dovecot-master.passwd\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 sieve_after\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 sql\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 dovecot-dict-sql.conf\n\u2502\u00a0\u00a0     \u2514\u2500\u2500 dovecot-mysql.conf\n\u251c\u2500\u2500 mysql\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 my.cnf\n\u251c\u2500\u2500 nginx\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 dynmaps.conf\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 site.conf\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 templates\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 listen_plain.template\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 listen_ssl.template\n\u2502\u00a0\u00a0     \u2514\u2500\u2500 server_name.template\n\u251c\u2500\u2500 postfix\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 main.cf\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 master.cf\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 postscreen_access.cidr\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 smtp_dsn_filter\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 sql\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_relay_recipient_maps.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_tls_enforce_in_policy.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_tls_enforce_out_policy.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_virtual_alias_domain_catchall_maps.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_virtual_alias_domain_maps.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_virtual_alias_maps.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_virtual_domains_maps.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_virtual_mailbox_maps.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_virtual_relay_domain_maps.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_virtual_sender_acl.cf\n\u2502\u00a0\u00a0     \u2514\u2500\u2500 mysql_virtual_spamalias_maps.cf\n\u251c\u2500\u2500 rmilter\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 rmilter.conf\n\u251c\u2500\u2500 rspamd\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 dynmaps\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 authoritative.php\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 settings.php\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 tags.php\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2514\u2500\u2500 vars.inc.php -> ../../../web/inc/vars.inc.php\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 local.d\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 dkim.conf\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 metrics.conf\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 options.inc\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 redis.conf\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 rspamd.conf.local\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2514\u2500\u2500 statistic.conf\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 lua\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2514\u2500\u2500 rspamd.local.lua\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 override.d\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 logging.inc\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 worker-controller.inc\n\u2502\u00a0\u00a0     \u2514\u2500\u2500 worker-normal.inc\n\u2514\u2500\u2500 sogo\n    \u251c\u2500\u2500 sieve.creds\n    \u2514\u2500\u2500 sogo.conf\n\n\n\n\n\nJust change the according configuration file on the host and restart the related service:\n\n\ndocker-compose restart service-mailcow",
-            "title": "Adjust Service Configurations"
-        },
-        {
-            "location": "/cust_dockerfiles/",
-            "text": "Make your changes in \ndata/Dockerfiles/$service\n and build the image locally:\n\n\ndocker build data/Dockerfiles/service -t mailcow/$service\n\n\n\n\n\nNow auto-recreate modified containers:\n\n\ndocker-compose up -d",
-            "title": "Customize Dockerfiles"
-        },
-        {
-            "location": "/dc_bash_compl/",
-            "text": "curl -L https://raw.githubusercontent.com/docker/compose/$(docker-compose version --short)/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose",
-            "title": "Docker Compose Bash Completion"
         },
         {
             "location": "/backup_maildir/",
@@ -366,24 +391,9 @@
             "title": "Restore"
         },
         {
-            "location": "/tfa/",
-            "text": "So far three methods for \nTwo-Factor Authentication\n are implemented: U2F, Yubi OTP, and TOTP\n\n\n\n\nFor U2F to work, you need an encrypted connection to the server (HTTPS) as well as a FIDO security key.\n\n\nBoth U2F and Yubi OTP work well with the fantastic \nYubikey\n.\n\n\n\nWhile Yubi OTP needs an active internet connection and an API ID + key, U2F will work with any FIDO U2F USB key out of the box, but can only be used when mailcow is accessed over HTTPS.\n\n\nU2F and Yubi OTP support multiple keys per user.\n\n\nAs the third TFA method mailcow uses TOTP: time-based one-time passwords. Those psaswords can be generated with apps like \"Google Authenticator\" after initially scanning a QR code or entering the given secret manually.\n\n\n\n\nAs administrator you are able to temporary disable a domain administrators TFA login until they successfully logged in.\n\n\nThe key used to login will be displayed in green, while other keys remain grey.\n\n\nYubi OTP\n\u00b6\n\n\nThe Yubi API ID and Key will be checked against the Yubico Cloud API. When setting up TFA you will be asked for your personal API account for this key.\nThe API ID, API key and the first 12 characters (your YubiKeys ID in modhex) are stored in the MySQL table as secret.\n\n\nU2F\n\u00b6\n\n\nOnly Google Chrome (+derivates) and Opera support U2F authentication to this day natively.\nFor Firefox you will need to install the \"U2F Support Add-on\" as provided on \nmozilla.org\n.\n\n\nU2F works without an internet connection.\n\n\nTOTP\n\u00b6\n\n\nThe best known TFA method mostly used with a smartphone.",
-            "title": "Two-Factor Authentication"
-        },
-        {
-            "location": "/tfa/#yubi-otp",
-            "text": "The Yubi API ID and Key will be checked against the Yubico Cloud API. When setting up TFA you will be asked for your personal API account for this key.\nThe API ID, API key and the first 12 characters (your YubiKeys ID in modhex) are stored in the MySQL table as secret.",
-            "title": "Yubi OTP"
-        },
-        {
-            "location": "/tfa/#u2f",
-            "text": "Only Google Chrome (+derivates) and Opera support U2F authentication to this day natively.\nFor Firefox you will need to install the \"U2F Support Add-on\" as provided on  mozilla.org .  U2F works without an internet connection.",
-            "title": "U2F"
-        },
-        {
-            "location": "/tfa/#totp",
-            "text": "The best known TFA method mostly used with a smartphone.",
-            "title": "TOTP"
+            "location": "/autodiscover_config/",
+            "text": "This disables ActiveSync in the autodiscover service for Outlook and configures it with IMAP and SMTP instead:\n\n\nOpen \ndata/web/autodiscover.php\n and set \n'useEASforOutlook' => 'yes'\n to \n'useEASforOutlook' => 'no'\n.\n\n\nTo always use IMAP and SMTP instead of EAS, set \n'autodiscoverType' => 'imap'\n.",
+            "title": "Autodiscover / Autoconfig"
         },
         {
             "location": "/80_to_443/",
@@ -391,29 +401,19 @@
             "title": "Redirect HTTP to HTTPS"
         },
         {
-            "location": "/anonym_headers/",
-            "text": "Save as \ndata/conf/postfix/mailcow_anonymize_headers.pcre\n:\n\n\n/^\\s*Received:[^\\)]+\\)\\s+\\(Authenticated sender:(.+)/\n    REPLACE Received: from localhost (localhost [127.0.0.1]) (Authenticated sender:$1\n/^\\s*User-Agent/        IGNORE\n/^\\s*X-Enigmail/        IGNORE\n/^\\s*X-Mailer/          IGNORE\n/^\\s*X-Originating-IP/  IGNORE\n/^\\s*X-Forward/         IGNORE\n\n\n\n\n\nAdd this to \ndata/conf/postfix/main.cf\n:\n\n\nsmtp_header_checks = pcre:/opt/postfix/conf/mailcow_anonymize_headers.pcre",
-            "title": "Anonymize Headers"
+            "location": "/change_config/",
+            "text": "The most important configuration files are mounted from the host into the related containers:\n\n\ndata/conf\n\u251c\u2500\u2500 bind9\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 named.conf\n\u251c\u2500\u2500 dovecot\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 dovecot.conf\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 dovecot-master.passwd\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 sieve_after\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 sql\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 dovecot-dict-sql.conf\n\u2502\u00a0\u00a0     \u2514\u2500\u2500 dovecot-mysql.conf\n\u251c\u2500\u2500 mysql\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 my.cnf\n\u251c\u2500\u2500 nginx\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 dynmaps.conf\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 site.conf\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 templates\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 listen_plain.template\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 listen_ssl.template\n\u2502\u00a0\u00a0     \u2514\u2500\u2500 server_name.template\n\u251c\u2500\u2500 postfix\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 main.cf\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 master.cf\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 postscreen_access.cidr\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 smtp_dsn_filter\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 sql\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_relay_recipient_maps.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_tls_enforce_in_policy.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_tls_enforce_out_policy.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_virtual_alias_domain_catchall_maps.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_virtual_alias_domain_maps.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_virtual_alias_maps.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_virtual_domains_maps.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_virtual_mailbox_maps.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_virtual_relay_domain_maps.cf\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 mysql_virtual_sender_acl.cf\n\u2502\u00a0\u00a0     \u2514\u2500\u2500 mysql_virtual_spamalias_maps.cf\n\u251c\u2500\u2500 rmilter\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 rmilter.conf\n\u251c\u2500\u2500 rspamd\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 dynmaps\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 authoritative.php\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 settings.php\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 tags.php\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2514\u2500\u2500 vars.inc.php -> ../../../web/inc/vars.inc.php\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 local.d\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 dkim.conf\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 metrics.conf\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 options.inc\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 redis.conf\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 rspamd.conf.local\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2514\u2500\u2500 statistic.conf\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 lua\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2514\u2500\u2500 rspamd.local.lua\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 override.d\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 logging.inc\n\u2502\u00a0\u00a0     \u251c\u2500\u2500 worker-controller.inc\n\u2502\u00a0\u00a0     \u2514\u2500\u2500 worker-normal.inc\n\u2514\u2500\u2500 sogo\n    \u251c\u2500\u2500 sieve.creds\n    \u2514\u2500\u2500 sogo.conf\n\n\n\n\n\nJust change the according configuration file on the host and restart the related service:\n\n\ndocker-compose restart service-mailcow",
+            "title": "Adjust Service Configurations"
         },
         {
-            "location": "/tagging/",
-            "text": "Mailbox users can tag their mail address like in \nme+facebook@example.org\n. They can control the taghandling in the users \nmailcow UI\n panel.\n\n\n\n\n1. Move this message to a subfolder \"facebook\" (will be created lower case if not existing)\n\n\n2. Prepend the tag to the subject: \"[facebook] Subject\"",
-            "title": "Tagging"
+            "location": "/cust_dockerfiles/",
+            "text": "Make your changes in \ndata/Dockerfiles/$service\n and build the image locally:\n\n\ndocker build data/Dockerfiles/service -t mailcow/$service\n\n\n\n\n\nNow auto-recreate modified containers:\n\n\ndocker-compose up -d",
+            "title": "Customize Dockerfiles"
         },
         {
-            "location": "/bl_wl/",
-            "text": "To add or edit an entry to your \ndomain wide\n filter table, login to your \nmailcow UI\n as (domain) administrator.\n\n\n\n\nBeware that a mailbox user can login to mailcow and override a domain policy filter item.",
-            "title": "Blacklist / Whitelist"
-        },
-        {
-            "location": "/autodiscover_config/",
-            "text": "This disables ActiveSync in the autodiscover service for Outlook and configures it with IMAP and SMTP instead:\n\n\nOpen \ndata/web/autodiscover.php\n and set \n'useEASforOutlook' => 'yes'\n to \n'useEASforOutlook' => 'no'\n.\n\n\nTo always use IMAP and SMTP instead of EAS, set \n'autodiscoverType' => 'imap'\n.",
-            "title": "Autodiscover / Autoconfig"
-        },
-        {
-            "location": "/disable_sender_verification/",
-            "text": "This option is not best-practice and should only be implemented when there is no other option available to archive whatever you are trying to do.\n\n\nSimply create a file \ndata/conf/postfix/check_sasl_access\n and enter the following content. This user must exist in your installation and needs to authenticate before sending mail.\n\n\nuser-to-allow-everything@example.com OK\n\n\n\n\n\nOpen \ndata/conf/postfix/main.cf\n and find \nsmtpd_sender_restrictions\n. Prepend \ncheck_sasl_access hash:/opt/postfix/conf/check_sasl_access\n like this:\n\n\nsmtpd_sender_restrictions = check_sasl_access hash:/opt/postfix/conf/check_sasl_access reject_authenticated_sender_login_mismatch [...]\n\n\n\n\n\nRun postmap on check_sasl_access:\n\n\ndocker-compose exec postfix-mailcow postmap /opt/postfix/conf/check_sasl_access\n\n\n\n\n\nRestart the Postfix container.",
-            "title": "Disable Sender Addresses Verification"
+            "location": "/dc_bash_compl/",
+            "text": "curl -L https://raw.githubusercontent.com/docker/compose/$(docker-compose version --short)/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose",
+            "title": "Docker Compose Bash Completion"
         },
         {
             "location": "/deinstall/",
