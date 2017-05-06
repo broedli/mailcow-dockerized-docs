@@ -733,27 +733,8 @@
 <nav class="md-nav md-nav--secondary">
   
   
+    
   
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#client" title="Client" class="md-nav__link">
-    Client
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#remove-persistent-data" title="Remove persistent data" class="md-nav__link">
-    Remove persistent data
-  </a>
-  
-</li>
-      
-      
-      
-    </ul>
   
 </nav>
                   </div>
@@ -768,22 +749,28 @@
                   <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/redis.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
                 
                 
-                  <h1>Redis</h1>
-                
                 <h3 id="client">Client<a class="headerlink" href="#client" title="Permanent link">&para;</a></h3>
+<p>Redis is used as a key-value store for (some of) mailcow's and rspamd's settings and data. If you are unfamilliar with redis please read the <a href="https://redis.io/topics/introduction">introduction to redis</a> and maybe visit this <a href="http://try.redis.io/">wonderfull guide</a> on how to use it.</p>
+<p>To connect to the redis cli execute:</p>
 <div class="codehilite"><pre><span></span>docker-compose exec redis-mailcow redis-cli
 </pre></div>
 
 
-<h2 id="remove-persistent-data">Remove persistent data<a class="headerlink" href="#remove-persistent-data" title="Permanent link">&para;</a></h2>
+<p>Here are some usefull commands for debugging:</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
 <ul>
-<li>Remove volume <code>mysql-vol-1</code> to remove all MySQL data.</li>
-<li>Remove volume <code>redis-vol-1</code> to remove all Redis data.</li>
-<li>Remove volume <code>vmail-vol-1</code> to remove all contents of <code>/var/vmail</code> mounted to <code>dovecot-mailcow</code>.</li>
-<li>Remove volume <code>dkim-vol-1</code> to remove all DKIM keys.</li>
-<li>Remove volume <code>rspamd-vol-1</code> to remove all Rspamd data.</li>
+<li><strong>monitor</strong>: Listens for all requests received by the server in real time.
+```</li>
 </ul>
-<p>Running <code>docker-compose down -v</code> will <strong>destroy all mailcow: dockerized volumes</strong> and delete any related containers.</p>
+<h1 id="docker-compose-exec-redis-mailcow-redis-cli">docker-compose exec redis-mailcow redis-cli<a class="headerlink" href="#docker-compose-exec-redis-mailcow-redis-cli" title="Permanent link">&para;</a></h1>
+<p>127.0.0.1:6379&gt; monitor
+OK
+1494077286.401963 [0 172.22.1.253:41228] "SMEMBERS" "BAYES_SPAM_keys"
+1494077288.292970 [0 172.22.1.253:41229] "SMEMBERS" "BAYES_SPAM_keys"
+[...]
+```</p>
+</div>
                 
                   
                 

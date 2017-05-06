@@ -257,18 +257,18 @@
         },
         {
             "location": "/redis/",
-            "text": "Client\n\u00b6\n\n\ndocker-compose exec redis-mailcow redis-cli\n\n\n\n\n\nRemove persistent data\n\u00b6\n\n\n\n\nRemove volume \nmysql-vol-1\n to remove all MySQL data.\n\n\nRemove volume \nredis-vol-1\n to remove all Redis data.\n\n\nRemove volume \nvmail-vol-1\n to remove all contents of \n/var/vmail\n mounted to \ndovecot-mailcow\n.\n\n\nRemove volume \ndkim-vol-1\n to remove all DKIM keys.\n\n\nRemove volume \nrspamd-vol-1\n to remove all Rspamd data.\n\n\n\n\nRunning \ndocker-compose down -v\n will \ndestroy all mailcow: dockerized volumes\n and delete any related containers.",
+            "text": "Client\n\u00b6\n\n\nRedis is used as a key-value store for (some of) mailcow's and rspamd's settings and data. If you are unfamilliar with redis please read the \nintroduction to redis\n and maybe visit this \nwonderfull guide\n on how to use it.\n\n\nTo connect to the redis cli execute:\n\n\ndocker-compose exec redis-mailcow redis-cli\n\n\n\n\n\nHere are some usefull commands for debugging:\n\n\n\n\nInfo\n\n\n\n\nmonitor\n: Listens for all requests received by the server in real time.\n```\n\n\n\n\ndocker-compose exec redis-mailcow redis-cli\n\u00b6\n\n\n127.0.0.1:6379> monitor\nOK\n1494077286.401963 [0 172.22.1.253:41228] \"SMEMBERS\" \"BAYES_SPAM_keys\"\n1494077288.292970 [0 172.22.1.253:41229] \"SMEMBERS\" \"BAYES_SPAM_keys\"\n[...]\n```",
             "title": "Redis"
         },
         {
             "location": "/redis/#client",
-            "text": "docker-compose exec redis-mailcow redis-cli",
+            "text": "Redis is used as a key-value store for (some of) mailcow's and rspamd's settings and data. If you are unfamilliar with redis please read the  introduction to redis  and maybe visit this  wonderfull guide  on how to use it.  To connect to the redis cli execute:  docker-compose exec redis-mailcow redis-cli  Here are some usefull commands for debugging:   Info   monitor : Listens for all requests received by the server in real time.\n```",
             "title": "Client"
         },
         {
-            "location": "/redis/#remove-persistent-data",
-            "text": "Remove volume  mysql-vol-1  to remove all MySQL data.  Remove volume  redis-vol-1  to remove all Redis data.  Remove volume  vmail-vol-1  to remove all contents of  /var/vmail  mounted to  dovecot-mailcow .  Remove volume  dkim-vol-1  to remove all DKIM keys.  Remove volume  rspamd-vol-1  to remove all Rspamd data.   Running  docker-compose down -v  will  destroy all mailcow: dockerized volumes  and delete any related containers.",
-            "title": "Remove persistent data"
+            "location": "/redis/#docker-compose-exec-redis-mailcow-redis-cli",
+            "text": "127.0.0.1:6379> monitor\nOK\n1494077286.401963 [0 172.22.1.253:41228] \"SMEMBERS\" \"BAYES_SPAM_keys\"\n1494077288.292970 [0 172.22.1.253:41229] \"SMEMBERS\" \"BAYES_SPAM_keys\"\n[...]\n```",
+            "title": "docker-compose exec redis-mailcow redis-cli"
         },
         {
             "location": "/mysql/",
