@@ -237,7 +237,7 @@
         },
         {
             "location": "/debug_logs/",
-            "text": "To view the logs of all mailcow: dockerized related containers, you can use \ndocker-compose logs\n inside your mailcow-dockerized folder that contains your \nmailcow.conf\n. This is usually a bit mutch but you could trim the output with \n--tail=100\n to the last 100 lines, or add a \n-f\n to follow the live output of all your services.\n\n\nTo view the logs of a specific service you can use \ndocker-compose logs [options] $Service_Name\n\n\n\n\nInfo\n\n\nThe available options for the command \ndocker-compose logs\n are:\n- \n--no-color\n: Produce monochrome output.\n- \n-f\n: Follow the log output.\n- \n-t\n: Show timestamps.\n- \n--tail=\"all\"\n: Number of lines to show from the end of the logs for each container.",
+            "text": "To view the logs of all mailcow: dockerized related containers, you can use \ndocker-compose logs\n inside your mailcow-dockerized folder that contains your \nmailcow.conf\n. This is usually a bit mutch but you could trim the output with \n--tail=100\n to the last 100 lines, or add a \n-f\n to follow the live output of all your services.\n\n\nTo view the logs of a specific service you can use \ndocker-compose logs [options] $Service_Name\n\n\n\n\nInfo\n\n\nThe available options for the command \ndocker-compose logs\n are:\n\n\n\n\n--no-color\n: Produce monochrome output.\n\n\n-f\n: Follow the log output.\n\n\n-t\n: Show timestamps.\n\n\n--tail=\"all\"\n: Number of lines to show from the end of the logs for each container.",
             "title": "Logs"
         },
         {
