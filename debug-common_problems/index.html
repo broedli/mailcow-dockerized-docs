@@ -985,8 +985,62 @@
 <nav class="md-nav md-nav--secondary">
   
   
-    
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mail-loops-back-to-myself" title="Mail loops back to myself" class="md-nav__link">
+    Mail loops back to myself
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-can-receive-but-not-send-mails" title="I can receive but not send mails" class="md-nav__link">
+    I can receive but not send mails
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#my-mails-are-identified-as-spam" title="My mails are identified as Spam" class="md-nav__link">
+    My mails are identified as Spam
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-compose-throws-weird-erros" title="docker-compose throws weird erros" class="md-nav__link">
+    docker-compose throws weird erros
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-xy-is-unhealthy" title="Container XY is unhealthy" class="md-nav__link">
+    Container XY is unhealthy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#address-already-in-use" title="Address already in use" class="md-nav__link">
+    Address already in use
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xyz-cant-connect-to" title="XYZ can't connect to ..." class="md-nav__link">
+    XYZ can't connect to ...
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1000,6 +1054,8 @@
                 
                   <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/debug-common_problems.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
                 
+                
+                  <h1>Common Problems</h1>
                 
                 <p>Here we list common problems and possible solutions:</p>
 <h2 id="mail-loops-back-to-myself">Mail loops back to myself<a class="headerlink" href="#mail-loops-back-to-myself" title="Permanent link">&para;</a></h2>
@@ -1039,7 +1095,7 @@ Escape character is &#39;^]&#39;.
 
 
 <p>while trying to start / install mailcow: dockerized, make sure you've followed our section on the <a href="../prerequesite-system/#firewall-ports">prerequisites</a>.</p>
-<h1 id="xyz-cant-connect-to">XYZ can't connect to ...<a class="headerlink" href="#xyz-cant-connect-to" title="Permanent link">&para;</a></h1>
+<h2 id="xyz-cant-connect-to">XYZ can't connect to ...<a class="headerlink" href="#xyz-cant-connect-to" title="Permanent link">&para;</a></h2>
 <p>Please check your local firewall! If you experience connection problems from home, please check your ISP router's firewall too, some of them block mail traffic on the <em>SMTP</em> (587) or <em>SMTPS</em> (465) ports. It could also be, that your ISP is blocking the ports for <em>SUBMISSION</em> (25). While Linux users can chose from a variety of tools to check if a port is open<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup>, the Windows user has only the command <code>telnet host port</code> available by default (this has to be activated since Windows Vista). To enable telnet on a Windows after Vista please check this <a href="https://social.technet.microsoft.com/wiki/contents/articles/910.windows-7-enabling-telnet-client.aspx">guide</a> or enter the following command in an terminal <strong>with administrator priviliges</strong>:</p>
 <div class="codehilite"><pre><span></span>dism /online /Enable-Feature /FeatureName:TelnetClient
 </pre></div>
