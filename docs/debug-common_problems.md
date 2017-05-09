@@ -53,7 +53,7 @@ ERROR: for postfix-mailcow  Cannot start service postfix-mailcow: driver failed 
 
 while trying to start / install mailcow: dockerized, make sure you've followed our section on the [prerequisites](prerequesite-system/#firewall-ports).
 
-# XYZ can't connect to ...
+## XYZ can't connect to ...
 
 Please check your local firewall! If you experience connection problems from home, please check your ISP router's firewall too, some of them block mail traffic on the *SMTP* (587) or *SMTPS* (465) ports. It could also be, that your ISP is blocking the ports for *SUBMISSION* (25). While Linux users can chose from a variety of tools to check if a port is open[^1], the Windows user has only the command `telnet host port` available by default (this has to be activated since Windows Vista). To enable telnet on a Windows after Vista please check this [guide](https://social.technet.microsoft.com/wiki/contents/articles/910.windows-7-enabling-telnet-client.aspx) or enter the following command in an terminal **with administrator priviliges**:
 
