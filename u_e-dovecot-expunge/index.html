@@ -15,7 +15,7 @@
     
     
       
-        <title>Rspamd - mailcow: dockerized documentation</title>
+        <title>Expunge a User's Mails - mailcow: dockerized documentation</title>
       
     
     
@@ -82,8 +82,12 @@
                   Usage & Examples
                 </span>
               
+                <span class="md-header-nav__parent">
+                  Dovecot
+                </span>
+              
             
-            Rspamd
+            Expunge a User's Mails
           
         </span>
       </div>
@@ -673,10 +677,12 @@
           
           
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-3" type="checkbox" id="nav-7-3">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-3" type="checkbox" id="nav-7-3" checked>
     
     <label class="md-nav__link" for="nav-7-3">
       Dovecot
@@ -692,11 +698,20 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../u_e-dovecot-expunge/" title="Expunge a User's Mails" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+    <a href="./" title="Expunge a User's Mails" class="md-nav__link md-nav__link--active">
       Expunge a User's Mails
     </a>
+    
   </li>
 
         
@@ -733,65 +748,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="toc">
-        Rspamd
-      </label>
-    
-    <a href="./" title="Rspamd" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../u_e-rspamd/" title="Rspamd" class="md-nav__link">
       Rspamd
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-  
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#learn-spam-ham" title="Learn Spam &amp; Ham" class="md-nav__link">
-    Learn Spam &amp; Ham
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#learn-spam-or-ham-from-existing-directory" title="Learn Spam or Ham from existing directory" class="md-nav__link">
-    Learn Spam or Ham from existing directory
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cli-tools" title="CLI tools" class="md-nav__link">
-    CLI tools
-  </a>
-  
-</li>
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -1035,28 +996,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#learn-spam-ham" title="Learn Spam &amp; Ham" class="md-nav__link">
-    Learn Spam &amp; Ham
+  <a href="#the-manual-way" title="The manual way" class="md-nav__link">
+    The manual way
   </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#learn-spam-or-ham-from-existing-directory" title="Learn Spam or Ham from existing directory" class="md-nav__link">
-    Learn Spam or Ham from existing directory
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#cli-tools" title="CLI tools" class="md-nav__link">
-    CLI tools
+  <a href="#make-it-automatic" title="Make it automatic" class="md-nav__link">
+    Make it automatic
   </a>
   
 </li>
@@ -1075,39 +1023,49 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/u_e-rspamd.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
+                  <a href="https://github.com/mailcow/mailcow-dockerized/edit/master/docs/u_e-dovecot-expunge.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
                 
                 
-                  <h1>Rspamd</h1>
+                  <h1>Expunge a User's Mails</h1>
                 
-                <p>Rspamd is used for av handling, dkim signing and spam handling. It's a powerfull and fast filter system. For a more in-depth documentation on Rspamd please visit it's <a href="https://rspamd.com/doc/index.html">own documentation</a>.</p>
-<h2 id="learn-spam-ham">Learn Spam &amp; Ham<a class="headerlink" href="#learn-spam-ham" title="Permanent link">&para;</a></h2>
-<p>Rspamd learns mail as spam or ham when you move a message in or out of the junk folder to any mailbox besides trash.
-This is archived by using the Dovecot plugin "antispam" and a simple parser script.</p>
-<p>Rspamd also auto-learns mail when a high or low score is detected (see <a href="https://rspamd.com/doc/configuration/statistic.html#autolearning">https://rspamd.com/doc/configuration/statistic.html#autolearning</a>)</p>
-<p>The bayes statistics are written to Redis as keys <code>BAYES_HAM</code> and <code>BAYES_SPAM</code>.</p>
-<p>You can also use Rspamd's web ui to learn ham and/or spam.</p>
-<h3 id="learn-spam-or-ham-from-existing-directory">Learn Spam or Ham from existing directory<a class="headerlink" href="#learn-spam-or-ham-from-existing-directory" title="Permanent link">&para;</a></h3>
-<p>You can use a one-liner to learn mail in plain-text (uncompressed) format:</p>
-<div class="codehilite"><pre><span></span># Ham
-for file in /my/folder/cur/*; do docker exec -i $(docker-compose ps -q rspamd-mailcow) rspamc learn_ham &lt; $file; done
-# Spam
-for file in /my/folder/.Junk/cur/*; do docker exec -i $(docker-compose ps -q rspamd-mailcow) rspamc learn_spam &lt; $file; done
+                <p>If you want to delete old mails out of the <code>.Junk</code> or <code>.Trash</code> folders or maybe delete all read mails that are older than a certain amount of time you may use dovecot's tool doveadm <a href="https://wiki.dovecot.org/Tools/Doveadm/Expunge">man doveadm-expunge</a>.</p>
+<h2 id="the-manual-way">The manual way<a class="headerlink" href="#the-manual-way" title="Permanent link">&para;</a></h2>
+<p>That said, let's dive in:</p>
+<p>Delete a user's mails inside the junk folder that <strong>are read</strong> and <strong>older</strong> than 4 hours</p>
+<div class="codehilite"><pre><span></span>docker-compose exec dovecot-mailcow doveadm expunge -u &#39;mailbox@example.com&#39; mailbox &#39;Junk&#39; SEEN not SINCE 4h
 </pre></div>
 
 
-<p>Consider attaching a local folder as new volume to <code>rspamd-mailcow</code> in <code>docker-compose.yml</code> and learn given files inside the container. This can be used as workaround to parse compressed data with zcat. Example:</p>
-<div class="codehilite"><pre><span></span>for file in /data/old_mail/.Junk/cur/*; do rspamc learn_spam &lt; zcat $file; done
+<p>Delete <strong>all</strong> user's mails in the junk folder that are <strong>older</strong> than 7 days</p>
+<div class="codehilite"><pre><span></span>docker-compose exec dovecot-mailcow doveadm expunge -A mailbox &#39;Junk&#39; savedbefore 7d
 </pre></div>
 
 
-<h2 id="cli-tools">CLI tools<a class="headerlink" href="#cli-tools" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>docker-compose exec rspamd-mailcow rspamc --help
-docker-compose exec rspamd-mailcow rspamadm --help
+<p>Delete mails inside a custom folder <strong>inside</strong> a user's inbox that are <strong>not</strong> flagged and <strong>older</strong> than 2 weeks</p>
+<div class="codehilite"><pre><span></span>docker-compose exec dovecot-mailcow doveadm expunge -u &#39;mailbox@example.com&#39; mailbox &#39;INBOX/custom-folder&#39; not FLAGGED not SINCE 2w
 </pre></div>
 
 
-<p>See <a href="https://rspamd.com/doc/index.html">Rspamd documentation</a></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+</div>
+<p>For possible <a href="https://wiki.dovecot.org/Tools/Doveadm/SearchQuery#section_date_specification">time spans</a> or <a href="https://wiki.dovecot.org/Tools/Doveadm/SearchQuery#section_search_keys">search keys</a> have a look at <a href="https://wiki.dovecot.org/Tools/Doveadm/SearchQuery">man doveadm-search-query</a></p>
+<h2 id="make-it-automatic">Make it automatic<a class="headerlink" href="#make-it-automatic" title="Permanent link">&para;</a></h2>
+<p>If you want to automate such a task you can create a cron job on your host that calls a script like the one below:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="ch">#!/bin/bash</span>
+/usr/local/bin/docker-compose <span class="nb">exec</span> -T doveadm dovecot-mailcow doveadm expunge -A mailbox <span class="s1">&#39;Junk&#39;</span> savedbefore 2w
+/usr/local/bin/docker-compose <span class="nb">exec</span> -T doveadm expunge -A mailbox <span class="s1">&#39;Junk&#39;</span> SEEN not SINCE 12h
+<span class="o">[</span>...<span class="o">]</span>
+</pre></div>
+</td></tr></table>
+
+<p>To create a cron job you may execute <code>crontab -e</code> and insert something like the following to execute a script:</p>
+<div class="codehilite"><pre><span></span># Execute everyday at 04:00 A.M.
+0 4 * * * /path/to/your/expunge_mailboxes.sh
+</pre></div>
                 
                   
                 
@@ -1126,7 +1084,7 @@ docker-compose exec rspamd-mailcow rspamadm --help
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../u_e-redis/" title="Redis" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../u_e-postfix-disable_sender_verification/" title="Disable Sender Addresses Verification" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1135,19 +1093,19 @@ docker-compose exec rspamd-mailcow rspamadm --help
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Redis
+                Disable Sender Addresses Verification
               </span>
             </div>
           </a>
         
         
-          <a href="../u_e-docker-cust_dockerfiles/" title="Customize Dockerfiles" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../u_e-dovecot-more/" title="More Examples with DOVEADM" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Customize Dockerfiles
+                More Examples with DOVEADM
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
